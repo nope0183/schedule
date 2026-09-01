@@ -10,6 +10,7 @@ URL = 'https://serp-koll.ru/images/ep/k1/rasp1.xlsx'
 JSON_FILE = 'schedule.json'
 HASH_FILE = 'schedule.hash'
 
+# --- Скачиваем файл ---
 try:
     resp = requests.get(URL, timeout=30)
     if resp.status_code != 200:
@@ -29,64 +30,125 @@ except FileNotFoundError:
     old_hash = ''
 
 if new_hash == old_hash:
-    print('No changes detected.')
+    print('No changes.')
     sys.exit(0)
 
-print(f'Schedule changed! Old: {old_hash[:8] if old_hash else "none"}, New: {new_hash[:8]}')
+print(f'Changed! {old_hash[:8] if old_hash else "none"} -> {new_hash[:8]}')
 
-wb = load_workbook(filename=BytesIO(content), read_only=True, data_only=True)
+# --- Парсим Excel ---
+# ВАЖНО: без read_only=True, иначе max_row/max_column могут быть None
+wb = load_workbook(filename=BytesIO(content), data_only=True)
 ws = wb.active
 
-date_cell = ws.cell(row=1, column=1).value
-date_str = str(date_cell) if date_cell else ''
-match = re.search(r'(\d{1,2}[.\s]\w+[.\s]\d{4}|\d{2}\.\d{2}\.\d{4})', date_str)
-date = match.group(1) if match else 'Неизвестная дата'
+max_row = ws.max_row or 200
+max_col = ws.max_column or 50
 
+# 1. Ищем дату в первых 50 строках и 5 столбцах
+date = "Неизвестная дата"
+for r in range(1, min(51, max_row + 1)):
+    for c in range(1, min(6, max_col + 1)):
+        v = ws.cell(row=r, column=c).value
+        if v:
+            m = re.search(r'(\d{1,2}[.\s]\w+[.\s]\d{4}|\d{2}\.\d{2}\.\d{4})', str(v))
+            if m:
+                date = m.group(1)
+                break
+    if date != "Неизвестная дата":
+        break
+
+# 2. Ищем строку с номерами групп (сканируем ВЕСЬ файл)
 groups = []
 group_cols = {}
-col = 3
-while True:
-    val = ws.cell(row=2, column=col).value
-    if val is None:
-        break
-    val_str = str(val).strip()
-    if re.match(r'^\d{4}[а-яА-Я]?$', val_str):
-        groups.append(val_str)
-        group_cols[val_str] = col
-    col += 1
+groups_row = -1
 
+for r in range(1, max_row + 1):
+    temp = []
+    for c in range(3, min(max_col + 1, 50)):
+        v = ws.cell(row=r, column=c).value
+        if v is not None:
+            s = str(v).strip()
+            if re.match(r'^\d{4}[а-яА-Я]?$', s):
+                temp.append((s, c))
+    if len(temp) >= 20:
+        groups_row = r
+        for g, c in temp:
+            groups.append(g)
+            group_cols[g] = c
+        break
+
+if not groups:
+    print("ERROR: Groups not found in any row!")
+    sys.exit(1)
+
+print(f"Found {len(groups)} groups in row {groups_row}, date: {date}")
+
+# 3. Парсим пары
+# Стратегия: сканируем ВСЕ строки файла (кроме строки с группами)
+# Номер пары определяем по:
+#   a) Явной цифре 1-7 в колонке A
+#   b) Подсчёту блоков: строка, где >40% ячеек содержат код дисциплины = начало нового блока
 raw_data = {}
-current_lesson = None
-for row_idx in range(3, ws.max_row + 1):
-    cell_a = ws.cell(row=row_idx, column=1).value
+current_lesson = 0
+
+for r in range(1, max_row + 1):
+    if r == groups_row:
+        continue
+
+    # Проверяем явный номер пары в колонке A
+    cell_a = ws.cell(row=r, column=1).value
     if cell_a is not None:
         s = str(cell_a).strip()
         if s.isdigit() and 1 <= int(s) <= 7:
-            current_lesson = s
-    if current_lesson is None:
-        continue
-    if current_lesson not in raw_data:
-        raw_data[current_lesson] = {}
+            current_lesson = int(s)
+            continue
+
+    # Проверяем, является ли строка началом нового блока кодов дисциплин
+    code_count = 0
+    non_empty = 0
     for gname, cidx in group_cols.items():
-        cv = ws.cell(row=row_idx, column=cidx).value
+        cv = ws.cell(row=r, column=cidx).value
+        if cv is not None:
+            v = str(cv).strip()
+            if v and 2 <= len(v) < 100:
+                non_empty += 1
+                if re.match(r'^[А-Я]{2,4}\.?\s*\d', v):
+                    code_count += 1
+
+    if non_empty > 0 and code_count > non_empty * 0.4:
+        current_lesson += 1
+
+    if current_lesson == 0:
+        continue
+
+    lk = str(current_lesson)
+
+    # Собираем данные для каждой группы
+    for gname, cidx in group_cols.items():
+        cv = ws.cell(row=r, column=cidx).value
         if cv is None:
             continue
         val = str(cv).strip()
+        if not val or len(val) < 2 or len(val) > 100:
+            continue
         low = val.lower()
         if any(x in low for x in ['пара', 'объединён', 'разделён']):
             continue
-        if len(val) < 2:
-            continue
-        if gname not in raw_data[current_lesson]:
-            raw_data[current_lesson][gname] = set()
+
+        if lk not in raw_data:
+            raw_data[lk] = {}
+        if gname not in raw_data[lk]:
+            raw_data[lk][gname] = set()
+
         for line in val.split('\n'):
             line = line.strip()
-            if line and len(line) >= 2:
-                raw_data[current_lesson][gname].add(line)
+            if line and 2 <= len(line) < 100:
+                raw_data[lk][gname].add(line)
 
 wb.close()
 
+# 4. Формируем JSON
 result = {'date': date, 'groups': sorted(groups), 'schedule': {}}
+
 for gname in groups:
     lessons = []
     for num in sorted(raw_data.keys(), key=int):
@@ -117,4 +179,4 @@ with open(JSON_FILE, 'w', encoding='utf-8') as f:
 with open(HASH_FILE, 'w') as f:
     f.write(new_hash)
 
-print(f'Done! {len(groups)} groups parsed, date: {date}')
+print(f'Done! {len(groups)} groups, {len(raw_data)} lesson blocks, date: {date}')
