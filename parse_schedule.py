@@ -58,10 +58,13 @@ def extract_data(text):
     room = ""
     
     for line in lines:
-        # Кабинет в скобках (23), (34а) и т.д.
-        room_match = re.search(r'\(([0-9]+[а-яА-ЯёЁ]*)\)', line)
+        # Кабинет в скобках (23), (34а) и т.д. - извлекаем содержимое из скобок
+        room_match = re.search(r'\(([^)]+)\)', line)
         if room_match and not room:
-            room = room_match.group(1)
+            room_content = room_match.group(1).strip()
+            # Проверяем, что это похоже на номер кабинета (начинается с цифр)
+            if re.match(r'^[0-9]+[а-яА-ЯёЁ]*$', room_content):
+                room = room_content
         
         # Преподаватель: ФИО (Иванов И.И., Ванявина О.О. и т.д.)
         teacher_match = re.search(r'([А-ЯЁ][а-яё]+\s+[А-ЯЁ]\.\s*[А-ЯЁ]\.?)', line)
