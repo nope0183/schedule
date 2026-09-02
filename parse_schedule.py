@@ -163,40 +163,37 @@ for gname in groups:
         subject, teacher, room = '', '', ''
 
         for line in lines:
-            # Извлекаем номер/название кабинета из всех скобок (...) в строке
-            matches = list(re.finditer(r'\(([^)]+)\)', line))
-            for rm in matches:
-                inside = rm.group(1).strip()
-                # Исключаем служебные метки подгрупп из поля кабинета
+            # Ищем кабинет в скобках (группа в скобках)
+            # Ищем все скобки, но НЕ трогаем подгруппы
+            bracket_matches = list(re.finditer(r'\(([^)]+)\)', line))
+            for match in bracket_matches:
+                inside = match.group(1).strip()
+                # Проверяем, что это НЕ подгруппа
                 if not re.match(r'^(?:подгруппа|п/г|п)\.?\s*\d+$', inside, re.IGNORECASE):
                     if room:
                         if inside not in room:
                             room = f"{room} / {inside}"
                     else:
                         room = inside
-                    # Удаляем найденный блок скобок из текстовой строки
-                    line = line.replace(rm.group(0), ' ').strip()
-
+                    # Удаляем этот блок скобок из строки
+                    line = line.replace(match.group(0), '').strip()
+            
+            # Очищаем строку от лишних пробелов
             line = re.sub(r'\s+', ' ', line).strip()
             if not line:
                 continue
-
-            # Пропуск служебных меток подгрупп вне скобок
+            
+            # Пропускаем служебные метки подгрупп
             if re.match(r'^(?:подгруппа|п/г|п)\.?\s*\d+$', line, re.IGNORECASE):
                 continue
-
-            # Кабинет без скобок (если не был найден ранее в скобках)
-            if not room:
-    # ищем в любых скобках: (), [], {}
-            match = re.search(r'[\(\[\{](.*?)[\)\]\}]', line)
-            if match:
-                    room = match.group(1)
-            elif re.match(r'^\d{1,3}[а-яА-Яa-zA-Z-]?\.?$', line) or line in ['-', 'с/з']:
-            room = line
+            
+            # Если кабинет не найден в скобках, ищем его как отдельное число
+            if not room and (re.match(r'^\d{1,3}[а-яА-Яa-zA-Z-]?\.?$', line) or line in ['-', 'с/з']):
+                room = line
             # Преподаватель (ФИО вида Иванов И.О. / Петров А.Б.)
             elif re.search(r'[А-ЯЁ][а-яё]+\s+[А-ЯЁ]\.\s*[А-ЯЁ]?\.', line):
                 teacher = line if not teacher else f"{teacher} / {line}"
-            # Название предмета
+            # Название предмета (всё остальное)
             else:
                 if subject:
                     if line not in subject:
