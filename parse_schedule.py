@@ -7,7 +7,6 @@ import json
 import hashlib
 import requests
 import openpyxl
-from openpyxl.utils import get_column_letter
 from datetime import datetime
 import sys
 
@@ -60,10 +59,7 @@ def clean_cell_value(value):
 
 
 def get_merged_value(ws, row, col, merged_values):
-    """
-    Возвращает значение ячейки с учётом объединения.
-    Если ячейка объединена — берёт значение из верхней левой ячейки.
-    """
+    """Возвращает значение ячейки с учётом объединения."""
     for merged_range, top_left_value in merged_values.items():
         if row in range(merged_range.min_row, merged_range.max_row + 1) and \
            col in range(merged_range.min_col, merged_range.max_col + 1):
@@ -72,10 +68,7 @@ def get_merged_value(ws, row, col, merged_values):
 
 
 def detect_groups(ws, merged_values):
-    """
-    Находит все группы в строке 2 (или в первой строке с группами).
-    Возвращает: список групп и словарь {группа: номер_колонки}.
-    """
+    """Находит все группы в строке 2."""
     groups = []
     group_cols = {}
 
@@ -85,195 +78,22 @@ def detect_groups(ws, merged_values):
         cell = ws.cell(row=row_idx, column=col_idx)
         value = clean_cell_value(cell.value)
 
-        # Если ячейка объединена, берём значение из объединения
         if not value:
             merged_val = get_merged_value(ws, row_idx, col_idx, merged_values)
             if merged_val:
                 value = clean_cell_value(merged_val)
 
-        # Проверяем, похоже ли значение на группу (цифры или буквы/цифры)
-        if value and re.match(r'^[А-Яа-яЁё]?\d{3,4}[а-яА-Я]?$', value):
+        # Проверяем на группу (цифры или буквы с цифрами)
+        if value and re.match(r'^[A-Za-zА-Яа-яЁё]?\d{3,4}[A-Za-zА-Яа-яЁё]?$', value):
             if value not in groups:
                 groups.append(value)
                 group_cols[value] = col_idx
 
-    # Если групп не найдено, пробуем строку 3
-    if not groups:
-        row_idx = 3
-        for col_idx in range(1, ws.max_column + 1):
-            cell = ws.cell(row=row_idx, column=col_idx)
-            value = clean_cell_value(cell.value)
-
-            if not value:
-                merged_val = get_merged_value(ws, row_idx, col_idx, merged_values)
-                if merged_val:
-                    value = clean_cell_value(merged_val)
-
-            if value and re.match(r'^[А-Яа-яЁё]?\d{3,4}[а-яА-Я]?$', value):
-                if value not in groups:
-                    groups.append(value)
-                    group_cols[value] = col_idx
-
     return groups, group_cols
 
 
-def detect_lessons(ws):
-    """
-    Находит строки, в которых начинаются пары.
-    Возвращает список кортежей (номер_строки, номер_пары).
-    """
-    lesson_rows = []
-
-    # Ищем строки с номерами пар (1, 2, 3, 4, 5, 6, 7)
-    for row_idx in range(1, ws.max_row + 1):
-        cell = ws.cell(row=row_idx, column=1)
-        value = clean_cell_value(cell.value)
-
-        if not value:
-            continue
-
-        # Проверяем, является ли значение номером пары
-        match = re.match(r'^(\d+)\s*$', value)
-        if match:
-            num = int(match.group(1))
-            if 1 <= num <= 7:
-                lesson_rows.append((row_idx, num))
-
-    # Если не нашли по первой колонке, пробуем по второй
-    if not lesson_rows:
-        for row_idx in range(1, ws.max_row + 1):
-            cell = ws.cell(row=row_idx, column=2)
-            value = clean_cell_value(cell.value)
-
-            if not value:
-                continue
-
-            match = re.match(r'^(\d+)\s*$', value)
-            if match:
-                num = int(match.group(1))
-                if 1 <= num <= 7:
-                    lesson_rows.append((row_idx, num))
-
-    return sorted(lesson_rows, key=lambda x: x[0])
-
-
-def parse_lesson_cell(value):
-    """
-    Парсит ячейку с данными пары.
-    Возвращает: subject, teacher, room.
-    """
-    if not value:
-        return "", "", ""
-
-    value = clean_cell_value(value)
-
-    # Пытаемся найти аудиторию
-    room = ""
-    room_patterns = [
-        r'\(([^)]+)\)$',          # (305), (305а), (23)
-        r'\s+([0-9]+[а-яА-Я]?)\s*$',  # 305, 305а
-        r'\s+([0-9]+[а-яА-Я]?)\s+',   # 305 в середине
-    ]
-
-    for pattern in room_patterns:
-        match = re.search(pattern, value)
-        if match:
-            room = match.group(1).strip()
-            # Удаляем аудиторию из значения
-            value = value[:match.start()] + value[match.end():]
-            break
-
-    # Теперь ищем преподавателя
-    teacher = ""
-    teacher_patterns = [
-        r'([А-Я][а-я]+\s+[А-Я]\.\s*[А-Я]\.?)',  # Иванов И.И.
-        r'([А-Я][а-я]+\s+[А-Я]\.[А-Я]\.?)',      # Иванов И.И. (без пробела)
-        r'([А-Я]\.\s*[А-Я]\.?\s+[А-Я][а-я]+)',   # И.И. Иванов
-        r'([А-Я]\.?[А-Я]\.?\s+[А-Я][а-я]+)',     # И.И.Иванов
-    ]
-
-    for pattern in teacher_patterns:
-        match = re.search(pattern, value)
-        if match:
-            teacher = match.group(1).strip()
-            # Удаляем преподавателя из значения
-            value = value[:match.start()] + value[match.end():]
-            break
-
-    # Остаток — это предмет
-    subject = clean_cell_value(value)
-
-    # Убираем лишние символы
-    subject = re.sub(r'^\s*[–—-]\s*', '', subject)
-    subject = re.sub(r'\s*[–—-]\s*$', '', subject)
-    subject = re.sub(r'^\s*[.,;]\s*', '', subject)
-    subject = re.sub(r'\s*[.,;]\s*$', '', subject)
-
-    # Если предмет начинается с кода (ОГСЭ.04, ОП.09*, МДК и т.д.)
-    # оставляем код + название
-    code_match = re.match(r'^([А-ЯЁа-яё]+\s*[\.\*]?\s*\d+[\.\d]*\s*[\.\*]?)\s*(.*)$', subject)
-    if code_match:
-        code = code_match.group(1).strip()
-        name = code_match.group(2).strip()
-        if name:
-            subject = f"{code} {name}"
-        else:
-            subject = code
-
-    # Если в предмете остались скобки — убираем
-    subject = re.sub(r'\s*\([^)]*\)\s*', ' ', subject)
-    subject = ' '.join(subject.split())
-
-    return subject, teacher, room
-
-
-def parse_lesson_block(ws, start_row, end_row, group_cols, merged_values):
-    """
-    Парсит блок строк, содержащих одну пару.
-    Возвращает словарь {группа: [items]}.
-    """
-    items_by_group = {group: [] for group in group_cols.keys()}
-
-    # Собираем все данные из блока строк
-    for row_idx in range(start_row, end_row + 1):
-        for group, col_idx in group_cols.items():
-            cell = ws.cell(row=row_idx, column=col_idx)
-            value = clean_cell_value(cell.value)
-
-            # Проверяем объединённую ячейку
-            if not value:
-                merged_val = get_merged_value(ws, row_idx, col_idx, merged_values)
-                if merged_val:
-                    value = clean_cell_value(merged_val)
-
-            if not value:
-                continue
-
-            # Проверяем, не является ли значение служебным (например, "пара")
-            if value.lower() in ["пара", "занятие", "физ-ра", "физкультура", "консультация"]:
-                continue
-
-            # Проверяем, не является ли значение временем или датой
-            if re.match(r'^\d{1,2}:\d{2}', value):
-                continue
-
-            # Парсим значение
-            subject, teacher, room = parse_lesson_cell(value)
-
-            if subject or teacher or room:
-                items_by_group[group].append({
-                    "subject": subject,
-                    "teacher": teacher,
-                    "room": room,
-                })
-
-    return items_by_group
-
-
 def find_lesson_rows(ws):
-    """
-    Находит строки, с которых начинаются пары.
-    """
+    """Находит строки с номерами пар."""
     lesson_rows = []
 
     for row_idx in range(1, ws.max_row + 1):
@@ -285,7 +105,6 @@ def find_lesson_rows(ws):
             if 1 <= num <= 7:
                 lesson_rows.append((row_idx, num))
 
-    # Если не нашли по колонке 1, пробуем колонку 2
     if not lesson_rows:
         for row_idx in range(1, ws.max_row + 1):
             cell = ws.cell(row=row_idx, column=2)
@@ -299,10 +118,209 @@ def find_lesson_rows(ws):
     return sorted(lesson_rows, key=lambda x: x[0])
 
 
+def split_by_lines(text):
+    """Разбивает текст на строки, учитывая переносы."""
+    if not text:
+        return []
+    # Разбиваем по \n и \r\n
+    lines = re.split(r'[\r\n]+', text)
+    # Фильтруем пустые строки
+    return [line.strip() for line in lines if line.strip()]
+
+
+def parse_teacher_name(text):
+    """Парсит имя преподавателя из текста."""
+    if not text:
+        return None
+
+    # Паттерны для ФИО преподавателя
+    patterns = [
+        # Иванов И.И.
+        r'([А-ЯЁ][а-яё]+\s+[А-ЯЁ]\.\s*[А-ЯЁ]\.?)',
+        # Иванов И.И
+        r'([А-ЯЁ][а-яё]+\s+[А-ЯЁ]\.[А-ЯЁ]\.?)',
+        # И.И. Иванов
+        r'([А-ЯЁ]\.\s*[А-ЯЁ]\.?\s+[А-ЯЁ][а-яё]+)',
+        # И.И.Иванов
+        r'([А-ЯЁ]\.?[А-ЯЁ]\.?\s*[А-ЯЁ][а-яё]+)',
+        # Иванова М.В. (с запятой)
+        r'([А-ЯЁ][а-яё]+\s+[А-ЯЁ]\.[А-ЯЁ]\.)',
+        # Ли М.В.
+        r'([А-ЯЁ][а-яё]+\s+[А-ЯЁ]\.\s*[А-ЯЁ]\.)',
+    ]
+
+    for pattern in patterns:
+        match = re.search(pattern, text)
+        if match:
+            return match.group(1).strip()
+
+    return None
+
+
+def parse_room(text):
+    """Парсит номер аудитории из текста."""
+    if not text:
+        return None
+
+    # Паттерны для аудиторий
+    patterns = [
+        r'\(([^)]+)\)$',  # (305), (305а), (23)
+        r'\s+([0-9]+[а-яА-ЯёЁ]?)\s*$',  # 305, 305а
+        r'\s+([0-9]+[а-яА-ЯёЁ]?)\s+',  # 305 в середине
+        r'^([0-9]+[а-яА-ЯёЁ]?)$',  # просто 305
+    ]
+
+    for pattern in patterns:
+        match = re.search(pattern, text)
+        if match:
+            room = match.group(1).strip()
+            # Проверяем, что это действительно аудитория (не дата и не время)
+            if not re.match(r'^\d{1,2}[:.]\d{2}', room):
+                return room
+
+    return None
+
+
+def parse_subject_code(text):
+    """Парсит код предмета."""
+    if not text:
+        return None
+
+    # Паттерны для кодов предметов
+    patterns = [
+        r'^([А-ЯЁа-яё]+\.\d+[\.\d]*\s*[\*\s]*)',  # ОГСЭ.04, ОП.09*
+        r'^([А-ЯЁа-яё]+\s*\.\s*\d+[\.\d]*)',  # МДК.02.02
+        r'^([А-ЯЁа-яё]+\s*\d+[\.\d]*)',  # ОГСЭ04
+    ]
+
+    for pattern in patterns:
+        match = re.match(pattern, text)
+        if match:
+            return match.group(1).strip()
+
+    return None
+
+
+def parse_lesson_cell(value):
+    """
+    Парсит ячейку с данными пары.
+    Возвращает список словарей {subject, teacher, room}.
+    """
+    if not value:
+        return []
+
+    value = clean_cell_value(value)
+
+    # Разбиваем на строки
+    lines = split_by_lines(value)
+
+    if not lines:
+        return []
+
+    result = []
+
+    for line in lines:
+        # Пропускаем служебные строки
+        if line.lower() in ["пара", "занятие", "физ-ра", "физкультура", "консультация"]:
+            continue
+
+        if re.match(r'^\d{1,2}:\d{2}', line):
+            continue
+
+        # Копия строки для парсинга
+        text = line
+
+        # Парсим аудиторию
+        room = parse_room(text)
+        if room:
+            # Удаляем аудиторию из текста
+            for pattern in [
+                r'\([^)]+\)$',
+                r'\s+[0-9]+[а-яА-ЯёЁ]?\s*$',
+                r'\s+[0-9]+[а-яА-ЯёЁ]?\s+',
+                r'^[0-9]+[а-яА-ЯёЁ]?$'
+            ]:
+                text = re.sub(pattern, '', text).strip()
+                if room not in text:
+                    break
+
+        # Парсим преподавателя
+        teacher = parse_teacher_name(text)
+        if teacher:
+            # Удаляем преподавателя из текста
+            for pattern in [
+                r'[А-ЯЁ][а-яё]+\s+[А-ЯЁ]\.\s*[А-ЯЁ]\.?',
+                r'[А-ЯЁ][а-яё]+\s+[А-ЯЁ]\.[А-ЯЁ]\.?',
+                r'[А-ЯЁ]\.\s*[А-ЯЁ]\.?\s+[А-ЯЁ][а-яё]+',
+                r'[А-ЯЁ]\.?[А-ЯЁ]\.?\s*[А-ЯЁ][а-яё]+',
+            ]:
+                text = re.sub(pattern, '', text).strip()
+                if teacher not in text:
+                    break
+
+        # Остаток - предмет
+        subject = text.strip()
+
+        # Очищаем предмет от лишних символов
+        subject = re.sub(r'^\s*[–—-]\s*', '', subject)
+        subject = re.sub(r'\s*[–—-]\s*$', '', subject)
+        subject = re.sub(r'^\s*[.,;]\s*', '', subject)
+        subject = re.sub(r'\s*[.,;]\s*$', '', subject)
+
+        # Парсим код предмета
+        code = parse_subject_code(subject)
+        if code:
+            # Удаляем код из предмета
+            subject = re.sub(r'^' + re.escape(code), '', subject).strip()
+            if subject:
+                subject = f"{code} {subject}"
+            else:
+                subject = code
+
+        # Очищаем от скобок
+        subject = re.sub(r'\s*\([^)]*\)\s*', ' ', subject)
+        subject = ' '.join(subject.split())
+
+        # Добавляем результат
+        if subject or teacher or room:
+            result.append({
+                "subject": subject if subject else "",
+                "teacher": teacher if teacher else "",
+                "room": room if room else "",
+            })
+
+    return result
+
+
+def parse_lesson_block(ws, start_row, end_row, group_cols, merged_values):
+    """Парсит блок строк, содержащих одну пару."""
+    items_by_group = {group: [] for group in group_cols.keys()}
+
+    for row_idx in range(start_row, end_row + 1):
+        for group, col_idx in group_cols.items():
+            cell = ws.cell(row=row_idx, column=col_idx)
+            value = clean_cell_value(cell.value)
+
+            if not value:
+                merged_val = get_merged_value(ws, row_idx, col_idx, merged_values)
+                if merged_val:
+                    value = clean_cell_value(merged_val)
+
+            if not value:
+                continue
+
+            # Парсим ячейку
+            parsed_items = parse_lesson_cell(value)
+
+            for item in parsed_items:
+                if item["subject"] or item["teacher"] or item["room"]:
+                    items_by_group[group].append(item)
+
+    return items_by_group
+
+
 def merge_items(items):
-    """
-    Объединяет одинаковые предметы/преподавателей/аудитории.
-    """
+    """Объединяет одинаковые предметы/преподавателей/аудитории."""
     unique = []
     seen = set()
 
@@ -326,9 +344,7 @@ def merge_items(items):
 
 
 def make_lesson(number, items):
-    """
-    Создаёт объект занятия из списка элементов.
-    """
+    """Создаёт объект занятия из списка элементов."""
     items = merge_items(items)
 
     if not items:
@@ -358,9 +374,7 @@ def make_lesson(number, items):
 
 
 def parse_schedule(ws, groups, group_cols, merged_values):
-    """
-    Основная функция парсинга расписания.
-    """
+    """Основная функция парсинга расписания."""
     lesson_rows = find_lesson_rows(ws)
 
     if not lesson_rows:
@@ -375,7 +389,6 @@ def parse_schedule(ws, groups, group_cols, merged_values):
         if index + 1 < len(lesson_rows):
             end_row = lesson_rows[index + 1][0] - 1
         else:
-            # Последняя пара — до конца листа
             end_row = ws.max_row
 
         # Парсим блок
@@ -393,16 +406,13 @@ def parse_schedule(ws, groups, group_cols, merged_values):
 
 
 def get_date_from_ws(ws):
-    """
-    Пытается найти дату в листе Excel.
-    """
-    # Сначала ищем в строке 1
+    """Пытается найти дату в листе Excel."""
+    # Ищем в строке 1
     for col_idx in range(1, min(ws.max_column + 1, 10)):
         cell = ws.cell(row=1, column=col_idx)
         value = clean_cell_value(cell.value)
 
         if value:
-            # Проверяем, похоже ли значение на дату
             date_match = re.search(r'(\d{1,2})\s*[\./]\s*(\d{1,2})\s*[\./]\s*(\d{2,4})', value)
             if date_match:
                 day = int(date_match.group(1))
@@ -418,29 +428,7 @@ def get_date_from_ws(ws):
                 except ValueError:
                     pass
 
-    # Если не нашли, пробуем другие строки
-    for row_idx in range(1, 5):
-        for col_idx in range(1, min(ws.max_column + 1, 5)):
-            cell = ws.cell(row=row_idx, column=col_idx)
-            value = clean_cell_value(cell.value)
-
-            if value:
-                date_match = re.search(r'(\d{1,2})\s*[\./]\s*(\d{1,2})\s*[\./]\s*(\d{2,4})', value)
-                if date_match:
-                    day = int(date_match.group(1))
-                    month = int(date_match.group(2))
-                    year = int(date_match.group(3))
-
-                    if year < 100:
-                        year += 2000
-
-                    try:
-                        date_obj = datetime(year, month, day)
-                        return date_obj.strftime("%d.%m.%Y")
-                    except ValueError:
-                        pass
-
-    # Если дату не нашли, используем текущую дату
+    # Если не нашли, используем текущую дату
     return datetime.now().strftime("%d.%m.%Y")
 
 
@@ -458,7 +446,6 @@ def main():
     if download_file(URL, XLSX_FILENAME):
         new_md5 = get_md5(XLSX_FILENAME)
 
-        # Проверяем, изменился ли файл
         if old_md5 == new_md5:
             print("File not changed, using existing schedule.json")
             return 0
@@ -511,7 +498,6 @@ def main():
 
         print(f"Saved: {JSON_FILENAME}")
 
-        # Сохраняем MD5
         if new_md5:
             save_md5(MD5_FILENAME, new_md5)
 
