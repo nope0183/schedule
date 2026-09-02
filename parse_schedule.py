@@ -1,227 +1,211 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-import os
-import re
-import json
+import datetime
 import hashlib
-import requests
-import openpyxl
-from datetime import datetime
+import json
+import re
 import sys
+from io import BytesIO
 
-URL = "https://serp-koll.ru/images/ep/k1/rasp1.xlsx"
-HASH_FILENAME = "schedule.hash"
-XLSX_FILENAME = "rasp1.xlsx"
-JSON_FILENAME = "schedule.json"
+import requests
+from openpyxl import load_workbook
 
-def get_hash(filename):
-    if not os.path.exists(filename):
-        return None
-    with open(filename, "rb") as f:
-        return hashlib.md5(f.read()).hexdigest()
+URL = 'https://serp-koll.ru/images/ep/k1/rasp1.xlsx'
+JSON_FILE = 'schedule.json'
+HASH_FILE = 'schedule.hash'
 
-def save_hash(filename, hash_val):
-    with open(filename, "w") as f:
-        f.write(hash_val)
+# 1. Скачиваем файл
+try:
+    resp = requests.get(URL, timeout=30)
+    if resp.status_code != 200:
+        print(f'HTTP {resp.status_code}')
+        sys.exit(0)
+except Exception as e:
+    print(f'Download error: {e}')
+    sys.exit(0)
 
-def download_file(url, filename):
-    print(f"⬇️  Downloading {url}...")
-    try:
-        response = requests.get(url, timeout=30)
-        response.raise_for_status()
-        with open(filename, "wb") as f:
-            f.write(response.content)
-        print(f"✅ Downloaded: {filename}")
-        return True
-    except Exception as e:
-        print(f"❌ Download error: {e}")
-        return False
+content = resp.content
+new_hash = hashlib.md5(content).hexdigest()
 
-def clean(val):
-    """Очищает значение ячейки."""
+try:
+    with open(HASH_FILE, 'r', encoding='utf-8') as f:
+        old_hash = f.read().strip()
+except FileNotFoundError:
+    old_hash = ''
+
+if new_hash == old_hash:
+    print('No changes.')
+    sys.exit(0)
+
+print(f'Changed! {old_hash[:8] if old_hash else "none"} -> {new_hash[:8]}')
+
+# 2. Парсим Excel
+wb = load_workbook(filename=BytesIO(content), data_only=True)
+ws = wb.active
+
+# Разъединяем объединённые ячейки и заполняем значениями из верхней левой ячейки
+merged_ranges = list(ws.merged_cells.ranges)
+for merged_range in merged_ranges:
+    min_col, min_row, max_col, max_row = merged_range.bounds
+    top_left_value = ws.cell(row=min_row, column=min_col).value
+    ws.unmerge_cells(str(merged_range))
+    for r_idx in range(min_row, max_row + 1):
+        for c_idx in range(min_col, max_col + 1):
+            ws.cell(row=r_idx, column=c_idx).value = top_left_value
+
+max_row = ws.max_row or 200
+max_col = ws.max_column or 50
+
+# Ищем дату расписания в первых 50 строках и 10 столбцах
+date = "Неизвестная дата"
+MONTHS_RU = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
+             'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
+
+def format_date(d):
+    return f"{d.day} {MONTHS_RU[d.month - 1]} {d.year}"
+
+DATE_PATTERNS = [
+    r'\d{1,2}\s+[а-яА-Я]+\s+\d{4}',         # 1 сентября 2025
+    r'\d{2}\.\d{2}\.\d{4}',                 # 01.09.2025
+    r'\d{1,2}\.\d{1,2}\.\d{2,4}',           # 1.9.25 / 1.09.2025
+]
+
+for r in range(1, min(51, max_row + 1)):
+    for c in range(1, min(10, max_col + 1)):
+        v = ws.cell(row=r, column=c).value
+        if v is None:
+            continue
+        if isinstance(v, (datetime.datetime, datetime.date)):
+            date = format_date(v)
+            break
+        s = str(v)
+        for pattern in DATE_PATTERNS:
+            m = re.search(pattern, s, re.IGNORECASE)
+            if m:
+                date = m.group(0)
+                break
+        if date != "Неизвестная дата":
+            break
+    if date != "Неизвестная дата":
+        break
+
+# Ищем группы во 2-й строке
+groups = []
+group_cols = {}
+for col in range(1, max_col + 1):
+    val = ws.cell(row=2, column=col).value
     if val is None:
-        return ""
-    s = str(val).strip()
-    s = re.sub(r'\s+', ' ', s)
-    return s
+        continue
+    val_str = str(val).strip()
+    if re.match(r'^\d{4}[а-яА-Я]?$', val_str):
+        groups.append(val_str)
+        group_cols[val_str] = col
 
-def extract_data(text):
-    """Извлекает из текста пары: предмет, преподавателя и кабинет."""
-    if not text:
-        return "", "", ""
-    
-    lines = [l.strip() for l in text.split('\n') if l.strip()]
-    
-    subject = ""
-    teacher = ""
-    room = ""
-    
-    for line in lines:
-        # Кабинет ТОЛЬКО в скобках в конце строки (23), (34а)
-        room_match = re.search(r'\(([0-9]+[а-яА-ЯёЁ]*)\)\s*$', line)
-        if room_match and not room:
-            room = room_match.group(1)
-            # Удаляем кабинет из строки для дальнейшего парсинга
-            line = re.sub(r'\s*\([^)]*\)\s*$', '', line).strip()
-        
-        # Преподаватель: ФИО (Иванов И.И., Ванявина О.О. и т.д.)
-        teacher_match = re.search(r'([А-ЯЁ][а-яё]+\s+[А-ЯЁ]\.\s*[А-ЯЁ]\.?)', line)
-        if teacher_match and not teacher:
-            teacher = teacher_match.group(1).strip()
-            # Удаляем преподавателя из строки
-            line = re.sub(r'[А-ЯЁ][а-яё]+\s+[А-ЯЁ]\.\s*[А-ЯЁ]\.?', '', line).strip()
-        
-        # Предмет: то что осталось (обычно название или код вроде ООД.04)
-        if line and not subject:
-            # Пропускаем служебные строки
-            if not any(x in line.lower() for x in ["разделённая", "объединённая", "физкультура", "консультация"]):
-                subject = line
-    
-    return subject.strip(), teacher.strip(), room.strip()
+if not groups:
+    print("ERROR: Groups not found in row 2!")
+    sys.exit(1)
 
-def parse_schedule_excel():
-    """Парсит расписание из Excel."""
-    wb = openpyxl.load_workbook(XLSX_FILENAME, data_only=True)
-    ws = wb.active
-    
-    print(f"📄 Лист: {ws.title}, Строк: {ws.max_row}, Столбцов: {ws.max_column}")
-    
-    # ===== ДАТА =====
-    date_str = datetime.now().strftime("%d.%m.%Y")
-    for row in range(1, min(5, ws.max_row + 1)):
-        for col in range(1, min(10, ws.max_column + 1)):
-            val = clean(ws.cell(row, col).value)
-            if val:
-                match = re.search(r'(\d{1,2})[.\/-](\d{1,2})[.\/-](\d{2,4})', val)
-                if match:
-                    d, m, y = int(match.group(1)), int(match.group(2)), int(match.group(3))
-                    if y < 100:
-                        y += 2000
-                    try:
-                        date_str = datetime(y, m, d).strftime("%d.%m.%Y")
-                        print(f"📅 Дата: {date_str}")
-                        break
-                    except:
-                        pass
-    
-    # ===== ГРУППЫ (строка 2) =====
-    groups = []
-    group_cols = {}
-    for col in range(1, ws.max_column + 1):
-        val = clean(ws.cell(2, col).value)
-        # Группа: 4 цифры (1161, 1162 и т.д.)
-        if val and re.match(r'^\d{4}$', val):
-            if val not in groups:
-                groups.append(val)
-                group_cols[val] = col
-    
-    print(f"👥 Групп найдено: {len(groups)}")
-    if groups:
-        print(f"   Группы: {', '.join(groups[:5])}")
-    
-    if not groups:
-        print("❌ Группы не найдены в строке 2!")
-        return None
-    
-    # ===== ПАРЫ (ищем номера пар в столбце A) =====
-    schedule = {group: [] for group in groups}
-    
-    pair_rows = []  # Строки где начинаются пары
-    for row in range(3, ws.max_row + 1):
-        val = clean(ws.cell(row, 1).value)
-        # Проверяем, это ли номер пары (1-7)
-        if val and re.match(r'^\d+$', val):
-            pair_num = int(val)
-            if 1 <= pair_num <= 7:
-                pair_rows.append((row, pair_num))
-    
-    print(f"🔢 Пар найдено: {len(pair_rows)}")
-    
-    # Парсим каждую пару
-    for idx, (start_row, pair_num) in enumerate(pair_rows):
-        # Пара занимает 2 строки (или больше до следующей пары)
-        if idx + 1 < len(pair_rows):
-            end_row = pair_rows[idx + 1][0] - 1
-        else:
-            end_row = ws.max_row
-        
-        # Для каждой группы
-        for group, col in group_cols.items():
-            # Объединяем содержимое ячеек в блоке пары
-            content_lines = []
-            for row in range(start_row, end_row + 1):
-                val = clean(ws.cell(row, col).value)
-                if val:
-                    content_lines.append(val)
-            
-            content = '\n'.join(content_lines)
-            
-            if content:
-                subject, teacher, room = extract_data(content)
-                
-                if subject or teacher or room:
-                    lesson = {
-                        "num": str(pair_num),
-                        "subject": subject,
-                        "teacher": teacher,
-                        "room": room,
-                    }
-                    schedule[group].append(lesson)
-    
-    return {
-        "date": date_str,
-        "groups": groups,
-        "schedule": schedule
-    }
+print(f"Found {len(groups)} groups, schedule date: {date}")
 
-def main():
-    print("=" * 60)
-    print("🎓 Schedule Parser v6.0")
-    print("=" * 60)
-    
-    # Проверяем изменения
-    old_hash = get_hash(XLSX_FILENAME)
-    new_hash = None
-    
-    if download_file(URL, XLSX_FILENAME):
-        new_hash = get_hash(XLSX_FILENAME)
-        if old_hash == new_hash:
-            print("📌 Файл не изменился")
-            return 0
-    else:
-        print("⚠️  Скачивание не удалось, используем локальный файл")
-        if not os.path.exists(XLSX_FILENAME):
-            print("❌ Файл не найден")
-            return 1
-    
-    try:
-        result = parse_schedule_excel()
-        if not result:
-            return 1
-        
-        with open(JSON_FILENAME, "w", encoding="utf-8") as f:
-            json.dump(result, f, ensure_ascii=False, indent=2)
-        
-        print(f"\n✅ Сохранено: {JSON_FILENAME}")
-        
-        if new_hash:
-            save_hash(HASH_FILENAME, new_hash)
-        
-        # Статистика
-        total = sum(len(v) for v in result["schedule"].values())
-        print(f"📊 Всего пар: {total}")
-        for group, lessons in list(result["schedule"].items())[:5]:
-            print(f"   {group}: {len(lessons)} пар")
-        
-        print("\n✨ Готово!")
-        return 0
-    
-    except Exception as e:
-        print(f"❌ Ошибка: {e}")
-        import traceback
-        traceback.print_exc()
-        return 1
+# 3. Парсим пары
+raw_data = {}
+current_lesson = 0
+for row_idx in range(3, max_row + 1):
+    cell_a = ws.cell(row=row_idx, column=1).value
+    if cell_a is not None:
+        s = str(cell_a).strip()
+        if s.isdigit() and 1 <= int(s) <= 7:
+            current_lesson = int(s)
 
-if __name__ == "__main__":
-    sys.exit(main())
+    if current_lesson == 0:
+        continue
+
+    lk = str(current_lesson)
+    if lk not in raw_data:
+        raw_data[lk] = {}
+
+    for gname, cidx in group_cols.items():
+        cv = ws.cell(row=row_idx, column=cidx).value
+        if cv is None:
+            continue
+        val = str(cv).strip()
+        if not val or len(val) < 2 or len(val) > 150:
+            continue
+        low = val.lower()
+        if any(x in low for x in ['пара', 'объединён', 'разделён']):
+            continue
+
+        if gname not in raw_data[lk]:
+            raw_data[lk][gname] = []
+
+        for line in val.split('\n'):
+            line = line.strip()
+            if line and 2 <= len(line) < 150 and line not in raw_data[lk][gname]:
+                raw_data[lk][gname].append(line)
+
+wb.close()
+
+# Текущие дата и время обработки (актуальность парсинга)
+updated_at = datetime.datetime.now().strftime("%d.%m.%Y %H:%M")
+
+# 4. Формируем JSON
+result = {
+    'date': date,
+    'updated_at': updated_at,
+    'groups': sorted(groups),
+    'schedule': {}
+}
+
+for gname in groups:
+    lessons = []
+    for num in sorted(raw_data.keys(), key=int):
+        if gname not in raw_data[num]:
+            continue
+        lines = raw_data[num][gname]
+        subject, teacher, room = '', '', ''
+
+        for line in lines:
+            # Извлекаем номер/название кабинета из всех скобок (...) в строке
+            matches = list(re.finditer(r'\(([^)]+)\)', line))
+            for rm in matches:
+                inside = rm.group(1).strip()
+                # Исключаем служебные метки подгрупп из поля кабинета
+                if not re.match(r'^(?:подгруппа|п/г|п)\.?\s*\d+$', inside, re.IGNORECASE):
+                    if room:
+                        if inside not in room:
+                            room = f"{room} / {inside}"
+                    else:
+                        room = inside
+                    # Удаляем найденный блок скобок из текстовой строки
+                    line = line.replace(rm.group(0), ' ').strip()
+
+            line = re.sub(r'\s+', ' ', line).strip()
+            if not line:
+                continue
+
+            # Пропуск служебных меток подгрупп вне скобок
+            if re.match(r'^(?:подгруппа|п/г|п)\.?\s*\d+$', line, re.IGNORECASE):
+                continue
+
+            # Кабинет без скобок (если не был найден ранее в скобках)
+            if not room and (re.match(r'^\d{1,3}[а-яА-Яa-zA-Z-]?\.?$', line) or line in ['-', 'с/з']):
+                room = line
+            # Преподаватель (ФИО вида Иванов И.О. / Петров А.Б.)
+            elif re.search(r'[А-ЯЁ][а-яё]+\s+[А-ЯЁ]\.\s*[А-ЯЁ]?\.', line):
+                teacher = line if not teacher else f"{teacher} / {line}"
+            # Название предмета
+            else:
+                if subject:
+                    if line not in subject:
+                        subject += f" / {line}"
+                else:
+                    subject = line
+
+        lessons.append({'num': num, 'subject': subject, 'teacher': teacher, 'room': room})
+    result['schedule'][gname] = lessons
+
+with open(JSON_FILE, 'w', encoding='utf-8') as f:
+    json.dump(result, f, ensure_ascii=False, indent=2)
+
+with open(HASH_FILE, 'w', encoding='utf-8') as f:
+    f.write(new_hash)
+
+print(f'Done! {len(groups)} groups, {len(raw_data)} lesson blocks, date: {date}, updated_at: {updated_at}')
