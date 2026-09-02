@@ -3,9 +3,9 @@ import hashlib
 import json
 import re
 import sys
-from io import BytesIO
 
 import requests
+from io import BytesIO
 from openpyxl import load_workbook
 
 URL = 'https://serp-koll.ru/images/ep/k1/rasp1.xlsx'
@@ -26,7 +26,7 @@ content = resp.content
 new_hash = hashlib.md5(content).hexdigest()
 
 try:
-    with open(HASH_FILE, 'r', encoding='utf-8') as f:
+    with open(HASH_FILE, 'r') as f:
         old_hash = f.read().strip()
 except FileNotFoundError:
     old_hash = ''
@@ -41,53 +41,74 @@ print(f'Changed! {old_hash[:8] if old_hash else "none"} -> {new_hash[:8]}')
 wb = load_workbook(filename=BytesIO(content), data_only=True)
 ws = wb.active
 
-# Разъединяем объединённые ячейки и заполняем значениями из верхней левой ячейки
-merged_ranges = list(ws.merged_cells.ranges)
-for merged_range in merged_ranges:
+# ВАЖНО: "разъединяем" объединённые ячейки — openpyxl отдаёт None
+# для всех ячеек merged-диапазона, кроме верхней левой. Если дата
+# или какая-то из пар лежит в объединённой ячейке — без этого шага
+# соседние (не top-left) ячейки будут просто пустыми.
+for merged_range in list(ws.merged_cells.ranges):
     min_col, min_row, max_col, max_row = merged_range.bounds
     top_left_value = ws.cell(row=min_row, column=min_col).value
     ws.unmerge_cells(str(merged_range))
-    for r_idx in range(min_row, max_row + 1):
-        for c_idx in range(min_col, max_col + 1):
-            ws.cell(row=r_idx, column=c_idx).value = top_left_value
+    for row in range(min_row, max_row + 1):
+        for col in range(min_col, max_col + 1):
+            ws.cell(row=row, column=col).value = top_left_value
 
 max_row = ws.max_row or 200
 max_col = ws.max_column or 50
 
-# Ищем дату расписания в первых 50 строках и 10 столбцах
-date = "Неизвестная дата"
 MONTHS_RU = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
              'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
 
 def format_date(d):
     return f"{d.day} {MONTHS_RU[d.month - 1]} {d.year}"
 
-DATE_PATTERNS = [
-    r'\d{1,2}\s+[а-яА-Я]+\s+\d{4}',         # 1 сентября 2025
-    r'\d{2}\.\d{2}\.\d{4}',                 # 01.09.2025
-    r'\d{1,2}\.\d{1,2}\.\d{2,4}',           # 1.9.25 / 1.09.2025
-]
+date = "Неизвестная дата"
 
-for r in range(1, min(51, max_row + 1)):
-    for c in range(1, min(10, max_col + 1)):
-        v = ws.cell(row=r, column=c).value
-        if v is None:
-            continue
-        if isinstance(v, (datetime.datetime, datetime.date)):
-            date = format_date(v)
-            break
-        s = str(v)
-        for pattern in DATE_PATTERNS:
-            m = re.search(pattern, s, re.IGNORECASE)
-            if m:
-                date = m.group(0)
+# ВАЖНО: в реальных выгрузках дата обычно вообще не лежит ни в одной
+# ячейке таблицы — она зашита прямо в НАЗВАНИЕ ЛИСТА, например
+# "02.09.2026 среда". Раньше парсер искал дату только по ячейкам и
+# поэтому всегда получал "Неизвестная дата". Сначала проверяем title.
+sheet_title = (ws.title or '').strip()
+m = re.search(r'(\d{1,2})\.(\d{1,2})\.(\d{4})', sheet_title)
+if m:
+    day, month, year = int(m.group(1)), int(m.group(2)), int(m.group(3))
+    try:
+        formatted = format_date(datetime.date(year, month, day))
+        weekday_word = sheet_title[m.end():].strip(' ,')
+        date = f"{formatted}, {weekday_word}" if weekday_word else formatted
+    except ValueError:
+        pass
+
+# Фолбэк на случай, если в какой-то выгрузке дата всё же лежит в ячейке
+# (первые 50 строк, первые 5 столбцов) — текстом или настоящим типом
+# datetime/date (тогда str(v) дал бы "2026-09-01 00:00:00", под старые
+# текстовые шаблоны не подходящее, поэтому проверяем тип отдельно).
+if date == "Неизвестная дата":
+    DATE_PATTERNS = [
+        r'\d{1,2}\s+\w+\s+\d{4}',        # 1 сентября 2025
+        r'\d{2}\.\d{2}\.\d{4}',          # 01.09.2025
+        r'\d{1,2}\.\d{1,2}\.\d{2,4}',    # 1.9.25 / 1.09.2025
+    ]
+    for r in range(1, min(51, max_row + 1)):
+        for c in range(1, min(6, max_col + 1)):
+            v = ws.cell(row=r, column=c).value
+            if v is None:
+                continue
+            if isinstance(v, (datetime.datetime, datetime.date)):
+                date = format_date(v)
+                break
+            s = str(v)
+            for pattern in DATE_PATTERNS:
+                fm = re.search(pattern, s)
+                if fm:
+                    date = fm.group(0)
+                    break
+            if date != "Неизвестная дата":
                 break
         if date != "Неизвестная дата":
             break
-    if date != "Неизвестная дата":
-        break
 
-# Ищем группы во 2-й строке
+# Ищем группы во 2-й строке (проверяем все колонки)
 groups = []
 group_cols = {}
 for col in range(1, max_col + 1):
@@ -103,103 +124,128 @@ if not groups:
     print("ERROR: Groups not found in row 2!")
     sys.exit(1)
 
-print(f"Found {len(groups)} groups, schedule date: {date}")
+print(f"Found {len(groups)} groups, date: {date}")
+
+ROOM_RE = re.compile(r'\((\d{1,3}[а-яА-Я]?)\)')
+CODE_RE = re.compile(r'^[А-Я]{1,4}\.?\s*\d+$')          # шифр дисциплины: "ООД.04"
+ROOM_ONLY_RE = re.compile(r'^\d{1,3}[а-яА-Я]?\.?$')      # кабинет без скобок отдельной строкой
+TEACHER_RE = re.compile(r'[А-ЯЁ][а-яё]+\s+[А-ЯЁ]\.')      # "Фамилия И."
+
+
+def parse_record(cell_text):
+    """Разбирает ОДНУ ячейку (один физический блок "код\\nпредмет\\nпреподаватель (каб.)")
+    построчно, в естественном порядке сверху вниз — а не вперемешку с другими
+    ячейками и не в алфавитном порядке, как было раньше. Это и есть источник
+    прежних багов с кабинетами и предметами:
+    - кабинет мог стоять отдельной строкой в скобках, например "(41)" —
+      после вырезания скобок оставалась пустая строка, которая раньше течением
+      кода записывалась как subject = '' и затирала уже найденный предмет;
+    - alphabetical-сортировка строк вообще не гарантирует порядок
+      код/предмет/преподаватель/кабинет.
+    """
+    subject, teacher, room = '', '', ''
+    for raw_line in cell_text.split('\n'):
+        line = raw_line.strip()
+        if not line:
+            continue
+
+        rm = ROOM_RE.search(line)
+        if rm:
+            if not room:
+                room = rm.group(1)
+            line = ROOM_RE.sub('', line).strip()
+            if not line:
+                # строка была ЦЕЛИКОМ кабинетом в скобках, например "(41)" —
+                # после вырезания скобок обрабатывать больше нечего, и, в
+                # отличие от старого кода, мы НЕ затираем subject пустой строкой
+                continue
+
+        if CODE_RE.match(line):
+            continue
+        if ROOM_ONLY_RE.match(line) or line == '-':
+            if not room:
+                room = line
+            continue
+        if TEACHER_RE.search(line):
+            teacher = line
+            continue
+        # похоже на название предмета; если предмет уже был найден в этой же
+        # ячейке (например, длинное название перенесено на 2 строки) — дописываем
+        subject = f'{subject} {line}'.strip() if subject else line
+    return subject, teacher, room
+
 
 # 3. Парсим пары
-raw_data = {}
+raw_records = {}   # {'1': {'1161': [ {subject,teacher,room}, ... ]}}
 current_lesson = 0
 for row_idx in range(3, max_row + 1):
     cell_a = ws.cell(row=row_idx, column=1).value
+    # Если в первой колонке цифра 1-7, это новая пара
     if cell_a is not None:
         s = str(cell_a).strip()
         if s.isdigit() and 1 <= int(s) <= 7:
             current_lesson = int(s)
+            # ВАЖНО: здесь НЕТ continue, чтобы обработать данные этой же строки!
 
     if current_lesson == 0:
         continue
 
     lk = str(current_lesson)
-    if lk not in raw_data:
-        raw_data[lk] = {}
+    raw_records.setdefault(lk, {})
 
     for gname, cidx in group_cols.items():
         cv = ws.cell(row=row_idx, column=cidx).value
         if cv is None:
             continue
-        val = str(cv).strip()
-        if not val or len(val) < 2 or len(val) > 150:
-            continue
-        low = val.lower()
-        if any(x in low for x in ['пара', 'объединён', 'разделён']):
+        val = str(cv)
+
+        # ВАЖНО: реальный файл содержит "рабочие" строки-остатки формул —
+        # тот же самый предмет/преподаватель/кабинет, но разбитый по одному
+        # значению на строку БЕЗ переноса строки внутри ячейки (например,
+        # отдельно "ООД.04", отдельно "Иностранный язык", отдельно ФИО).
+        # Раньше парсер не делал continue после начала пары и подхватывал
+        # эти строки в тот же блок, отчего в кабинет/предмет/преподавателя
+        # попадал случайный мусор. Целостная запись о паре — это всегда
+        # ОДНА ячейка с несколькими строками ("код\nпредмет\nпреподаватель
+        # (каб.)"), поэтому доверяем только многострочным ячейкам.
+        if '\n' not in val:
             continue
 
-        if gname not in raw_data[lk]:
-            raw_data[lk][gname] = []
+        subject, teacher, room = parse_record(val)
+        if not (subject or teacher or room):
+            continue
 
-        for line in val.split('\n'):
-            line = line.strip()
-            if line and 2 <= len(line) < 150 and line not in raw_data[lk][gname]:
-                raw_data[lk][gname].append(line)
+        record = {'subject': subject, 'teacher': teacher, 'room': room}
+        records = raw_records[lk].setdefault(gname, [])
+        if record not in records:
+            records.append(record)
 
 wb.close()
 
-# Текущие дата и время обработки (актуальность парсинга)
-updated_at = datetime.datetime.now().strftime("%d.%m.%Y %H:%M")
-
 # 4. Формируем JSON
-result = {
-    'date': date,
-    'updated_at': updated_at,
-    'groups': sorted(groups),
-    'schedule': {}
-}
-
+result = {'date': date, 'groups': sorted(groups), 'schedule': {}}
 for gname in groups:
     lessons = []
-    for num in sorted(raw_data.keys(), key=int):
-        if gname not in raw_data[num]:
+    for num in sorted(raw_records.keys(), key=int):
+        records = raw_records[num].get(gname)
+        if not records:
             continue
-        lines = raw_data[num][gname]
-        subject, teacher, room = '', '', ''
 
-        for line in lines:
-            # Ищем кабинет в скобках (группа в скобках)
-            # Ищем все скобки, но НЕ трогаем подгруппы
-            bracket_matches = list(re.finditer(r'\(([^)]+)\)', line))
-            for match in bracket_matches:
-                inside = match.group(1).strip()
-                # Проверяем, что это НЕ подгруппа
-                if not re.match(r'^(?:подгруппа|п/г|п)\.?\s*\d+$', inside, re.IGNORECASE):
-                    if room:
-                        if inside not in room:
-                            room = f"{room} / {inside}"
-                    else:
-                        room = inside
-                    # Удаляем этот блок скобок из строки
-                    line = line.replace(match.group(0), '').strip()
-            
-            # Очищаем строку от лишних пробелов
-            line = re.sub(r'\s+', ' ', line).strip()
-            if not line:
-                continue
-            
-            # Пропускаем служебные метки подгрупп
-            if re.match(r'^(?:подгруппа|п/г|п)\.?\s*\d+$', line, re.IGNORECASE):
-                continue
-            
-            # Если кабинет не найден в скобках, ищем его как отдельное число
-            if not room and (re.match(r'^\d{1,3}[а-яА-Яa-zA-Z-]?\.?$', line) or line in ['-', 'с/з']):
-                room = line
-            # Преподаватель (ФИО вида Иванов И.О. / Петров А.Б.)
-            elif re.search(r'[А-ЯЁ][а-яё]+\s+[А-ЯЁ]\.\s*[А-ЯЁ]?\.', line):
-                teacher = line if not teacher else f"{teacher} / {line}"
-            # Название предмета (всё остальное)
-            else:
-                if subject:
-                    if line not in subject:
-                        subject += f" / {line}"
-                else:
-                    subject = line
+        if len(records) == 1:
+            subject, teacher, room = records[0]['subject'], records[0]['teacher'], records[0]['room']
+        else:
+            # Несколько РАЗНЫХ записей на одну пару у одной группы — это
+            # деление на подгруппы (например, две группы английского языка
+            # с разными преподавателями/кабинетами). Раньше вторая подгруппа
+            # молча терялась, потому что subject/teacher/room в цикле просто
+            # перезаписывались последним значением. Показываем все варианты.
+            def _joined(key):
+                seen = []
+                for r in records:
+                    if r[key] and r[key] not in seen:
+                        seen.append(r[key])
+                return ' / '.join(seen)
+            subject, teacher, room = _joined('subject'), _joined('teacher'), _joined('room')
 
         lessons.append({'num': num, 'subject': subject, 'teacher': teacher, 'room': room})
     result['schedule'][gname] = lessons
@@ -207,7 +253,7 @@ for gname in groups:
 with open(JSON_FILE, 'w', encoding='utf-8') as f:
     json.dump(result, f, ensure_ascii=False, indent=2)
 
-with open(HASH_FILE, 'w', encoding='utf-8') as f:
+with open(HASH_FILE, 'w') as f:
     f.write(new_hash)
 
-print(f'Done! {len(groups)} groups, {len(raw_data)} lesson blocks, date: {date}, updated_at: {updated_at}')
+print(f'Done! {len(groups)} groups, {len(raw_records)} lesson blocks, date: {date}')
