@@ -186,8 +186,13 @@ for gname in groups:
                 continue
 
             # Кабинет без скобок (если не был найден ранее в скобках)
-            if not room and (re.match(r'^\d{1,3}[а-яА-Яa-zA-Z-]?\.?$', line) or line in ['-', 'с/з']):
-                room = line
+            if not room:
+    # ищем в любых скобках: (), [], {}
+            match = re.search(r'[\(\[\{](.*?)[\)\]\}]', line)
+            if match:
+                    room = match.group(1)
+            elif re.match(r'^\d{1,3}[а-яА-Яa-zA-Z-]?\.?$', line) or line in ['-', 'с/з']:
+            room = line
             # Преподаватель (ФИО вида Иванов И.О. / Петров А.Б.)
             elif re.search(r'[А-ЯЁ][а-яё]+\s+[А-ЯЁ]\.\s*[А-ЯЁ]?\.', line):
                 teacher = line if not teacher else f"{teacher} / {line}"
