@@ -1,1 +1,1 @@
-Nothing should be ignored based on the provided file changes, as they only include source files (.py) and a config file (.json).
+Nothing should be ignored based on the provided file changes. The modified files (`parse_schedule.py` and `schedule.json`) are source/config files that should not be added to .gitignore.

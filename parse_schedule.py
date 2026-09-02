@@ -41,6 +41,16 @@ print(f'Changed! {old_hash[:8] if old_hash else "none"} -> {new_hash[:8]}')
 wb = load_workbook(filename=BytesIO(content), data_only=True)
 ws = wb.active
 
+# ВАЖНО: Сохраняем информацию об объединённых ячейках ДО разmerge
+# Это нужно для проверки, объединены ли ячейки пары (например, 14 и 15 строки)
+merged_ranges_before_unmerge = {}
+for merged_range in list(ws.merged_cells.ranges):
+    min_col, min_row, max_col, max_row = merged_range.bounds
+    # Сохраняем информацию об объединённых ячейках для проверки позже
+    for row in range(min_row, max_row + 1):
+        for col in range(min_col, max_col + 1):
+            merged_ranges_before_unmerge[(row, col)] = (min_row, min_col)  # (row, col) -> top-left cell
+
 # ВАЖНО: "разъединяем" объединённые ячейки — openpyxl отдаёт None
 # для всех ячеек merged-диапазона, кроме верхней левой. Если дата
 # или какая-то из пар лежит в объединённой ячейке — без этого шага
@@ -202,11 +212,22 @@ raw_records = {}   # {'1': {'1161': [ {subject,teacher,room}, ... ]}}
 for lesson_num, row_range in LESSON_ROWS.items():
     raw_records[lesson_num] = {}
     
-    for row_idx in row_range:
-        if row_idx > max_row:
-            continue
-            
-        for gname, cidx in group_cols.items():
+    # Проверяем, объединены ли ячейки пары для каждой группы
+    for gname, cidx in group_cols.items():
+        row1, row2 = row_range
+        # Если обе ячейки принадлежат одному merged-диапазону (имеют одинаковый top-left)
+        is_merged_pair = False
+        if (row1, cidx) in merged_ranges_before_unmerge and (row2, cidx) in merged_ranges_before_unmerge:
+            if merged_ranges_before_unmerge[(row1, cidx)] == merged_ranges_before_unmerge[(row2, cidx)]:
+                is_merged_pair = True
+        
+        # Если ячейки объединены, читаем только первую строку
+        rows_to_read = [row1] if is_merged_pair else row_range
+        
+        for row_idx in rows_to_read:
+            if row_idx > max_row:
+                continue
+                
             cv = ws.cell(row=row_idx, column=cidx).value
             if cv is None:
                 continue
