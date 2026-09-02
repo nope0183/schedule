@@ -75,6 +75,10 @@ if m:
     try:
         formatted = format_date(datetime.date(year, month, day))
         weekday_word = sheet_title[m.end():].strip(' ,')
+        # Убираем возможные лишние слова после дня недели (например "студ", "преп" и т.д.)
+        weekday_match = re.match(r'([а-яА-ЯёЁ]+)', weekday_word)
+        if weekday_match:
+            weekday_word = weekday_match.group(1)
         date = f"{formatted}, {weekday_word}" if weekday_word else formatted
     except ValueError:
         pass
