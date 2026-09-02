@@ -64,7 +64,7 @@ def format_date(d):
 
 date = "Неизвестная дата"
 
-# ВАЖНО: в реальных выгрузках дата обычно вообще не лежит ни �� одной
+# ВАЖНО: в реальных выгрузках дата обычно вообще не лежит ни на одной
 # ячейке таблицы — она зашита прямо в НАЗВАНИЕ ЛИСТА, например
 # "02.09.2026 среда". Раньше парсер искал дату только по ячейкам и
 # поэтому всегда получал "Неизвестная дата". Сначала проверяем title.
@@ -179,43 +179,49 @@ def parse_record(cell_text):
     return subject, teacher, room
 
 
-# 3. Парсим пары
+# 3. Парсим пары — согласно структуре таблицы:
+# Пара 1: строки 14-15
+# Пара 2: строки 27-28
+# Пара 3: строки 40-41
+# Пара 4: строки 53-54
+# Пара 5: строки 66-67
+# Пара 6: строки 69-70
+LESSON_ROWS = {
+    '1': [14, 15],
+    '2': [27, 28],
+    '3': [40, 41],
+    '4': [53, 54],
+    '5': [66, 67],
+    '6': [69, 70],
+}
+
 raw_records = {}   # {'1': {'1161': [ {subject,teacher,room}, ... ]}}
-current_lesson = 0
-for row_idx in range(3, max_row + 1):
-    cell_a = ws.cell(row=row_idx, column=1).value
-    # Если в первой колонке цифра 1-7, это новая пара
-    if cell_a is not None:
-        s = str(cell_a).strip()
-        if s.isdigit() and 1 <= int(s) <= 7:
-            current_lesson = int(s)
-            # ВАЖНО: здесь НЕТ continue, чтобы обработать данные этой же строки!
 
-    if current_lesson == 0:
-        continue
-
-    lk = str(current_lesson)
-    raw_records.setdefault(lk, {})
-
-    for gname, cidx in group_cols.items():
-        cv = ws.cell(row=row_idx, column=cidx).value
-        if cv is None:
+for lesson_num, row_range in LESSON_ROWS.items():
+    raw_records[lesson_num] = {}
+    
+    for row_idx in row_range:
+        if row_idx > max_row:
             continue
-        val = str(cv).strip()
-        
-        if not val:
-            continue
+            
+        for gname, cidx in group_cols.items():
+            cv = ws.cell(row=row_idx, column=cidx).value
+            if cv is None:
+                continue
+            val = str(cv).strip()
+            
+            if not val:
+                continue
 
-        # Теперь парсим ЛЮБОЕ содержимое ячейки (с переносами или без)
-        # целиком как одну запись о паре
-        subject, teacher, room = parse_record(val)
-        if not (subject or teacher or room):
-            continue
+            # Парсим содержимое ячейки как запись о паре
+            subject, teacher, room = parse_record(val)
+            if not (subject or teacher or room):
+                continue
 
-        record = {'subject': subject, 'teacher': teacher, 'room': room}
-        records = raw_records[lk].setdefault(gname, [])
-        if record not in records:
-            records.append(record)
+            record = {'subject': subject, 'teacher': teacher, 'room': room}
+            records = raw_records[lesson_num].setdefault(gname, [])
+            if record not in records:
+                records.append(record)
 
 wb.close()
 
