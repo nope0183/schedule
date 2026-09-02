@@ -112,10 +112,10 @@ if date == "Неизвестная дата":
         if date != "Неизвестная дата":
             break
 
-# Ищем группы во 2-й строке (проверяем все колонки)
+# Ищем группы во 2-й строке (проверяем колонки B-AK, то есть 2-37)
 groups = []
 group_cols = {}
-for col in range(1, max_col + 1):
+for col in range(2, 38):  # B до AK включительно (2 до 37)
     val = ws.cell(row=2, column=col).value
     if val is None:
         continue
@@ -125,7 +125,7 @@ for col in range(1, max_col + 1):
         group_cols[val_str] = col
 
 if not groups:
-    print("ERROR: Groups not found in row 2!")
+    print("ERROR: Groups not found in row 2 (columns B-AK)!")
     sys.exit(1)
 
 print(f"Found {len(groups)} groups, date: {date}")
@@ -179,13 +179,15 @@ def parse_record(cell_text):
     return subject, teacher, room
 
 
-# 3. Парсим пары — согласно структуре таблицы:
+# 3. Парсим пары — согласно КООРДИНАТНОЙ структуре таблицы:
 # Пара 1: строки 14-15
 # Пара 2: строки 27-28
 # Пара 3: строки 40-41
 # Пара 4: строки 53-54
 # Пара 5: строки 66-67
 # Пара 6: строки 69-70
+#
+# Столбцы: B-AK (каждый столбец = одна группа из row 2)
 LESSON_ROWS = {
     '1': [14, 15],
     '2': [27, 28],
