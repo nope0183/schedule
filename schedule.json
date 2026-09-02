@@ -42,5159 +42,883 @@
     "1161": [
       {
         "num": "1",
-        "subject": "ООД.04 / Иностранный язык",
-        "teacher": "Ванявина О.О. / Карпова А.Н. / Щукина И.Е.",
-        "room": "23 / 34а / 36",
-        "items": [
-          {
-            "subject": "ООД.04",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Иностранный язык",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Ванявина О.О.",
-            "room": "23"
-          },
-          {
-            "subject": "",
-            "teacher": "Карпова А.Н.",
-            "room": "34а"
-          },
-          {
-            "subject": "",
-            "teacher": "Ванявина О.О.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "23"
-          },
-          {
-            "subject": "",
-            "teacher": "Щукина И.Е.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "36"
-          }
-        ]
+        "subject": "Иностранный язык",
+        "teacher": "Ванявина О.О.",
+        "room": "04"
       },
       {
         "num": "2",
-        "subject": "ООД.13 / Основы безопасности и защиты Родины / ООД.06 / Физика",
-        "teacher": "Галушко В.В. / Дегтярева Л.В.",
-        "room": "33а / 41",
-        "items": [
-          {
-            "subject": "ООД.13",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Основы безопасности и защиты Родины",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Галушко В.В.",
-            "room": "33а"
-          },
-          {
-            "subject": "ООД.06",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Физика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Дегтярева Л.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "41"
-          }
-        ]
+        "subject": "Основы безопасности и защиты Родины",
+        "teacher": "Галушко В.В.",
+        "room": "13"
       },
       {
         "num": "3",
-        "subject": "ООД.09 / Математика / ОП.06 / Материаловедение, электрорадиоматериалы и радиокомпоненты",
-        "teacher": "Климко К.А. / Раихина И.В.",
-        "room": "30 / 31",
-        "items": [
-          {
-            "subject": "ООД.09",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Математика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Климко К.А.",
-            "room": "30"
-          },
-          {
-            "subject": "ОП.06",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Материаловедение, электрорадиоматериалы и радиокомпоненты",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Раихина И.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "31"
-          }
-        ]
+        "subject": "Математика",
+        "teacher": "Климко К.А.",
+        "room": "09"
       }
     ],
     "1162": [
       {
         "num": "1",
-        "subject": "ООД.09 / История / ООД.04 / Иностранный язык",
-        "teacher": "Макушина И.Н. / Ванявина О.О. / Щукина И.Е.",
-        "room": "43 / 23 / 36",
-        "items": [
-          {
-            "subject": "ООД.09",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "История",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Макушина И.Н.",
-            "room": "43"
-          },
-          {
-            "subject": "ООД.04",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Иностранный язык",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Ванявина О.О.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "23"
-          },
-          {
-            "subject": "",
-            "teacher": "Щукина И.Е.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "36"
-          }
-        ]
+        "subject": "История",
+        "teacher": "Макушина И.Н.",
+        "room": "09"
       },
       {
         "num": "2",
-        "subject": "ООД.15 / Обществознание / ООД.06 / Физика",
-        "teacher": "Карпова А.Н. / Дегтярева Л.В.",
-        "room": "34а / 41",
-        "items": [
-          {
-            "subject": "ООД.15",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Обществознание",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Карпова А.Н.",
-            "room": "34а"
-          },
-          {
-            "subject": "ООД.06",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Физика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Дегтярева Л.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "41"
-          }
-        ]
+        "subject": "Обществознание",
+        "teacher": "Карпова А.Н.",
+        "room": "15"
       },
       {
         "num": "3",
-        "subject": "ООД.10 / Информатика / ОП.06 / Материаловедение, электрорадиоматериалы и радиокомпоненты",
-        "teacher": "Михайлова О.А. / Раихина И.В.",
-        "room": "27 / 31",
-        "items": [
-          {
-            "subject": "ООД.10",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Информатика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Михайлова О.А.",
-            "room": "27"
-          },
-          {
-            "subject": "ОП.06",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Материаловедение, электрорадиоматериалы и радиокомпоненты",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Раихина И.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "31"
-          }
-        ]
+        "subject": "Информатика",
+        "teacher": "Михайлова О.А.",
+        "room": "10"
       }
     ],
     "1163": [
       {
         "num": "1",
-        "subject": "ООД.03 / Математика / ООД.04 / Иностранный язык",
-        "teacher": "Сусло Г.А. / Ванявина О.О. / Щукина И.Е.",
-        "room": "40 / 23 / 36",
-        "items": [
-          {
-            "subject": "ООД.03",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Математика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Сусло Г.А.",
-            "room": "40"
-          },
-          {
-            "subject": "ООД.04",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Иностранный язык",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Ванявина О.О.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "23"
-          },
-          {
-            "subject": "",
-            "teacher": "Щукина И.Е.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "36"
-          }
-        ]
+        "subject": "Математика",
+        "teacher": "Сусло Г.А.",
+        "room": "03"
       },
       {
         "num": "2",
-        "subject": "ООД.03 / Математика / ООД.06 / Физика",
-        "teacher": "Сусло Г.А. / Дегтярева Л.В.",
-        "room": "40 / 41",
-        "items": [
-          {
-            "subject": "ООД.03",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Математика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Сусло Г.А.",
-            "room": "40"
-          },
-          {
-            "subject": "ООД.06",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Физика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Дегтярева Л.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "41"
-          }
-        ]
+        "subject": "Математика",
+        "teacher": "Сусло Г.А.",
+        "room": "03"
       },
       {
         "num": "3",
-        "subject": "ООД.10 / Обществознание / ОП.06 / Материаловедение, электрорадиоматериалы и радиокомпоненты",
-        "teacher": "Карпова А.Н. / Раихина И.В.",
-        "room": "34а / 31",
-        "items": [
-          {
-            "subject": "ООД.10",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Обществознание",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Карпова А.Н.",
-            "room": "34а"
-          },
-          {
-            "subject": "ОП.06",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Материаловедение, электрорадиоматериалы и радиокомпоненты",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Раихина И.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "31"
-          }
-        ]
+        "subject": "Обществознание",
+        "teacher": "Карпова А.Н.",
+        "room": "10"
       },
       {
         "num": "4",
-        "subject": "ООД.01 / Русский язык",
+        "subject": "Русский язык",
         "teacher": "Павлуша Т.В.",
-        "room": "28",
-        "items": [
-          {
-            "subject": "ООД.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Русский язык",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Павлуша Т.В.",
-            "room": "28"
-          }
-        ]
+        "room": "01"
       }
     ],
     "1261": [
       {
         "num": "1",
-        "subject": "ООД.06 / Физика / ООД.05 / Информатика",
-        "teacher": "Дегтярева Л.В. / Байбакова Н.В.",
-        "room": "41 / 21",
-        "items": [
-          {
-            "subject": "ООД.06",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Физика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Дегтярева Л.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "41"
-          },
-          {
-            "subject": "ООД.05",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Информатика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Байбакова Н.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "21"
-          }
-        ]
+        "subject": "",
+        "teacher": "Дегтярева Л.В.",
+        "room": "06"
       },
       {
         "num": "2",
-        "subject": "ООД.01 / История / ООД.10 / Обществознание",
-        "teacher": "Макушина И.Н. / Чеснокова Н.Н.",
-        "room": "43 / 35",
-        "items": [
-          {
-            "subject": "ООД.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "История",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Макушина И.Н.",
-            "room": "43"
-          },
-          {
-            "subject": "ООД.10",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Обществознание",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Чеснокова Н.Н.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "35"
-          }
-        ]
+        "subject": "История",
+        "teacher": "Макушина И.Н.",
+        "room": "01"
       }
     ],
     "1262": [
       {
         "num": "1",
-        "subject": "ООД.03 / Математика / ООД.04 / Иностранный язык",
-        "teacher": "Климко К.А. / Карпова А.Н. / Матвеева Н.В.",
-        "room": "30 / 33 / 45",
-        "items": [
-          {
-            "subject": "ООД.03",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Математика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Климко К.А.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "30"
-          },
-          {
-            "subject": "ООД.04",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Иностранный язык",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Карпова А.Н.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "33"
-          },
-          {
-            "subject": "",
-            "teacher": "Матвеева Н.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "45"
-          }
-        ]
+        "subject": "Математика",
+        "teacher": "Климко К.А.",
+        "room": "03"
       },
       {
         "num": "2",
-        "subject": "ООД.06 / Физика / ООД.08 / Биология",
-        "teacher": "Дегтярева Л.В. / Карпачева С.В.",
-        "room": "41 / 47",
-        "items": [
-          {
-            "subject": "ООД.06",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Физика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Дегтярева Л.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "41"
-          },
-          {
-            "subject": "ООД.08",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Биология",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Карпачева С.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "47"
-          }
-        ]
+        "subject": "",
+        "teacher": "Дегтярева Л.В.",
+        "room": "06"
       },
       {
         "num": "3",
-        "subject": "ООД.01 / История / ООД.06 / Физика",
-        "teacher": "Макушина И.Н. / Дегтярева Л.В.",
-        "room": "43 / 41",
-        "items": [
-          {
-            "subject": "ООД.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "История",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Макушина И.Н.",
-            "room": "43"
-          },
-          {
-            "subject": "ООД.06",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Физика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Дегтярева Л.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "41"
-          }
-        ]
+        "subject": "История",
+        "teacher": "Макушина И.Н.",
+        "room": "01"
       },
       {
         "num": "4",
-        "subject": "ООД.03 / Математика / ООД.09 / История",
-        "teacher": "Климко К.А. / Белоиван А.А.",
-        "room": "30 / 43",
-        "items": [
-          {
-            "subject": "ООД.03",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Математика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Климко К.А.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "30"
-          },
-          {
-            "subject": "ООД.09",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "История",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Белоиван А.А.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "43"
-          }
-        ]
+        "subject": "Математика",
+        "teacher": "Климко К.А.",
+        "room": "03"
       }
     ],
     "1561": [
       {
         "num": "1",
-        "subject": "ОУП.01 / Русский язык / ООД.02 / Литература",
+        "subject": "Русский язык",
         "teacher": "Вялых Г.В.",
-        "room": "49",
-        "items": [
-          {
-            "subject": "ОУП.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Русский язык",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Вялых Г.В.",
-            "room": "49"
-          },
-          {
-            "subject": "ООД.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Литература",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Вялых Г.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "49"
-          }
-        ]
+        "room": "01"
       },
       {
         "num": "2",
-        "subject": "Индивидуальный проект / ООД.04 / Иностранный язык",
-        "teacher": "Ермилова Н.В. / Карпова А.Н. / Матвеева Н.В.",
-        "room": "математика / 46 / 33 / 45",
-        "items": [
-          {
-            "subject": "Индивидуальный проект",
-            "teacher": "",
-            "room": "математика"
-          },
-          {
-            "subject": "",
-            "teacher": "Ермилова Н.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "46"
-          },
-          {
-            "subject": "ООД.04",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Иностранный язык",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Карпова А.Н.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "33"
-          },
-          {
-            "subject": "",
-            "teacher": "Матвеева Н.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "45"
-          }
-        ]
+        "subject": "Индивидуальный проект(математика)",
+        "teacher": "Ермилова Н.В.",
+        "room": "46"
       },
       {
         "num": "3",
-        "subject": "ОУП.08 / Физическая культура / ОП.02 / Техническая механика",
-        "teacher": "Семичаснова Е.В. / Ли М. В.",
-        "room": "48",
-        "items": [
-          {
-            "subject": "ОУП.08",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Физическая культура",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Семичаснова Е.В.",
-            "room": ""
-          },
-          {
-            "subject": "ОП.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Техническая механика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Ли М. В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "48"
-          }
-        ]
+        "subject": "",
+        "teacher": "Семичаснова Е.В.",
+        "room": "08"
       },
       {
         "num": "4",
-        "subject": "ОУП.03 / История",
+        "subject": "История",
         "teacher": "Макушина И.Н.",
-        "room": "43",
-        "items": [
-          {
-            "subject": "ОУП.03",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "История",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Макушина И.Н.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "43"
-          }
-        ]
+        "room": "03"
       }
     ],
     "1562": [
       {
         "num": "1",
-        "subject": "ОП.03 / Материаловедение / ООД.02 / Литература",
-        "teacher": "Рашицкий А.Н. / Вялых Г.В.",
-        "room": "31а / 49",
-        "items": [
-          {
-            "subject": "ОП.03",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Материаловедение",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Рашицкий А.Н.",
-            "room": "31а"
-          },
-          {
-            "subject": "ООД.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Литература",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Вялых Г.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "49"
-          }
-        ]
+        "subject": "Материаловедение",
+        "teacher": "Рашицкий А.Н.",
+        "room": "03"
       },
       {
         "num": "2",
-        "subject": "ОП.03 / Материаловедение / ООД.04 / Иностранный язык",
-        "teacher": "Рашицкий А.Н. / Карпова А.Н. / Матвеева Н.В.",
-        "room": "31а / 33 / 45",
-        "items": [
-          {
-            "subject": "ОП.03",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Материаловедение",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Рашицкий А.Н.",
-            "room": "31а"
-          },
-          {
-            "subject": "ООД.04",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Иностранный язык",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Карпова А.Н.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "33"
-          },
-          {
-            "subject": "",
-            "teacher": "Матвеева Н.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "45"
-          }
-        ]
+        "subject": "Материаловедение",
+        "teacher": "Рашицкий А.Н.",
+        "room": "03"
       },
       {
         "num": "3",
-        "subject": "Индивидуальный проект",
+        "subject": "Индивидуальный проект(математика)",
         "teacher": "Ермилова Н.В.",
-        "room": "математика / 46",
-        "items": [
-          {
-            "subject": "Индивидуальный проект",
-            "teacher": "",
-            "room": "математика"
-          },
-          {
-            "subject": "",
-            "teacher": "Ермилова Н.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "46"
-          }
-        ]
+        "room": "46"
       },
       {
         "num": "4",
-        "subject": "ОП.02 / Техническая механика",
+        "subject": "Техническая механика",
         "teacher": "Ермилов В.А.",
-        "room": "37",
-        "items": [
-          {
-            "subject": "ОП.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Техническая механика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Ермилов В.А.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "37"
-          }
-        ]
+        "room": "02"
       }
     ],
     "1563": [
       {
         "num": "1",
-        "subject": "ОУП.01 / Русский язык / ООД.02 / Литература",
-        "teacher": "Федорова Т.В. / Вялых Г.В.",
-        "room": "42 / 49",
-        "items": [
-          {
-            "subject": "ОУП.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Русский язык",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Федорова Т.В.",
-            "room": "42"
-          },
-          {
-            "subject": "ООД.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Литература",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Вялых Г.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "49"
-          }
-        ]
+        "subject": "Русский язык",
+        "teacher": "Федорова Т.В.",
+        "room": "01"
       },
       {
         "num": "2",
-        "subject": "ОУП.09 / Основы безопасности и защиты Родины / ООД.04 / Иностранный язык",
-        "teacher": "Бутенко Е.С. / Карпова А.Н. / Матвеева Н.В.",
-        "room": "48 / 33 / 45",
-        "items": [
-          {
-            "subject": "ОУП.09",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Основы безопасности и защиты Родины",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Бутенко Е.С.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "48"
-          },
-          {
-            "subject": "ООД.04",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Иностранный язык",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Карпова А.Н.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "33"
-          },
-          {
-            "subject": "",
-            "teacher": "Матвеева Н.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "45"
-          }
-        ]
+        "subject": "Основы безопасности и защиты Родины",
+        "teacher": "Бутенко Е.С.",
+        "room": "09"
       }
     ],
     "2361": [
       {
         "num": "1",
-        "subject": "ООД.11 / География / ООД.02 / Литература",
-        "teacher": "Бутенко Е.С. / Вялых Г.В.",
-        "room": "48 / 49",
-        "items": [
-          {
-            "subject": "ООД.11",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "География",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Бутенко Е.С.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "48"
-          },
-          {
-            "subject": "ООД.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Литература",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Вялых Г.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "49"
-          }
-        ]
+        "subject": "География",
+        "teacher": "Бутенко Е.С.",
+        "room": "11"
       },
       {
         "num": "2",
-        "subject": "ООД.05 / Информатика / ООД.04 / Иностранный язык",
-        "teacher": "Михайлова О.А. / Карпова А.Н. / Матвеева Н.В.",
-        "room": "27 / 33 / 45",
-        "items": [
-          {
-            "subject": "ООД.05",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Информатика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Михайлова О.А.",
-            "room": "27"
-          },
-          {
-            "subject": "ООД.04",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Иностранный язык",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Карпова А.Н.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "33"
-          },
-          {
-            "subject": "",
-            "teacher": "Матвеева Н.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "45"
-          }
-        ]
+        "subject": "Информатика",
+        "teacher": "Михайлова О.А.",
+        "room": "05"
       },
       {
         "num": "3",
-        "subject": "ООД.02 / Литература язык / Литература",
-        "teacher": "Павлуша Т.В. / Вялых Г.В.",
-        "room": "28 / 49",
-        "items": [
-          {
-            "subject": "ООД.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Литература язык",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Павлуша Т.В.",
-            "room": "28"
-          },
-          {
-            "subject": "Литература",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Вялых Г.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "49"
-          }
-        ]
+        "subject": "Литература язык",
+        "teacher": "Павлуша Т.В.",
+        "room": "02"
       },
       {
         "num": "4",
-        "subject": "ООД.03 / Математика",
+        "subject": "Математика",
         "teacher": "Сусло Г.А.",
-        "room": "40",
-        "items": [
-          {
-            "subject": "ООД.03",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Математика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Сусло Г.А.",
-            "room": "40"
-          }
-        ]
+        "room": "03"
       }
     ],
     "2362": [
       {
         "num": "1",
-        "subject": "ОГСЭ.04 / Иностранный язык / ООД.02 / Литература",
-        "teacher": "Матвеева Н.В. / Щукина И.Е. / Вялых Г.В.",
-        "room": "45 / 36 / 49",
-        "items": [
-          {
-            "subject": "ОГСЭ.04",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Иностранный язык",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Матвеева Н.В.",
-            "room": "45"
-          },
-          {
-            "subject": "",
-            "teacher": "Щукина И.Е.",
-            "room": "36"
-          },
-          {
-            "subject": "ООД.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Литература",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Вялых Г.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "49"
-          }
-        ]
+        "subject": "Иностранный язык",
+        "teacher": "Матвеева Н.В.",
+        "room": "04"
       },
       {
         "num": "2",
-        "subject": "ООД.02 / Литература язык / ООД.04 / Иностранный язык",
-        "teacher": "Павлуша Т.В. / Карпова А.Н. / Матвеева Н.В.",
-        "room": "34 / 33 / 45",
-        "items": [
-          {
-            "subject": "ООД.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Литература язык",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Павлуша Т.В.",
-            "room": "34"
-          },
-          {
-            "subject": "ООД.04",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Иностранный язык",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Карпова А.Н.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "33"
-          },
-          {
-            "subject": "",
-            "teacher": "Матвеева Н.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "45"
-          }
-        ]
+        "subject": "Литература язык",
+        "teacher": "Павлуша Т.В.",
+        "room": "02"
       },
       {
         "num": "3",
-        "subject": "ООД.03 / Математика / ОП.02 / Техническая механика",
-        "teacher": "Сусло Г.А. / Ли М. В.",
-        "room": "40 / 48",
-        "items": [
-          {
-            "subject": "ООД.03",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Математика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Сусло Г.А.",
-            "room": "40"
-          },
-          {
-            "subject": "ОП.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Техническая механика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Ли М. В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "48"
-          }
-        ]
+        "subject": "Математика",
+        "teacher": "Сусло Г.А.",
+        "room": "03"
       },
       {
         "num": "4",
-        "subject": "ООД.05 / Информатика",
+        "subject": "Информатика",
         "teacher": "Михайлова О.А.",
-        "room": "27",
-        "items": [
-          {
-            "subject": "ООД.05",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Информатика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Михайлова О.А.",
-            "room": "27"
-          }
-        ]
+        "room": "05"
       }
     ],
     "0961": [
       {
         "num": "1",
-        "subject": "ООД.07 / Химия / ООД.02 / Литература",
-        "teacher": "Карпачева С.В. / Вялых Г.В.",
-        "room": "47 / 49",
-        "items": [
-          {
-            "subject": "ООД.07",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Химия",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Карпачева С.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "47"
-          },
-          {
-            "subject": "ООД.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Литература",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Вялых Г.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "49"
-          }
-        ]
+        "subject": "Химия",
+        "teacher": "Карпачева С.В.",
+        "room": "07"
       },
       {
         "num": "2",
-        "subject": "ООД.07 / Химия / ООД.04 / Иностранный язык",
-        "teacher": "Карпачева С.В. / Карпова А.Н. / Матвеева Н.В.",
-        "room": "47 / 33 / 45",
-        "items": [
-          {
-            "subject": "ООД.07",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Химия",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Карпачева С.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "47"
-          },
-          {
-            "subject": "ООД.04",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Иностранный язык",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Карпова А.Н.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "33"
-          },
-          {
-            "subject": "",
-            "teacher": "Матвеева Н.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "45"
-          }
-        ]
+        "subject": "Химия",
+        "teacher": "Карпачева С.В.",
+        "room": "07"
       },
       {
         "num": "3",
-        "subject": "ООД.01 / Русский язык / ОП.02 / Техническая механика",
-        "teacher": "Вялых Г.В. / Ли М. В.",
-        "room": "49 / 48",
-        "items": [
-          {
-            "subject": "ООД.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Русский язык",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Вялых Г.В.",
-            "room": "49"
-          },
-          {
-            "subject": "ОП.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Техническая механика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Ли М. В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "48"
-          }
-        ]
+        "subject": "Русский язык",
+        "teacher": "Вялых Г.В.",
+        "room": "01"
       },
       {
         "num": "4",
-        "subject": "ООД.02 / Литература",
+        "subject": "Литература",
         "teacher": "Вялых Г.В.",
-        "room": "49",
-        "items": [
-          {
-            "subject": "ООД.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Литература",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Вялых Г.В.",
-            "room": "49"
-          }
-        ]
+        "room": "02"
       }
     ],
     "0962": [
       {
         "num": "1",
-        "subject": "А.05 / Адаптивная физическая культура",
+        "subject": "",
         "teacher": "Семичаснова Е.В.",
-        "room": "",
-        "items": [
-          {
-            "subject": "А.05",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Адаптивная физическая культура",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Семичаснова Е.В.",
-            "room": ""
-          }
-        ]
+        "room": "05"
       },
       {
         "num": "2",
-        "subject": "ОО.01 / Русский язык и культура речи",
+        "subject": "Русский язык и культура речи",
         "teacher": "Федорова Т.В.",
-        "room": "",
-        "items": [
-          {
-            "subject": "ОО.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Русский язык и культура речи",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Федорова Т.В.",
-            "room": ""
-          }
-        ]
+        "room": "01"
       },
       {
         "num": "3",
-        "subject": "ОО.01 / Русский язык и культура речи",
+        "subject": "Русский язык и культура речи",
         "teacher": "Федорова Т.В.",
-        "room": "",
-        "items": [
-          {
-            "subject": "ОО.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Русский язык и культура речи",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Федорова Т.В.",
-            "room": ""
-          }
-        ]
+        "room": "01"
       }
     ],
     "1151": [
       {
-        "num": "1",
-        "subject": "ООД.04 / Иностранный язык",
-        "teacher": "Ванявина О.О. / Щукина И.Е.",
-        "room": "23 / 36",
-        "items": [
-          {
-            "subject": "ООД.04",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Иностранный язык",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Ванявина О.О.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "23"
-          },
-          {
-            "subject": "",
-            "teacher": "Щукина И.Е.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "36"
-          }
-        ]
-      },
-      {
         "num": "2",
-        "subject": "ОП.03 / Метрология, стандартизация и сертификация / ООД.06 / Физика",
-        "teacher": "Смирнова Т.С. / Дегтярева Л.В.",
-        "room": "44 / 41",
-        "items": [
-          {
-            "subject": "ОП.03",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Метрология, стандартизация и сертификация",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Смирнова Т.С.",
-            "room": "44"
-          },
-          {
-            "subject": "ООД.06",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Физика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Дегтярева Л.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "41"
-          }
-        ]
+        "subject": "Метрология, стандартизация и сертификация",
+        "teacher": "Смирнова Т.С.",
+        "room": "03"
       },
       {
         "num": "3",
-        "subject": "ООД.02 / Литература / ОП.06 / Материаловедение, электрорадиоматериалы и радиокомпоненты",
-        "teacher": "Максименко Т.И. / Раихина И.В.",
-        "room": "25 / 31",
-        "items": [
-          {
-            "subject": "ООД.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Литература",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Максименко Т.И.",
-            "room": "25"
-          },
-          {
-            "subject": "ОП.06",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Материаловедение, электрорадиоматериалы и радиокомпоненты",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Раихина И.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "31"
-          }
-        ]
+        "subject": "Литература",
+        "teacher": "Максименко Т.И.",
+        "room": "02"
       },
       {
         "num": "4",
-        "subject": "ОП.03 / Метрология, стандартизация и сертификация",
+        "subject": "Метрология, стандартизация и сертификация",
         "teacher": "Смирнова Т.С.",
-        "room": "44",
-        "items": [
-          {
-            "subject": "ОП.03",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Метрология, стандартизация и сертификация",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Смирнова Т.С.",
-            "room": "44"
-          }
-        ]
+        "room": "03"
       },
       {
         "num": "5",
-        "subject": "ОП.11 / Безопасность жизнедеятельности",
+        "subject": "Безопасность жизнедеятельности",
         "teacher": "Галушко В.В.",
-        "room": "33а",
-        "items": [
-          {
-            "subject": "ОП.11",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Безопасность жизнедеятельности",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Галушко В.В.",
-            "room": "33а"
-          }
-        ]
+        "room": "11"
       }
     ],
     "1152": [
       {
         "num": "1",
-        "subject": "ООД.02 / Литература / ООД.01 / Русский язык",
+        "subject": "Литература",
         "teacher": "Максименко Т.И.",
-        "room": "25 / 24",
-        "items": [
-          {
-            "subject": "ООД.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Литература",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Максименко Т.И.",
-            "room": "25"
-          },
-          {
-            "subject": "ООД.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Русский язык",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Максименко Т.И.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "24"
-          }
-        ]
+        "room": "02"
       },
       {
         "num": "2",
-        "subject": "ООД.02 / Литература / ОП.06 / Материаловедение, электрорадиоматериалы и радиокомпоненты",
-        "teacher": "Максименко Т.И. / Раихина И.В.",
-        "room": "25 / 31",
-        "items": [
-          {
-            "subject": "ООД.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Литература",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Максименко Т.И.",
-            "room": "25"
-          },
-          {
-            "subject": "ОП.06",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Материаловедение, электрорадиоматериалы и радиокомпоненты",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Раихина И.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "31"
-          }
-        ]
+        "subject": "Литература",
+        "teacher": "Максименко Т.И.",
+        "room": "02"
       },
       {
         "num": "3",
-        "subject": "ОП.11 / Безопасность жизнедеятельности / ООД.10 / Обществознание",
-        "teacher": "Галушко В.В. / Чеснокова Н.Н.",
-        "room": "33а / 35",
-        "items": [
-          {
-            "subject": "ОП.11",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Безопасность жизнедеятельности",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Галушко В.В.",
-            "room": "33а"
-          },
-          {
-            "subject": "ООД.10",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Обществознание",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Чеснокова Н.Н.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "35"
-          }
-        ]
+        "subject": "Безопасность жизнедеятельности",
+        "teacher": "Галушко В.В.",
+        "room": "11"
       },
       {
         "num": "4",
-        "subject": "МДК.05.01 / Монтаж радиоэлектронной аппаратуры и приборов / ООД.03 / Математика",
-        "teacher": "Горин Ю.Г. / Шапошникова К.А.",
-        "room": "30",
-        "items": [
-          {
-            "subject": "МДК.05.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Монтаж радиоэлектронной аппаратуры и приборов",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Горин Ю.Г.",
-            "room": ""
-          },
-          {
-            "subject": "ООД.03",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Математика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Шапошникова К.А.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "30"
-          }
-        ]
+        "subject": "Монтаж радиоэлектронной аппаратуры и приборов",
+        "teacher": "Горин Ю.Г.",
+        "room": "05"
       }
     ],
     "1153": [
       {
         "num": "1",
-        "subject": "ЕН.03 / Информатика",
+        "subject": "Информатика",
         "teacher": "Михайлова О.А.",
-        "room": "27",
-        "items": [
-          {
-            "subject": "ЕН.03",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Информатика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Михайлова О.А.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "27"
-          }
-        ]
+        "room": "03"
       },
       {
         "num": "2",
-        "subject": "ООД.02 / Литература",
+        "subject": "Литература",
         "teacher": "Вялых Г.В.",
-        "room": "49",
-        "items": [
-          {
-            "subject": "ООД.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Литература",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Вялых Г.В.",
-            "room": "49"
-          }
-        ]
+        "room": "02"
       },
       {
         "num": "3",
-        "subject": "ЕН.02 / Физика",
+        "subject": "",
         "teacher": "Дегтярева Л.В.",
-        "room": "41",
-        "items": [
-          {
-            "subject": "ЕН.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Физика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Дегтярева Л.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "41"
-          }
-        ]
+        "room": "02"
       },
       {
         "num": "4",
-        "subject": "ОП.11 / Безопасность жизнедеятельности",
+        "subject": "Безопасность жизнедеятельности",
         "teacher": "Галушко В.В.",
-        "room": "33а",
-        "items": [
-          {
-            "subject": "ОП.11",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Безопасность жизнедеятельности",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Галушко В.В.",
-            "room": "33а"
-          }
-        ]
+        "room": "11"
       },
       {
         "num": "5",
-        "subject": "ОГСЭ.04 / Физическая культура",
+        "subject": "",
         "teacher": "Семичаснова Е.В.",
-        "room": "",
-        "items": [
-          {
-            "subject": "ОГСЭ.04",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Физическая культура",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Семичаснова Е.В.",
-            "room": ""
-          }
-        ]
+        "room": "04"
       }
     ],
     "1154": [
       {
         "num": "1",
-        "subject": "ОП.09* / Основы финансовой грамотности / ООД.03 / Математика",
-        "teacher": "Залюбовская И.А. / Сусло Г.А.",
-        "room": "32а / 40",
-        "items": [
-          {
-            "subject": "ОП.09*",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Основы финансовой грамотности",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Залюбовская И.А.",
-            "room": "32а"
-          },
-          {
-            "subject": "ООД.03",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Математика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Сусло Г.А.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "40"
-          }
-        ]
+        "subject": "Основы финансовой грамотности",
+        "teacher": "Залюбовская И.А.",
+        "room": "09"
       },
       {
         "num": "2",
-        "subject": "ОП.09* Электрорадиоизмерения / ООД.12 / Физическая культура",
-        "teacher": "Горин Ю.Г. / Гоглова Н.А.",
-        "room": "33",
-        "items": [
-          {
-            "subject": "ОП.09* Электрорадиоизмерения",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Горин Ю.Г.",
-            "room": "33"
-          },
-          {
-            "subject": "ООД.12",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Физическая культура",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Гоглова Н.А.",
-            "room": ""
-          }
-        ]
+        "subject": "",
+        "teacher": "Горин Ю.Г.",
+        "room": "09"
       },
       {
         "num": "3",
-        "subject": "МДК.06.01 / Технология выполнения работ по профессииМонтажник радиоэлектронной аппаратуры и приборов / ООД.01 / Русский язык",
-        "teacher": "Харламов А.В. / Максименко Т.И.",
-        "room": "14618 / 26 / 24",
-        "items": [
-          {
-            "subject": "МДК.06.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Технология выполнения работ по профессииМонтажник радиоэлектронной аппаратуры и приборов",
-            "teacher": "",
-            "room": "14618"
-          },
-          {
-            "subject": "",
-            "teacher": "Харламов А.В.",
-            "room": "26"
-          },
-          {
-            "subject": "ООД.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Русский язык",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Максименко Т.И.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "24"
-          }
-        ]
+        "subject": "",
+        "teacher": "Харламов А.В.",
+        "room": "06"
       }
     ],
     "1155": [
       {
         "num": "1",
-        "subject": "ОП.05 / Основы метрологии и электрорадиоизмерений / ООД.12 / Физическая культура",
-        "teacher": "Смирнова Т.С. / Гоглова Н.А.",
-        "room": "44",
-        "items": [
-          {
-            "subject": "ОП.05",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Основы метрологии и электрорадиоизмерений",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Смирнова Т.С.",
-            "room": "44"
-          },
-          {
-            "subject": "ООД.12",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Физическая культура",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Гоглова Н.А.",
-            "room": ""
-          }
-        ]
+        "subject": "Основы метрологии и электрорадиоизмерений",
+        "teacher": "Смирнова Т.С.",
+        "room": "05"
       },
       {
         "num": "2",
-        "subject": "ОП.09* / Основы финансовой грамотности / ООД.01 / Русский язык",
-        "teacher": "Залюбовская И.А. / Максименко Т.И.",
-        "room": "32а / 24",
-        "items": [
-          {
-            "subject": "ОП.09*",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Основы финансовой грамотности",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Залюбовская И.А.",
-            "room": "32а"
-          },
-          {
-            "subject": "ООД.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Русский язык",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Максименко Т.И.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "24"
-          }
-        ]
+        "subject": "Основы финансовой грамотности",
+        "teacher": "Залюбовская И.А.",
+        "room": "09"
       },
       {
         "num": "3",
-        "subject": "ОП.09* Электрорадиоизмерения / ООД.03 / Математика",
-        "teacher": "Горин Ю.Г. / Сусло Г.А.",
-        "room": "33 / 40",
-        "items": [
-          {
-            "subject": "ОП.09* Электрорадиоизмерения",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Горин Ю.Г.",
-            "room": "33"
-          },
-          {
-            "subject": "ООД.03",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Математика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Сусло Г.А.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "40"
-          }
-        ]
+        "subject": "",
+        "teacher": "Горин Ю.Г.",
+        "room": "09"
       }
     ],
     "1156": [
       {
         "num": "1",
-        "subject": "ОП.09* Электрорадиоизмерения / ООД.09 / История",
-        "teacher": "Горин Ю.Г. / Белоиван А.А.",
-        "room": "33 / 42",
-        "items": [
-          {
-            "subject": "ОП.09* Электрорадиоизмерения",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Горин Ю.Г.",
-            "room": "33"
-          },
-          {
-            "subject": "ООД.09",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "История",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Белоиван А.А.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "42"
-          }
-        ]
+        "subject": "",
+        "teacher": "Горин Ю.Г.",
+        "room": "09"
       },
       {
         "num": "2",
-        "subject": "ОП.01 / Математические методы решения типовых прикладных задач / ООД.05 / Информатика",
-        "teacher": "Климко К.А. / Виноградова О.А.",
-        "room": "30 / 27",
-        "items": [
-          {
-            "subject": "ОП.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Математические методы решения типовых прикладных задач",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Климко К.А.",
-            "room": "30"
-          },
-          {
-            "subject": "ООД.05",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Информатика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Виноградова О.А.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "27"
-          }
-        ]
+        "subject": "Математические методы решения типовых прикладных задач",
+        "teacher": "Климко К.А.",
+        "room": "01"
       },
       {
         "num": "3",
-        "subject": "ОП.09* / Основы финансовой грамотности / ООД.03 / Математика",
-        "teacher": "Залюбовская И.А. / Шапошникова К.А.",
-        "room": "32а / 30",
-        "items": [
-          {
-            "subject": "ОП.09*",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Основы финансовой грамотности",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Залюбовская И.А.",
-            "room": "32а"
-          },
-          {
-            "subject": "ООД.03",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Математика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Шапошникова К.А.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "30"
-          }
-        ]
+        "subject": "Основы финансовой грамотности",
+        "teacher": "Залюбовская И.А.",
+        "room": "09"
       }
     ],
     "1141": [
       {
         "num": "1",
-        "subject": "МДК 03.02 / Основы проектирования электронных приборов и устройств на основе печатного монтажа / ЕН.02 / Физика",
-        "teacher": "Святова И.В. / Дегтярева Л.В.",
-        "room": "32 / 41",
-        "items": [
-          {
-            "subject": "МДК 03.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Основы проектирования электронных приборов и устройств на основе печатного монтажа",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Святова И.В.",
-            "room": "32"
-          },
-          {
-            "subject": "ЕН.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Физика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Дегтярева Л.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "41"
-          }
-        ]
+        "subject": "Основы проектирования электронных приборов и устройств на основе печатного монтажа",
+        "teacher": "Святова И.В.",
+        "room": "03"
       },
       {
         "num": "2",
-        "subject": "МДК 01.01 / Технология сборки, монтажа и демонтажа электронных приборов и устройств / ОП.03 / Метрология, стандартизация и сертификация",
-        "teacher": "Зубова В.В. / Смирнова Т.С.",
-        "room": "29м / 44",
-        "items": [
-          {
-            "subject": "МДК 01.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Технология сборки, монтажа и демонтажа электронных приборов и устройств",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Зубова В.В.",
-            "room": "29м"
-          },
-          {
-            "subject": "ОП.03",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Метрология, стандартизация и сертификация",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Смирнова Т.С.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "44"
-          }
-        ]
+        "subject": "Технология сборки, монтажа и демонтажа электронных приборов и устройств",
+        "teacher": "Зубова В.В.",
+        "room": "01"
       },
       {
         "num": "3",
-        "subject": "МДК 03.02 / Основы проектирования электронных приборов и устройств на основе печатного монтажа",
+        "subject": "Основы проектирования электронных приборов и устройств на основе печатного монтажа",
         "teacher": "Святова И.В.",
-        "room": "32",
-        "items": [
-          {
-            "subject": "МДК 03.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Основы проектирования электронных приборов и устройств на основе печатного монтажа",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Святова И.В.",
-            "room": "32"
-          }
-        ]
+        "room": "03"
       },
       {
         "num": "4",
-        "subject": "МДК.01.02 / Технология настройки и регулировки электронных приборов и устройств",
+        "subject": "Технология настройки и регулировки электронных приборов и устройств",
         "teacher": "Зюзько А.П.",
-        "room": "34",
-        "items": [
-          {
-            "subject": "МДК.01.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Технология настройки и регулировки электронных приборов и устройств",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Зюзько А.П.",
-            "room": "34"
-          }
-        ]
+        "room": "01"
       },
       {
         "num": "5",
-        "subject": "МДК 06.01 / Контроль сборочно-монтажных работ",
+        "subject": "Контроль сборочно-монтажных работ",
         "teacher": "Смирнова Т.С.",
-        "room": "44",
-        "items": [
-          {
-            "subject": "МДК 06.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Контроль сборочно-монтажных работ",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Смирнова Т.С.",
-            "room": "44"
-          }
-        ]
+        "room": "06"
       }
     ],
     "1142": [
       {
         "num": "1",
-        "subject": "МДК 01.01 / Технология сборки, монтажа и демонтажа электронных приборов и устройств / МДК.01.02 / Технология настройки и регулировки электронных приборов и устройств",
-        "teacher": "Зубова В.В. / Зюзько А.П.",
-        "room": "29м / 34",
-        "items": [
-          {
-            "subject": "МДК 01.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Технология сборки, монтажа и демонтажа электронных приборов и устройств",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Зубова В.В.",
-            "room": "29м"
-          },
-          {
-            "subject": "МДК.01.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Технология настройки и регулировки электронных приборов и устройств",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Зюзько А.П.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "34"
-          }
-        ]
+        "subject": "Технология сборки, монтажа и демонтажа электронных приборов и устройств",
+        "teacher": "Зубова В.В.",
+        "room": "01"
       },
       {
         "num": "2",
-        "subject": "МДК 03.02 / Основы проектирования электронных приборов и устройств на основе печатного монтажа / ОП.11 / Безопасность жизнедеятельности",
-        "teacher": "Святова И.В. / Рачков А.С.",
-        "room": "32 / 32а",
-        "items": [
-          {
-            "subject": "МДК 03.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Основы проектирования электронных приборов и устройств на основе печатного монтажа",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Святова И.В.",
-            "room": "32"
-          },
-          {
-            "subject": "ОП.11",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Безопасность жизнедеятельности",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Рачков А.С.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "32а"
-          }
-        ]
+        "subject": "Основы проектирования электронных приборов и устройств на основе печатного монтажа",
+        "teacher": "Святова И.В.",
+        "room": "03"
       },
       {
         "num": "3",
-        "subject": "МДК 01.01 / Технология сборки, монтажа и демонтажа электронных приборов и устройств",
+        "subject": "Технология сборки, монтажа и демонтажа электронных приборов и устройств",
         "teacher": "Зубова В.В.",
-        "room": "29м",
-        "items": [
-          {
-            "subject": "МДК 01.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Технология сборки, монтажа и демонтажа электронных приборов и устройств",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Зубова В.В.",
-            "room": "29м"
-          }
-        ]
+        "room": "01"
       },
       {
         "num": "4",
-        "subject": "МДК 03.02 / Основы проектирования электронных приборов и устройств на основе печатного монтажа",
+        "subject": "Основы проектирования электронных приборов и устройств на основе печатного монтажа",
         "teacher": "Святова И.В.",
-        "room": "32",
-        "items": [
-          {
-            "subject": "МДК 03.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Основы проектирования электронных приборов и устройств на основе печатного монтажа",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Святова И.В.",
-            "room": "32"
-          }
-        ]
+        "room": "03"
       },
       {
         "num": "5",
-        "subject": "МДК.04.01 / Сборка радиоэлектронной аппаратуры и приборов",
+        "subject": "Сборка радиоэлектронной аппаратуры и приборов",
         "teacher": "Харламов А.В.",
-        "room": "33",
-        "items": [
-          {
-            "subject": "МДК.04.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Сборка радиоэлектронной аппаратуры и приборов",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Харламов А.В.",
-            "room": "33"
-          }
-        ]
+        "room": "04"
       }
     ],
     "1131": [
       {
         "num": "3",
-        "subject": "МДК.02.01 / Основы диагностики и обнаружения отказов и дефектов электронных приборов и устройств",
+        "subject": "Основы диагностики и обнаружения отказов и дефектов электронных приборов и устройств",
         "teacher": "Зюзько А.П.",
-        "room": "",
-        "items": [
-          {
-            "subject": "МДК.02.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Основы диагностики и обнаружения отказов и дефектов электронных приборов и устройств",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Зюзько А.П.",
-            "room": ""
-          }
-        ]
+        "room": "02"
       },
       {
         "num": "4",
-        "subject": "ОП.04 / Экономика организации",
+        "subject": "Экономика организации",
         "teacher": "Номашко М.А.",
-        "room": "31",
-        "items": [
-          {
-            "subject": "ОП.04",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Экономика организации",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Номашко М.А.",
-            "room": "31"
-          }
-        ]
+        "room": "04"
       },
       {
         "num": "5",
-        "subject": "ОГСЭ.06 / Основы финансовой грамотности",
+        "subject": "Основы финансовой грамотности",
         "teacher": "Залюбовская И.А.",
-        "room": "32а",
-        "items": [
-          {
-            "subject": "ОГСЭ.06",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Основы финансовой грамотности",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Залюбовская И.А.",
-            "room": "32а"
-          }
-        ]
+        "room": "06"
       },
       {
         "num": "6",
-        "subject": "ОГСЭ .01 / Основы философии",
+        "subject": "Основы философии",
         "teacher": "Матвеева Н.В.",
-        "room": "45",
-        "items": [
-          {
-            "subject": "ОГСЭ .01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Основы философии",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Матвеева Н.В.",
-            "room": "45"
-          }
-        ]
+        "room": "01"
       }
     ],
     "1132": [
       {
-        "num": "2",
-        "subject": "МДК.03.02 / Основы проектирования электронных приборов и устройств на основе печатного монтажа",
-        "teacher": "Святова И.В.",
-        "room": "32",
-        "items": [
-          {
-            "subject": "МДК.03.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Основы проектирования электронных приборов и устройств на основе печатного монтажа",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Святова И.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "32"
-          }
-        ]
-      },
-      {
         "num": "3",
-        "subject": "МДК.02.02 / Техническое обслуживание, ремонт и оценка качества электронных приборов и устройств / МДК 06.01 / Контроль сборочно-монтажных работ",
+        "subject": "Техническое обслуживание, ремонт и оценка качества электронных приборов и устройств",
         "teacher": "Смирнова Т.С.",
-        "room": "44",
-        "items": [
-          {
-            "subject": "МДК.02.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Техническое обслуживание, ремонт и оценка качества электронных приборов и устройств",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Смирнова Т.С.",
-            "room": "44"
-          },
-          {
-            "subject": "МДК 06.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Контроль сборочно-монтажных работ",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Смирнова Т.С.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "44"
-          }
-        ]
+        "room": "02"
       },
       {
         "num": "4",
-        "subject": "ОГСЭ.06 / Основы финансовой грамотности",
+        "subject": "Основы финансовой грамотности",
         "teacher": "Залюбовская И.А.",
-        "room": "32а",
-        "items": [
-          {
-            "subject": "ОГСЭ.06",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Основы финансовой грамотности",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Залюбовская И.А.",
-            "room": "32а"
-          }
-        ]
+        "room": "06"
       },
       {
         "num": "5",
-        "subject": "ОП.04 / Экономика организации",
+        "subject": "Экономика организации",
         "teacher": "Номашко М.А.",
-        "room": "31",
-        "items": [
-          {
-            "subject": "ОП.04",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Экономика организации",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Номашко М.А.",
-            "room": "31"
-          }
-        ]
+        "room": "04"
       },
       {
         "num": "6",
-        "subject": "ОП.04 / Экономика организации",
+        "subject": "Экономика организации",
         "teacher": "Номашко М.А.",
-        "room": "31",
-        "items": [
-          {
-            "subject": "ОП.04",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Экономика организации",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Номашко М.А.",
-            "room": "31"
-          }
-        ]
+        "room": "04"
       }
     ],
     "1251": [
       {
         "num": "2",
-        "subject": "ОП.02 / Архитектура аппаратных средств / ООД.10 / Обществознание",
-        "teacher": "Рябченко А.Ю. / Чеснокова Н.Н.",
-        "room": "26 / 35",
-        "items": [
-          {
-            "subject": "ОП.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Архитектура аппаратных средств",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Рябченко А.Ю.",
-            "room": "26"
-          },
-          {
-            "subject": "ООД.10",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Обществознание",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Чеснокова Н.Н.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "35"
-          }
-        ]
+        "subject": "Архитектура аппаратных средств",
+        "teacher": "Рябченко А.Ю.",
+        "room": "02"
       },
       {
         "num": "3",
-        "subject": "ОГСЭ / Эффективное поведение на рынке труда",
+        "subject": "Эффективное поведение на рынке труда",
         "teacher": "Головина Е.Н.",
-        "room": "07 / 42",
-        "items": [
-          {
-            "subject": "ОГСЭ",
-            "teacher": "",
-            "room": "07"
-          },
-          {
-            "subject": "Эффективное поведение на рынке труда",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Головина Е.Н.",
-            "room": "42"
-          }
-        ]
+        "room": "07"
       },
       {
         "num": "4",
-        "subject": "ОП.04 / Основы алгоритмизации и программирования",
+        "subject": "Основы алгоритмизации и программирования",
         "teacher": "Злобина А.А.",
-        "room": "30м",
-        "items": [
-          {
-            "subject": "ОП.04",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Основы алгоритмизации и программирования",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Злобина А.А.",
-            "room": "30м"
-          }
-        ]
+        "room": "04"
       },
       {
         "num": "5",
-        "subject": "ОГСЭ.04 / Иностранный язык в профессиональной деятельности",
-        "teacher": "Матвеева Н.В. / Щукина И.Е.",
-        "room": "45 / 36",
-        "items": [
-          {
-            "subject": "ОГСЭ.04",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Иностранный язык в профессиональной деятельности",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Матвеева Н.В.",
-            "room": "45"
-          },
-          {
-            "subject": "",
-            "teacher": "Щукина И.Е.",
-            "room": "36"
-          }
-        ]
+        "subject": "Иностранный язык в профессиональной деятельности",
+        "teacher": "Матвеева Н.В.",
+        "room": "04"
       }
     ],
     "1252": [
       {
-        "num": "1",
-        "subject": "ООД.04 / Иностранный язык",
-        "teacher": "Карпова А.Н. / Матвеева Н.В.",
-        "room": "33 / 45",
-        "items": [
-          {
-            "subject": "ООД.04",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Иностранный язык",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Карпова А.Н.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "33"
-          },
-          {
-            "subject": "",
-            "teacher": "Матвеева Н.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "45"
-          }
-        ]
-      },
-      {
         "num": "2",
-        "subject": "ОП.04 / Основы алгоритмизации и программирования / ООД.08 / Биология",
-        "teacher": "Злобина А.А. / Карпачева С.В.",
-        "room": "30м / 47",
-        "items": [
-          {
-            "subject": "ОП.04",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Основы алгоритмизации и программирования",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Злобина А.А.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "30м"
-          },
-          {
-            "subject": "ООД.08",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Биология",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Карпачева С.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "47"
-          }
-        ]
+        "subject": "Основы алгоритмизации и программирования",
+        "teacher": "Злобина А.А.",
+        "room": "04"
       },
       {
         "num": "3",
-        "subject": "ОП.04 / Основы алгоритмизации и программирования / ООД.06 / Физика",
-        "teacher": "Злобина А.А. / Дегтярева Л.В.",
-        "room": "30м / 41",
-        "items": [
-          {
-            "subject": "ОП.04",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Основы алгоритмизации и программирования",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Злобина А.А.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "30м"
-          },
-          {
-            "subject": "ООД.06",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Физика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Дегтярева Л.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "41"
-          }
-        ]
+        "subject": "Основы алгоритмизации и программирования",
+        "teacher": "Злобина А.А.",
+        "room": "04"
       },
       {
         "num": "4",
-        "subject": "ОГСЭ.02 / История / ООД.09",
-        "teacher": "Карпова А.Н. / Белоиван А.А.",
-        "room": "34а / 43",
-        "items": [
-          {
-            "subject": "ОГСЭ.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "История",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Карпова А.Н.",
-            "room": "34а"
-          },
-          {
-            "subject": "ООД.09",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Белоиван А.А.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "43"
-          }
-        ]
+        "subject": "История",
+        "teacher": "Карпова А.Н.",
+        "room": "02"
       },
       {
         "num": "5",
-        "subject": "ЕН.02 / Дискретная математика с элементами математической логики",
+        "subject": "Дискретная математика с элементами математической логики",
         "teacher": "Ермилова Н.В.",
-        "room": "46",
-        "items": [
-          {
-            "subject": "ЕН.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Дискретная математика с элементами математической логики",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Ермилова Н.В.",
-            "room": "46"
-          }
-        ]
+        "room": "02"
       }
     ],
     "1241": [
       {
         "num": "1",
-        "subject": "ОП09 / Стандартизация, сертификация и техническое документоведение / ОП.01 / Операционные системы и среды",
-        "teacher": "Рябченко А.Ю. / Нагибин Т.С.",
-        "room": "26 / 28",
-        "items": [
-          {
-            "subject": "ОП09",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Стандартизация, сертификация и техническое документоведение",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Рябченко А.Ю.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "26"
-          },
-          {
-            "subject": "ОП.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Операционные системы и среды",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Нагибин Т.С.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "28"
-          }
-        ]
+        "subject": "Стандартизация, сертификация и техническое документоведение",
+        "teacher": "Рябченко А.Ю.",
+        "room": "09"
       },
       {
         "num": "2",
-        "subject": "МДК.01.03 / Разработка мобильных приложений / ОП.10 / Численные методы",
-        "teacher": "Шкуратова С.С. / Байбакова Н.В.",
-        "room": "21",
-        "items": [
-          {
-            "subject": "МДК.01.03",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Разработка мобильных приложений",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Шкуратова С.С.",
-            "room": "21"
-          },
-          {
-            "subject": "ОП.10",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Численные методы",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Байбакова Н.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "21"
-          }
-        ]
+        "subject": "Разработка мобильных приложений",
+        "teacher": "Шкуратова С.С.",
+        "room": "01"
       },
       {
         "num": "3",
-        "subject": "МДК.01.03 / Разработка мобильных приложений / ОГСЭ.04 / Иностранный язык в профессиональной деятельности",
-        "teacher": "Шкуратова С.С. / Матвеева Н.В.",
-        "room": "21 / 45",
-        "items": [
-          {
-            "subject": "МДК.01.03",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Разработка мобильных приложений",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Шкуратова С.С.",
-            "room": "21"
-          },
-          {
-            "subject": "ОГСЭ.04",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Иностранный язык в профессиональной деятельности",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Матвеева Н.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "45"
-          }
-        ]
+        "subject": "Разработка мобильных приложений",
+        "teacher": "Шкуратова С.С.",
+        "room": "01"
       },
       {
         "num": "4",
-        "subject": "ОП.05 / Правовое обеспечение профессиональной деятельности",
+        "subject": "Правовое обеспечение профессиональной деятельности",
         "teacher": "Харламов А.В.",
-        "room": "26",
-        "items": [
-          {
-            "subject": "ОП.05",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Правовое обеспечение профессиональной деятельности",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Харламов А.В.",
-            "room": "26"
-          }
-        ]
+        "room": "05"
       }
     ],
     "1231": [
       {
         "num": "1",
-        "subject": "ОП.07 / Экономика отрасли / МДК.11.01 / Технология разработки и защиты баз данных",
-        "teacher": "Номашко М.А. / Шацкий В.П.",
-        "room": "31 / 25",
-        "items": [
-          {
-            "subject": "ОП.07",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Экономика отрасли",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Номашко М.А.",
-            "room": "31"
-          },
-          {
-            "subject": "МДК.11.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Технология разработки и защиты баз данных",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Шацкий В.П.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "25"
-          }
-        ]
+        "subject": "Экономика отрасли",
+        "teacher": "Номашко М.А.",
+        "room": "07"
       },
       {
         "num": "2",
-        "subject": "ОП.07 / Экономика отрасли / МДК.11.01 / Технология разработки и защиты баз данных",
-        "teacher": "Номашко М.А. / Шацкий В.П.",
-        "room": "31 / 25",
-        "items": [
-          {
-            "subject": "ОП.07",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Экономика отрасли",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Номашко М.А.",
-            "room": "31"
-          },
-          {
-            "subject": "МДК.11.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Технология разработки и защиты баз данных",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Шацкий В.П.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "25"
-          }
-        ]
+        "subject": "Экономика отрасли",
+        "teacher": "Номашко М.А.",
+        "room": "07"
       },
       {
         "num": "3",
-        "subject": "ОГСЭ.04 / Иностранный язык в профессиональной деятельности / МДК.11.01 / Технология разработки и защиты баз данных",
-        "teacher": "Матвеева Н.В. / Щукина И.Е. / Шацкий В.П.",
-        "room": "45 / 36 / 25",
-        "items": [
-          {
-            "subject": "ОГСЭ.04",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Иностранный язык в профессиональной деятельности",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Матвеева Н.В.",
-            "room": "45"
-          },
-          {
-            "subject": "",
-            "teacher": "Щукина И.Е.",
-            "room": "36"
-          },
-          {
-            "subject": "МДК.11.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Технология разработки и защиты баз данных",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Шацкий В.П.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "25"
-          }
-        ]
+        "subject": "Иностранный язык в профессиональной деятельности",
+        "teacher": "Матвеева Н.В.",
+        "room": "04"
       },
       {
         "num": "4",
-        "subject": "МДК.02.02 / Инструментальные средства разработки программного обеспечения / МДК.11.01 / Технология разработки и защиты баз данных",
-        "teacher": "Шкуратова С.С. / Шацкий В.П.",
-        "room": "21 / 25",
-        "items": [
-          {
-            "subject": "МДК.02.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Инструментальные средства разработки программного обеспечения",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Шкуратова С.С.",
-            "room": "21"
-          },
-          {
-            "subject": "МДК.11.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Технология разработки и защиты баз данных",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Шацкий В.П.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "25"
-          }
-        ]
+        "subject": "Инструментальные средства разработки программного обеспечения",
+        "teacher": "Шкуратова С.С.",
+        "room": "02"
       }
     ],
     "1232": [
       {
         "num": "1",
-        "subject": "МДК.02.02 / Инструментальные средства разработки программного обеспечения",
+        "subject": "Инструментальные средства разработки программного обеспечения",
         "teacher": "Шкуратова С.С.",
-        "room": "21",
-        "items": [
-          {
-            "subject": "МДК.02.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Инструментальные средства разработки программного обеспечения",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Шкуратова С.С.",
-            "room": "21"
-          }
-        ]
+        "room": "02"
       },
       {
         "num": "2",
-        "subject": "ОГСЭ.05 / Физическая культура",
+        "subject": "",
         "teacher": "Семичаснова Е.В.",
-        "room": "",
-        "items": [
-          {
-            "subject": "ОГСЭ.05",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Физическая культура",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Семичаснова Е.В.",
-            "room": ""
-          }
-        ]
+        "room": "05"
       },
       {
         "num": "3",
-        "subject": "ОП.07 / Экономика отрасли / МДК.11.01 / Технология разработки и защиты баз данных",
-        "teacher": "Номашко М.А. / Шацкий В.П.",
-        "room": "31 / 25",
-        "items": [
-          {
-            "subject": "ОП.07",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Экономика отрасли",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Номашко М.А.",
-            "room": "31"
-          },
-          {
-            "subject": "МДК.11.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Технология разработки и защиты баз данных",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Шацкий В.П.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "25"
-          }
-        ]
+        "subject": "Экономика отрасли",
+        "teacher": "Номашко М.А.",
+        "room": "07"
       },
       {
         "num": "4",
-        "subject": "ОГСЭ.04 / Иностранный язык в профессиональной деятельности",
-        "teacher": "Матвеева Н.В. / Щукина И.Е.",
-        "room": "45 / 36",
-        "items": [
-          {
-            "subject": "ОГСЭ.04",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Иностранный язык в профессиональной деятельности",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Матвеева Н.В.",
-            "room": "45"
-          },
-          {
-            "subject": "",
-            "teacher": "Щукина И.Е.",
-            "room": "36"
-          }
-        ]
+        "subject": "Иностранный язык в профессиональной деятельности",
+        "teacher": "Матвеева Н.В.",
+        "room": "04"
       },
       {
         "num": "5",
-        "subject": "МДК.02.02 / Инструментальные средства разработки программного обеспечения",
+        "subject": "Инструментальные средства разработки программного обеспечения",
         "teacher": "Шкуратова С.С.",
-        "room": "21",
-        "items": [
-          {
-            "subject": "МДК.02.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Инструментальные средства разработки программного обеспечения",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Шкуратова С.С.",
-            "room": "21"
-          }
-        ]
+        "room": "02"
       }
     ],
     "0951": [
       {
         "num": "1",
-        "subject": "ООД.03 / Математика / ООД.05 / Информатика",
-        "teacher": "Ермилова Н.В. / Овчинникова С.Н. / Смирнова Т.С.",
-        "room": "46 / разукрупнение / 27 / 44",
-        "items": [
-          {
-            "subject": "ООД.03",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Математика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Ермилова Н.В.",
-            "room": "46"
-          },
-          {
-            "subject": "ООД.05",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Информатика",
-            "teacher": "",
-            "room": "разукрупнение"
-          },
-          {
-            "subject": "",
-            "teacher": "Овчинникова С.Н.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "27"
-          },
-          {
-            "subject": "Информатика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Смирнова Т.С.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "44"
-          }
-        ]
+        "subject": "Математика",
+        "teacher": "Ермилова Н.В.",
+        "room": "03"
       },
       {
         "num": "2",
-        "subject": "СГ.02 / Иностранный язык в профессиональной деятельности / МДК.02.01 / Работа в системе управления контентом",
-        "teacher": "Матвеева Н.В. / Щукина И.Е. / Нагибин Т.С.",
-        "room": "45 / 36 / 28",
-        "items": [
-          {
-            "subject": "СГ.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Иностранный язык в профессиональной деятельности",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Матвеева Н.В.",
-            "room": "45"
-          },
-          {
-            "subject": "",
-            "teacher": "Щукина И.Е.",
-            "room": "36"
-          },
-          {
-            "subject": "МДК.02.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Работа в системе управления контентом",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Нагибин Т.С.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "28"
-          }
-        ]
+        "subject": "Иностранный язык в профессиональной деятельности",
+        "teacher": "Матвеева Н.В.",
+        "room": "02"
       },
       {
         "num": "3",
-        "subject": "ООД.08 / Биология / ООД.01 / Русский язык",
-        "teacher": "Карпачева С.В. / Вялых Г.В.",
-        "room": "47 / 49",
-        "items": [
-          {
-            "subject": "ООД.08",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Биология",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Карпачева С.В.",
-            "room": "47"
-          },
-          {
-            "subject": "ООД.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Русский язык",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Вялых Г.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "49"
-          }
-        ]
+        "subject": "Биология",
+        "teacher": "Карпачева С.В.",
+        "room": "08"
       },
       {
         "num": "4",
-        "subject": "ООД.06 / Физика",
+        "subject": "",
         "teacher": "Дегтярева Л.В.",
-        "room": "41",
-        "items": [
-          {
-            "subject": "ООД.06",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Физика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Дегтярева Л.В.",
-            "room": "41"
-          }
-        ]
+        "room": "06"
       }
     ],
     "0952": [
       {
         "num": "1",
-        "subject": "МДК. 02.01 / Технологии публикациицифровой мультимедийной информации / ОП.01 / Основы информационных технологий",
-        "teacher": "Крайнова Ю.С. / Крайнова Ю.А.",
-        "room": "",
-        "items": [
-          {
-            "subject": "МДК. 02.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Технологии публикациицифровой мультимедийной информации",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Крайнова Ю.С.",
-            "room": ""
-          },
-          {
-            "subject": "ОП.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Основы информационных технологий",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Крайнова Ю.А.",
-            "room": ""
-          }
-        ]
+        "subject": "Технологии публикациицифровой мультимедийной информации",
+        "teacher": "Крайнова Ю.С.",
+        "room": "02"
       },
       {
         "num": "2",
-        "subject": "МДК. 02.01 / Технологии публикациицифровой мультимедийной информации / ОП.02 / Архитектура персонального компьютера",
-        "teacher": "Крайнова Ю.С. / Крайнова Ю.А.",
-        "room": "",
-        "items": [
-          {
-            "subject": "МДК. 02.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Технологии публикациицифровой мультимедийной информации",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Крайнова Ю.С.",
-            "room": ""
-          },
-          {
-            "subject": "ОП.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Архитектура персонального компьютера",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Крайнова Ю.А.",
-            "room": ""
-          }
-        ]
+        "subject": "Технологии публикациицифровой мультимедийной информации",
+        "teacher": "Крайнова Ю.С.",
+        "room": "02"
       },
       {
         "num": "3",
-        "subject": "МДК. 02.01 / Технологии публикациицифровой мультимедийной информации",
+        "subject": "Технологии публикациицифровой мультимедийной информации",
         "teacher": "Крайнова Ю.С.",
-        "room": "",
-        "items": [
-          {
-            "subject": "МДК. 02.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Технологии публикациицифровой мультимедийной информации",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Крайнова Ю.С.",
-            "room": ""
-          }
-        ]
+        "room": "02"
       }
     ],
     "1551": [
       {
         "num": "1",
-        "subject": "ООД.10 ПОбществознание / ОП.02 / Техническая механика",
-        "teacher": "Чеснокова Н.Н. / Ли М. В.",
-        "room": "24 / 48",
-        "items": [
-          {
-            "subject": "ООД.10 ПОбществознание",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Чеснокова Н.Н.",
-            "room": "24"
-          },
-          {
-            "subject": "ОП.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Техническая механика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Ли М. В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "48"
-          }
-        ]
+        "subject": "",
+        "teacher": "Чеснокова Н.Н.",
+        "room": "10"
       },
       {
         "num": "2",
-        "subject": "МДК.02.01 / Разработка и внедрение управляющих программ изготовления деталей машин в машиностроительном производстве / ООД.02 / Литература",
-        "teacher": "Павлуша В.И. / Вялых Г.В.",
-        "room": "35 / 49",
-        "items": [
-          {
-            "subject": "МДК.02.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Разработка и внедрение управляющих программ изготовления деталей машин в машиностроительном производстве",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Павлуша В.И.",
-            "room": "35"
-          },
-          {
-            "subject": "ООД.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Литература",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Вялых Г.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "49"
-          }
-        ]
+        "subject": "Разработка и внедрение управляющих программ изготовления деталей машин в машиностроительном производстве",
+        "teacher": "Павлуша В.И.",
+        "room": "02"
       },
       {
         "num": "3",
-        "subject": "МДК.02.01 / Разработка и внедрение управляющих программ изготовления деталей машин в машиностроительном производстве / ООД.06 / Физика",
-        "teacher": "Павлуша В.И. / Крайнова Ю.А.",
-        "room": "35 / 34а",
-        "items": [
-          {
-            "subject": "МДК.02.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Разработка и внедрение управляющих программ изготовления деталей машин в машиностроительном производстве",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Павлуша В.И.",
-            "room": "35"
-          },
-          {
-            "subject": "ООД.06",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Физика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Крайнова Ю.А.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "34а"
-          }
-        ]
+        "subject": "Разработка и внедрение управляющих программ изготовления деталей машин в машиностроительном производстве",
+        "teacher": "Павлуша В.И.",
+        "room": "02"
       },
       {
         "num": "4",
-        "subject": "МДК.02.01 / Разработка и внедрение управляющих программ изготовления деталей машин в машиностроительном производстве",
+        "subject": "Разработка и внедрение управляющих программ изготовления деталей машин в машиностроительном производстве",
         "teacher": "Павлуша В.И.",
-        "room": "35",
-        "items": [
-          {
-            "subject": "МДК.02.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Разработка и внедрение управляющих программ изготовления деталей машин в машиностроительном производстве",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Павлуша В.И.",
-            "room": "35"
-          }
-        ]
+        "room": "02"
       },
       {
         "num": "5",
-        "subject": "МДК.02.01 / Разработка и внедрение управляющих программ изготовления деталей машин в машиностроительном производстве",
+        "subject": "Разработка и внедрение управляющих программ изготовления деталей машин в машиностроительном производстве",
         "teacher": "Павлуша В.И.",
-        "room": "35",
-        "items": [
-          {
-            "subject": "МДК.02.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Разработка и внедрение управляющих программ изготовления деталей машин в машиностроительном производстве",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Павлуша В.И.",
-            "room": "35"
-          }
-        ]
+        "room": "02"
       }
     ],
     "1552": [
       {
-        "num": "1",
-        "subject": "ООД.02 / Литература",
-        "teacher": "Вялых Г.В.",
-        "room": "49",
-        "items": [
-          {
-            "subject": "ООД.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Литература",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Вялых Г.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "49"
-          }
-        ]
-      },
-      {
         "num": "2",
-        "subject": "ООД.10 Обществознание / ООД.04 / Иностранный язык",
-        "teacher": "Чеснокова Н.Н. / Карпова А.Н. / Матвеева Н.В.",
-        "room": "24 / 33 / 45",
-        "items": [
-          {
-            "subject": "ООД.10 Обществознание",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Чеснокова Н.Н.",
-            "room": "24"
-          },
-          {
-            "subject": "ООД.04",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Иностранный язык",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Карпова А.Н.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "33"
-          },
-          {
-            "subject": "",
-            "teacher": "Матвеева Н.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "45"
-          }
-        ]
+        "subject": "",
+        "teacher": "Чеснокова Н.Н.",
+        "room": "10"
       },
       {
         "num": "3",
-        "subject": "ООД.11 География / ОП.02 / Техническая механика",
-        "teacher": "Бутенко Е.С. / Ли М. В.",
-        "room": "48",
-        "items": [
-          {
-            "subject": "ООД.11 География",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Бутенко Е.С.",
-            "room": "48"
-          },
-          {
-            "subject": "ОП.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Техническая механика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Ли М. В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "48"
-          }
-        ]
+        "subject": "",
+        "teacher": "Бутенко Е.С.",
+        "room": "11"
       },
       {
         "num": "4",
-        "subject": "ООД.07 Химия",
+        "subject": "",
         "teacher": "Карпачева С.В.",
-        "room": "47",
-        "items": [
-          {
-            "subject": "ООД.07 Химия",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Карпачева С.В.",
-            "room": "47"
-          }
-        ]
+        "room": "07"
       },
       {
         "num": "5",
-        "subject": "ООД.11 География",
+        "subject": "",
         "teacher": "Бутенко Е.С.",
-        "room": "48",
-        "items": [
-          {
-            "subject": "ООД.11 География",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Бутенко Е.С.",
-            "room": "48"
-          }
-        ]
+        "room": "11"
       }
     ],
     "1553": [
       {
         "num": "3",
-        "subject": "ООД.10 Обществознание / ООД.13 / Основы безопасности и защиты Родины",
-        "teacher": "Чеснокова Н.Н. / Карпачева С.В.",
-        "room": "24 / 47",
-        "items": [
-          {
-            "subject": "ООД.10 Обществознание",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Чеснокова Н.Н.",
-            "room": "24"
-          },
-          {
-            "subject": "ООД.13",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Основы безопасности и защиты Родины",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Карпачева С.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "47"
-          }
-        ]
+        "subject": "",
+        "teacher": "Чеснокова Н.Н.",
+        "room": "10"
       },
       {
         "num": "4",
-        "subject": "ООД.11 География",
+        "subject": "",
         "teacher": "Бутенко Е.С.",
-        "room": "48",
-        "items": [
-          {
-            "subject": "ООД.11 География",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Бутенко Е.С.",
-            "room": "48"
-          }
-        ]
+        "room": "11"
       },
       {
         "num": "5",
-        "subject": "ООД.07 Химия",
+        "subject": "",
         "teacher": "Карпачева С.В.",
-        "room": "47",
-        "items": [
-          {
-            "subject": "ООД.07 Химия",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Карпачева С.В.",
-            "room": "47"
-          }
-        ]
+        "room": "07"
       },
       {
         "num": "6",
-        "subject": "ООД.07 Химия",
+        "subject": "",
         "teacher": "Карпачева С.В.",
-        "room": "47",
-        "items": [
-          {
-            "subject": "ООД.07 Химия",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Карпачева С.В.",
-            "room": "47"
-          }
-        ]
+        "room": "07"
       }
     ],
     "1541": [
       {
-        "num": "1",
-        "subject": "СГ.06 / Основы финансовой грамотности",
-        "teacher": "Залюбовская И.А.",
-        "room": "37",
-        "items": [
-          {
-            "subject": "СГ.06",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Основы финансовой грамотности",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Залюбовская И.А.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "37"
-          }
-        ]
-      },
-      {
         "num": "2",
-        "subject": "СГ.03 / Безопасность жизнедеятельности / СГ.01 / История России",
-        "teacher": "Рачков А.С. / Макушина И.Н.",
-        "room": "11м / 43",
-        "items": [
-          {
-            "subject": "СГ.03",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Безопасность жизнедеятельности",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Рачков А.С.",
-            "room": "11м"
-          },
-          {
-            "subject": "СГ.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "История России",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Макушина И.Н.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "43"
-          }
-        ]
+        "subject": "Безопасность жизнедеятельности",
+        "teacher": "Рачков А.С.",
+        "room": "03"
       },
       {
         "num": "3",
-        "subject": "МДК.04.01 / Контроль, наладка, подналадка и техническое обслуживание сборочного оборудования",
+        "subject": "Контроль, наладка, подналадка и техническое обслуживание сборочного оборудования",
         "teacher": "Рашицкий А.Н.",
-        "room": "31а",
-        "items": [
-          {
-            "subject": "МДК.04.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Контроль, наладка, подналадка и техническое обслуживание сборочного оборудования",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Рашицкий А.Н.",
-            "room": "31а"
-          }
-        ]
+        "room": "04"
       },
       {
         "num": "4",
-        "subject": "СГ.03 / Безопасность жизнедеятельности",
+        "subject": "Безопасность жизнедеятельности",
         "teacher": "Рачков А.С.",
-        "room": "11м",
-        "items": [
-          {
-            "subject": "СГ.03",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Безопасность жизнедеятельности",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Рачков А.С.",
-            "room": "11м"
-          }
-        ]
+        "room": "03"
       }
     ],
     "1542": [
       {
         "num": "1",
-        "subject": "ОП.10 ц / Программирование для автоматизированного оборудования / СГ.01 / История России",
-        "teacher": "Ермилов В.А. / Макушина И.Н.",
-        "room": "37 / 43",
-        "items": [
-          {
-            "subject": "ОП.10 ц",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Программирование для автоматизированного оборудования",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Ермилов В.А.",
-            "room": "37"
-          },
-          {
-            "subject": "СГ.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "История России",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Макушина И.Н.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "43"
-          }
-        ]
+        "subject": "Программирование для автоматизированного оборудования",
+        "teacher": "Ермилов В.А.",
+        "room": "10ц"
       },
       {
         "num": "2",
-        "subject": "ОП.10 ц / Программирование для автоматизированного оборудования / СГ.05 / Основы бережливого производства",
-        "teacher": "Ермилов В.А. / Залюбовская И.А.",
-        "room": "37",
-        "items": [
-          {
-            "subject": "ОП.10 ц",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Программирование для автоматизированного оборудования",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Ермилов В.А.",
-            "room": "37"
-          },
-          {
-            "subject": "СГ.05",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Основы бережливого производства",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Залюбовская И.А.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "37"
-          }
-        ]
+        "subject": "Программирование для автоматизированного оборудования",
+        "teacher": "Ермилов В.А.",
+        "room": "10ц"
       },
       {
         "num": "3",
-        "subject": "ОП.10 ц / Программирование для автоматизированного оборудования / СГ.06 / Основы финансовой грамотности",
-        "teacher": "Ермилов В.А. / Залюбовская И.А.",
-        "room": "37",
-        "items": [
-          {
-            "subject": "ОП.10 ц",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Программирование для автоматизированного оборудования",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Ермилов В.А.",
-            "room": "37"
-          },
-          {
-            "subject": "СГ.06",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Основы финансовой грамотности",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Залюбовская И.А.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "37"
-          }
-        ]
+        "subject": "Программирование для автоматизированного оборудования",
+        "teacher": "Ермилов В.А.",
+        "room": "10ц"
       },
       {
         "num": "4",
-        "subject": "СГ.04 Физическая культура",
+        "subject": "",
         "teacher": "Семичаснова Е.В.",
-        "room": "",
-        "items": [
-          {
-            "subject": "СГ.04 Физическая культура",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Семичаснова Е.В.",
-            "room": ""
-          }
-        ]
+        "room": ""
       },
       {
         "num": "5",
-        "subject": "ОП.11 ц / Информационные технологии в профессиональной деятельности",
+        "subject": "Информационные технологии в профессиональной деятельности",
         "teacher": "Ермилов В.А.",
-        "room": "37",
-        "items": [
-          {
-            "subject": "ОП.11 ц",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Информационные технологии в профессиональной деятельности",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Ермилов В.А.",
-            "room": "37"
-          }
-        ]
+        "room": "11ц"
       }
     ],
     "2351": [
       {
-        "num": "1",
-        "subject": "ООД.13 / Основы безопасности и защиты Родины",
-        "teacher": "Галушко В.В.",
-        "room": "33а",
-        "items": [
-          {
-            "subject": "ООД.13",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Основы безопасности и защиты Родины",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Галушко В.В.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "33а"
-          }
-        ]
-      },
-      {
-        "num": "2",
-        "subject": "ООД.03 / Математика",
-        "teacher": "Сусло Г.А.",
-        "room": "40",
-        "items": [
-          {
-            "subject": "ООД.03",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Математика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Сусло Г.А.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "40"
-          }
-        ]
-      },
-      {
         "num": "3",
-        "subject": "ОП.01 / Инженерная графика / ООД.05 / Информатика",
-        "teacher": "Рачков А.С. / Виноградова О.А.",
-        "room": "11м / 27",
-        "items": [
-          {
-            "subject": "ОП.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Инженерная графика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Рачков А.С.",
-            "room": "11м"
-          },
-          {
-            "subject": "ООД.05",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Информатика",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Виноградова О.А.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "27"
-          }
-        ]
+        "subject": "Инженерная графика",
+        "teacher": "Рачков А.С.",
+        "room": "01"
       },
       {
         "num": "4",
-        "subject": "ОП.04 / Материаловедение / ООД.01 / Русский язык",
-        "teacher": "Рашицкий А.Н. / Максименко Т.И.",
-        "room": "31а / 24",
-        "items": [
-          {
-            "subject": "ОП.04",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Материаловедение",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Рашицкий А.Н.",
-            "room": "31а"
-          },
-          {
-            "subject": "ООД.01",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Русский язык",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Максименко Т.И.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "24"
-          }
-        ]
+        "subject": "Материаловедение",
+        "teacher": "Рашицкий А.Н.",
+        "room": "04"
       },
       {
         "num": "5",
-        "subject": "ОП.04 / Материаловедение",
+        "subject": "Материаловедение",
         "teacher": "Рашицкий А.Н.",
-        "room": "31а",
-        "items": [
-          {
-            "subject": "ОП.04",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Материаловедение",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Рашицкий А.Н.",
-            "room": "31а"
-          }
-        ]
+        "room": "04"
       }
     ],
     "2331": [
       {
         "num": "1",
-        "subject": "МДК.02.02 / Управление процессом технического обслуживания и ремонтом автомоблией / МДК 01.07 / Ремонт кузовов автомобилей",
-        "teacher": "Галушко В.В. / Рашицкий А.Н.",
-        "room": "33а / 31а",
-        "items": [
-          {
-            "subject": "МДК.02.02",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Управление процессом технического обслуживания и ремонтом автомоблией",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Галушко В.В.",
-            "room": "33а"
-          },
-          {
-            "subject": "МДК 01.07",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Ремонт кузовов автомобилей",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Рашицкий А.Н.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "31а"
-          }
-        ]
+        "subject": "Управление процессом технического обслуживания и ремонтом автомоблией",
+        "teacher": "Галушко В.В.",
+        "room": "02"
       },
       {
         "num": "2",
-        "subject": "ОГСЭ.05 / Психология общения / МДК 01.07 / Ремонт кузовов автомобилей",
-        "teacher": "Головина Е.Н. / Рашицкий А.Н.",
-        "room": "42 / 31а",
-        "items": [
-          {
-            "subject": "ОГСЭ.05",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Психология общения",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Головина Е.Н.",
-            "room": "42"
-          },
-          {
-            "subject": "МДК 01.07",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "Ремонт кузовов автомобилей",
-            "teacher": "",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "Рашицкий А.Н.",
-            "room": ""
-          },
-          {
-            "subject": "",
-            "teacher": "",
-            "room": "31а"
-          }
-        ]
+        "subject": "Психология общения",
+        "teacher": "Головина Е.Н.",
+        "room": "05"
       }
     ]
   }
