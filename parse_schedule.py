@@ -1,446 +1,308 @@
-import datetime
-import hashlib
-import json
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 import os
 import re
-import sys
-import tempfile
-from io import BytesIO
-
+import json
+import hashlib
 import requests
-from openpyxl import load_workbook
+import openpyxl
+from openpyxl.utils import get_column_letter
+from datetime import datetime
+import sys
 
-
-# ============================================================
-# CONFIG
-# ============================================================
-
+# ===== Конфигурация =====
 URL = "https://serp-koll.ru/images/ep/k1/rasp1.xlsx"
+MD5_FILENAME = "rasp1.xlsx.md5"
+XLSX_FILENAME = "rasp1.xlsx"
+JSON_FILENAME = "schedule.json"
 
-JSON_FILE = "schedule.json"
-HASH_FILE = "schedule.hash"
+# ===== Вспомогательные функции =====
 
-# Р”Р»СЏ Р»РѕРєР°Р»СЊРЅРѕР№ РїСЂРѕРІРµСЂРєРё РјРѕР¶РЅРѕ:
-#   LOCAL_XLSX=rasp1.xlsx python parse_schedule.py
-LOCAL_XLSX = os.getenv("LOCAL_XLSX")
-
-MAX_LESSON = 7
-GROUP_RE = re.compile(r"^\d{4}[А-Яа-яЁё]?$")
-
-TEACHER_RE = re.compile(
-    r"^[А-ЯЁ][а-яё-]+(?:\s+[А-ЯЁ]\.?\s*[А-ЯЁ]\.?)$",
-    re.IGNORECASE,
-)
-
-CODE_ONLY_RE = re.compile(
-    r"^[А-ЯЁ]{1,8}\s*\.?\s*\d{1,3}(?:[.\-]\d{1,3})?[*а-яА-ЯЁё]*$",
-    re.IGNORECASE,
-)
-
-CODE_WITH_TEXT_RE = re.compile(
-    r"^([А-ЯЁ]{1,8}\s*\.?\s*\d{1,3}(?:[.\-]\d{1,3})?[*а-яА-ЯЁё]*)\s+(.+)$",
-    re.IGNORECASE,
-)
-
-ROOM_IN_BRACKETS_RE = re.compile(
-    r"\(\s*(\d{1,3}[а-яё]?)\s*\)",
-    re.IGNORECASE,
-)
-ROOM_ONLY_RE = re.compile(
-    r"^\d{1,3}[а-яё]?$",
-    re.IGNORECASE,
-)
-
-MONTHS_RU = [
-    "января", "февраля", "марта", "апреля", "мая", "июня",
-    "июля", "августа", "сентября", "октября", "ноября", "декабря",
-]
+def get_md5(filename):
+    """Вычисляет MD5 файла."""
+    if not os.path.exists(filename):
+        return None
+    with open(filename, "rb") as f:
+        return hashlib.md5(f.read()).hexdigest()
 
 
+def save_md5(filename, md5):
+    """Сохраняет MD5 в файл."""
+    with open(filename, "w") as f:
+        f.write(md5)
 
 
-# ============================================================
-# DOWNLOAD
-# ============================================================
-
-def download_xlsx():
-    if LOCAL_XLSX:
-        print(f"LOCAL_XLSX={LOCAL_XLSX}")
-        with open(LOCAL_XLSX, "rb") as f:
-            return f.read()
-
-    headers = {
-        "User-Agent": (
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-            "AppleWebKit/537.36 Chrome/131 Safari/537.36"
-        )
-    }
-
-    last_error = None
-
-    for attempt in range(1, 4):
-        try:
-            print(f"Downloading XLSX (attempt {attempt}/3)...")
-            response = requests.get(
-                URL,
-                headers=headers,
-                timeout=(15, 60),
-            )
-            response.raise_for_status()
-
-            content = response.content
-
-            if not content.startswith(b"PK"):
-                raise ValueError("Downloaded file is not a valid XLSX/ZIP file")
-
-            if len(content) < 10_000:
-                raise ValueError(
-                    f"Downloaded XLSX is suspiciously small: {len(content)} bytes"
-                )
-
-            print(f"Downloaded: {len(content):,} bytes")
-            return content
-
-        except Exception as exc:
-            last_error = exc
-            print(f"Download error: {exc}")
-
-    raise RuntimeError(f"Could not download XLSX: {last_error}")
+def download_file(url, filename):
+    """Скачивает файл по URL."""
+    print(f"Downloading {url}...")
+    try:
+        response = requests.get(url, timeout=30)
+        response.raise_for_status()
+        with open(filename, "wb") as f:
+            f.write(response.content)
+        print(f"Downloaded: {filename}")
+        return True
+    except Exception as e:
+        print(f"Download error: {e}")
+        return False
 
 
-# ============================================================
-# DATE
-# ============================================================
+# ===== Парсер Excel =====
 
-def format_date(value):
-    if isinstance(value, datetime.datetime):
-        value = value.date()
-
-    return f"{value.day} {MONTHS_RU[value.month - 1]} {value.year}"
-
-
-DATE_PATTERNS = [
-    re.compile(r"\b\d{1,2}\s+[Рђ-РЇР°-СЏРЃС‘]+\s+\d{4}\b"),
-    re.compile(r"\b\d{1,2}\.\d{1,2}\.\d{2,4}\b"),
-]
-
-
-def find_date(ws):
-    # РЎРЅР°С‡Р°Р»Р° РёС‰РµРј РЅР°СЃС‚РѕСЏС‰СѓСЋ Excel date.
-    for row in ws.iter_rows(
-        min_row=1,
-        max_row=min(ws.max_row, 20),
-        min_col=1,
-        max_col=min(ws.max_column, 15),
-    ):
-        for cell in row:
-            value = cell.value
-
-            if isinstance(value, (datetime.datetime, datetime.date)):
-                return format_date(value)
-
-    # Р—Р°С‚РµРј РґР°С‚Сѓ РІРЅСѓС‚СЂРё С‚РµРєСЃС‚Р°.
-    for row in ws.iter_rows(
-        min_row=1,
-        max_row=min(ws.max_row, 20),
-        min_col=1,
-        max_col=min(ws.max_column, 15),
-    ):
-        for cell in row:
-            if cell.value is None:
-                continue
-
-            text = str(cell.value).strip()
-
-            for pattern in DATE_PATTERNS:
-                match = pattern.search(text)
-                if match:
-                    return match.group(0)
-
-    return "РќРµРёР·РІРµСЃС‚РЅР°СЏ РґР°С‚Р°"
-
-
-# ============================================================
-# CELL NORMALIZATION
-# ============================================================
-
-def clean_text(value):
+def clean_cell_value(value):
+    """Очищает значение ячейки от лишних пробелов и переносов строк."""
     if value is None:
         return ""
-
-    text = str(value)
-    text = text.replace("\r\n", "\n").replace("\r", "\n")
-
-    lines = []
-    for line in text.split("\n"):
-        line = re.sub(r"[ \t]+", " ", line).strip()
-        if line:
-            lines.append(line)
-
-    return "\n".join(lines)
+    if isinstance(value, (int, float)):
+        return str(value).strip()
+    return str(value).strip()
 
 
-def extract_room(text):
-    rooms = []
-
-    def replace_room(match):
-        room = match.group(1).strip()
-        if room not in rooms:
-            rooms.append(room)
-        return ""
-
-    text = ROOM_IN_BRACKETS_RE.sub(replace_room, text)
-
-    return text, rooms
-
-
-def is_teacher(text):
-    return bool(TEACHER_RE.fullmatch(text.strip()))
-
-
-def strip_subject_code(text):
-    text = text.strip()
-
-    if CODE_ONLY_RE.fullmatch(text):
-        return ""
-
-    match = CODE_WITH_TEXT_RE.match(text)
-    if match:
-        return match.group(2).strip()
-
-    return text
-
-
-def parse_cell(value):
+def get_merged_value(ws, row, col, merged_values):
     """
-    РџСЂРµРѕР±СЂР°Р·СѓРµС‚ РѕРґРЅСѓ СЏС‡РµР№РєСѓ Excel РІРёРґР°:
-
-        РћРћР”.04
-        РРЅРѕСЃС‚СЂР°РЅРЅС‹Р№ СЏР·С‹Рє
-        Р’Р°РЅСЏРІРёРЅР° Рћ.Рћ. (23)
-
-    РёР»Рё:
-
-        РћРџ.09* Р­Р»РµРєС‚СЂРѕСЂР°РґРёРѕРёР·РјРµСЂРµРЅРёСЏ
-        Р“РѕСЂРёРЅ Р®.Р“. (33)
-
-    РІ:
-
-        {
-            "subject": "...",
-            "teacher": "...",
-            "room": "..."
-        }
+    Возвращает значение ячейки с учётом объединения.
+    Если ячейка объединена — берёт значение из верхней левой ячейки.
     """
-
-    text = clean_text(value)
-
-    if not text:
-        return None
-
-    text, rooms = extract_room(text)
-
-    lines = [line.strip() for line in text.split("\n") if line.strip()]
-
-    # РРЅРѕРіРґР° Р°СѓРґРёС‚РѕСЂРёСЏ Р·Р°РїРёСЃР°РЅР° РѕС‚РґРµР»СЊРЅРѕР№ СЃС‚СЂРѕРєРѕР№.
-    filtered_lines = []
-    for line in lines:
-        if ROOM_ONLY_RE.fullmatch(line):
-            if line not in rooms:
-                rooms.append(line)
-        else:
-            filtered_lines.append(line)
-
-    lines = filtered_lines
-
-    if not lines:
-        return None
-
-    teachers = []
-    subject_parts = []
-
-    for index, line in enumerate(lines):
-        line = re.sub(r"\.\s*\.$", ".", line).strip()
-
-        if is_teacher(line):
-            if line not in teachers:
-                teachers.append(line)
-            continue
-
-        # Р•СЃР»Рё РІ СЃС‚СЂРѕРєРµ РЅР°С…РѕРґРёС‚СЃСЏ РїСЂРµРїРѕРґР°РІР°С‚РµР»СЊ РІРјРµСЃС‚Рµ СЃ С‚РµРєСЃС‚РѕРј,
-        # РїС‹С‚Р°РµРјСЃСЏ РѕС‚РґРµР»РёС‚СЊ РµРіРѕ.
-        teacher_match = re.search(
-            r"([Рђ-РЇРЃ][Р°-СЏС‘-]+(?:\s+[Рђ-РЇРЃ]\.?\s*[Рђ-РЇРЃ]\.?))\s*$",
-            line,
-            re.IGNORECASE,
-        )
-
-        if teacher_match:
-            teacher = teacher_match.group(1).strip()
-            prefix = line[:teacher_match.start()].strip()
-
-            if teacher not in teachers:
-                teachers.append(teacher)
-
-            if prefix:
-                subject_parts.append(prefix)
-
-            continue
-
-        subject_parts.append(line)
-
-    # РџРµСЂРІР°СЏ СЃС‚СЂРѕРєР° РѕР±С‹С‡РЅРѕ СЃРѕРґРµСЂР¶РёС‚ РєРѕРґ РґРёСЃС†РёРїР»РёРЅС‹.
-    cleaned_subject_parts = []
-
-    for part in subject_parts:
-        part = strip_subject_code(part)
-        if part:
-            cleaned_subject_parts.append(part)
-
-    subject = " ".join(cleaned_subject_parts)
-    subject = re.sub(r"\s+", " ", subject).strip()
-
-    # РЇС‡РµР№РєР°, СЃРѕСЃС‚РѕСЏС‰Р°СЏ С‚РѕР»СЊРєРѕ РёР· СЃР»СѓР¶РµР±РЅРѕР№ РёРЅС„РѕСЂРјР°С†РёРё, РЅРµ СЏРІР»СЏРµС‚СЃСЏ СѓСЂРѕРєРѕРј.
-    if not subject and not teachers:
-        return None
-
-    return {
-        "subject": subject,
-        "teacher": " / ".join(teachers),
-        "room": " / ".join(rooms),
-    }
+    for merged_range, top_left_value in merged_values.items():
+        if row in range(merged_range.min_row, merged_range.max_row + 1) and \
+           col in range(merged_range.min_col, merged_range.max_col + 1):
+            return top_left_value
+    return None
 
 
-# ============================================================
-# MERGED CELLS
-# ============================================================
-
-def build_merged_value_map(ws):
+def detect_groups(ws, merged_values):
     """
-    РќРµ СЂР°Р·СЉРµРґРёРЅСЏРµС‚ merged cells.
-
-    Р”Р»СЏ РєР°Р¶РґРѕР№ РєРѕРѕСЂРґРёРЅР°С‚С‹ merged РґРёР°РїР°Р·РѕРЅР° РІРѕР·РІСЂР°С‰Р°РµС‚ Р·РЅР°С‡РµРЅРёРµ
-    РІРµСЂС…РЅРµР№ Р»РµРІРѕР№ СЏС‡РµР№РєРё. Р­С‚Рѕ Р±РµР·РѕРїР°СЃРЅРµРµ, С‡РµРј unmerge_cells(),
-    РїРѕС‚РѕРјСѓ С‡С‚Рѕ РёСЃС…РѕРґРЅС‹Р№ XLSX РЅРµ РёР·РјРµРЅСЏРµС‚СЃСЏ.
+    Находит все группы в строке 2 (или в первой строке с группами).
+    Возвращает: список групп и словарь {группа: номер_колонки}.
     """
-
-    merged_values = {}
-
-    for merged_range in ws.merged_cells.ranges:
-        min_col, min_row, max_col, max_row = merged_range.bounds
-        value = ws.cell(min_row, min_col).value
-
-        for row in range(min_row, max_row + 1):
-            for col in range(min_col, max_col + 1):
-                merged_values[(row, col)] = value
-
-    return merged_values
-
-
-def get_value(ws, merged_values, row, col):
-    key = (row, col)
-
-    if key in merged_values:
-        return merged_values[key]
-
-    return ws.cell(row=row, column=col).value
-
-
-# ============================================================
-# GROUPS
-# ============================================================
-
-def find_groups(ws, merged_values):
     groups = []
     group_cols = {}
 
-    # РћСЃРЅРѕРІРЅРѕР№ РІР°СЂРёР°РЅС‚ вЂ” СЃС‚СЂРѕРєР° 2.
-    for col in range(1, ws.max_column + 1):
-        value = get_value(ws, merged_values, 2, col)
+    # Ищем группы во 2-й строке
+    row_idx = 2
+    for col_idx in range(1, ws.max_column + 1):
+        cell = ws.cell(row=row_idx, column=col_idx)
+        value = clean_cell_value(cell.value)
 
-        if value is None:
-            continue
+        # Если ячейка объединена, берём значение из объединения
+        if not value:
+            merged_val = get_merged_value(ws, row_idx, col_idx, merged_values)
+            if merged_val:
+                value = clean_cell_value(merged_val)
 
-        group = str(value).strip()
+        # Проверяем, похоже ли значение на группу (цифры или буквы/цифры)
+        if value and re.match(r'^[А-Яа-яЁё]?\d{3,4}[а-яА-Я]?$', value):
+            if value not in groups:
+                groups.append(value)
+                group_cols[value] = col_idx
 
-        if GROUP_RE.fullmatch(group):
-            if group not in group_cols:
-                groups.append(group)
-                group_cols[group] = col
-
-    # Р•СЃР»Рё СЃР°Р№С‚ РєРѕРіРґР°-РЅРёР±СѓРґСЊ РЅРµРјРЅРѕРіРѕ РёР·РјРµРЅРёС‚ С€Р°РїРєСѓ,
-    # РёС‰РµРј РіСЂСѓРїРїС‹ РІ РїРµСЂРІС‹С… 10 СЃС‚СЂРѕРєР°С….
+    # Если групп не найдено, пробуем строку 3
     if not groups:
-        for row in range(1, min(ws.max_row, 10) + 1):
-            for col in range(1, ws.max_column + 1):
-                value = get_value(ws, merged_values, row, col)
+        row_idx = 3
+        for col_idx in range(1, ws.max_column + 1):
+            cell = ws.cell(row=row_idx, column=col_idx)
+            value = clean_cell_value(cell.value)
 
-                if value is None:
-                    continue
+            if not value:
+                merged_val = get_merged_value(ws, row_idx, col_idx, merged_values)
+                if merged_val:
+                    value = clean_cell_value(merged_val)
 
-                group = str(value).strip()
-
-                if GROUP_RE.fullmatch(group):
-                    if group not in group_cols:
-                        groups.append(group)
-                        group_cols[group] = col
-
-    if not groups:
-        raise ValueError("Groups not found in XLSX")
+            if value and re.match(r'^[А-Яа-яЁё]?\d{3,4}[а-яА-Я]?$', value):
+                if value not in groups:
+                    groups.append(value)
+                    group_cols[value] = col_idx
 
     return groups, group_cols
 
 
-# ============================================================
-# LESSON ROWS
-# ============================================================
+def detect_lessons(ws):
+    """
+    Находит строки, в которых начинаются пары.
+    Возвращает список кортежей (номер_строки, номер_пары).
+    """
+    lesson_rows = []
+
+    # Ищем строки с номерами пар (1, 2, 3, 4, 5, 6, 7)
+    for row_idx in range(1, ws.max_row + 1):
+        cell = ws.cell(row=row_idx, column=1)
+        value = clean_cell_value(cell.value)
+
+        if not value:
+            continue
+
+        # Проверяем, является ли значение номером пары
+        match = re.match(r'^(\d+)\s*$', value)
+        if match:
+            num = int(match.group(1))
+            if 1 <= num <= 7:
+                lesson_rows.append((row_idx, num))
+
+    # Если не нашли по первой колонке, пробуем по второй
+    if not lesson_rows:
+        for row_idx in range(1, ws.max_row + 1):
+            cell = ws.cell(row=row_idx, column=2)
+            value = clean_cell_value(cell.value)
+
+            if not value:
+                continue
+
+            match = re.match(r'^(\d+)\s*$', value)
+            if match:
+                num = int(match.group(1))
+                if 1 <= num <= 7:
+                    lesson_rows.append((row_idx, num))
+
+    return sorted(lesson_rows, key=lambda x: x[0])
+
+
+def parse_lesson_cell(value):
+    """
+    Парсит ячейку с данными пары.
+    Возвращает: subject, teacher, room.
+    """
+    if not value:
+        return "", "", ""
+
+    value = clean_cell_value(value)
+
+    # Пытаемся найти аудиторию
+    room = ""
+    room_patterns = [
+        r'\(([^)]+)\)$',          # (305), (305а), (23)
+        r'\s+([0-9]+[а-яА-Я]?)\s*$',  # 305, 305а
+        r'\s+([0-9]+[а-яА-Я]?)\s+',   # 305 в середине
+    ]
+
+    for pattern in room_patterns:
+        match = re.search(pattern, value)
+        if match:
+            room = match.group(1).strip()
+            # Удаляем аудиторию из значения
+            value = value[:match.start()] + value[match.end():]
+            break
+
+    # Теперь ищем преподавателя
+    teacher = ""
+    teacher_patterns = [
+        r'([А-Я][а-я]+\s+[А-Я]\.\s*[А-Я]\.?)',  # Иванов И.И.
+        r'([А-Я][а-я]+\s+[А-Я]\.[А-Я]\.?)',      # Иванов И.И. (без пробела)
+        r'([А-Я]\.\s*[А-Я]\.?\s+[А-Я][а-я]+)',   # И.И. Иванов
+        r'([А-Я]\.?[А-Я]\.?\s+[А-Я][а-я]+)',     # И.И.Иванов
+    ]
+
+    for pattern in teacher_patterns:
+        match = re.search(pattern, value)
+        if match:
+            teacher = match.group(1).strip()
+            # Удаляем преподавателя из значения
+            value = value[:match.start()] + value[match.end():]
+            break
+
+    # Остаток — это предмет
+    subject = clean_cell_value(value)
+
+    # Убираем лишние символы
+    subject = re.sub(r'^\s*[–—-]\s*', '', subject)
+    subject = re.sub(r'\s*[–—-]\s*$', '', subject)
+    subject = re.sub(r'^\s*[.,;]\s*', '', subject)
+    subject = re.sub(r'\s*[.,;]\s*$', '', subject)
+
+    # Если предмет начинается с кода (ОГСЭ.04, ОП.09*, МДК и т.д.)
+    # оставляем код + название
+    code_match = re.match(r'^([А-ЯЁа-яё]+\s*[\.\*]?\s*\d+[\.\d]*\s*[\.\*]?)\s*(.*)$', subject)
+    if code_match:
+        code = code_match.group(1).strip()
+        name = code_match.group(2).strip()
+        if name:
+            subject = f"{code} {name}"
+        else:
+            subject = code
+
+    # Если в предмете остались скобки — убираем
+    subject = re.sub(r'\s*\([^)]*\)\s*', ' ', subject)
+    subject = ' '.join(subject.split())
+
+    return subject, teacher, room
+
+
+def parse_lesson_block(ws, start_row, end_row, group_cols, merged_values):
+    """
+    Парсит блок строк, содержащих одну пару.
+    Возвращает словарь {группа: [items]}.
+    """
+    items_by_group = {group: [] for group in group_cols.keys()}
+
+    # Собираем все данные из блока строк
+    for row_idx in range(start_row, end_row + 1):
+        for group, col_idx in group_cols.items():
+            cell = ws.cell(row=row_idx, column=col_idx)
+            value = clean_cell_value(cell.value)
+
+            # Проверяем объединённую ячейку
+            if not value:
+                merged_val = get_merged_value(ws, row_idx, col_idx, merged_values)
+                if merged_val:
+                    value = clean_cell_value(merged_val)
+
+            if not value:
+                continue
+
+            # Проверяем, не является ли значение служебным (например, "пара")
+            if value.lower() in ["пара", "занятие", "физ-ра", "физкультура", "консультация"]:
+                continue
+
+            # Проверяем, не является ли значение временем или датой
+            if re.match(r'^\d{1,2}:\d{2}', value):
+                continue
+
+            # Парсим значение
+            subject, teacher, room = parse_lesson_cell(value)
+
+            if subject or teacher or room:
+                items_by_group[group].append({
+                    "subject": subject,
+                    "teacher": teacher,
+                    "room": room,
+                })
+
+    return items_by_group
+
 
 def find_lesson_rows(ws):
-    rows = []
+    """
+    Находит строки, с которых начинаются пары.
+    """
+    lesson_rows = []
 
-    for row in range(1, ws.max_row + 1):
-        value = ws.cell(row, 1).value
+    for row_idx in range(1, ws.max_row + 1):
+        cell = ws.cell(row=row_idx, column=1)
+        value = clean_cell_value(cell.value)
 
-        if value is None:
-            continue
+        if value and re.match(r'^(\d+)\s*$', value):
+            num = int(re.match(r'^(\d+)', value).group(1))
+            if 1 <= num <= 7:
+                lesson_rows.append((row_idx, num))
 
-        if isinstance(value, bool):
-            continue
+    # Если не нашли по колонке 1, пробуем колонку 2
+    if not lesson_rows:
+        for row_idx in range(1, ws.max_row + 1):
+            cell = ws.cell(row=row_idx, column=2)
+            value = clean_cell_value(cell.value)
 
-        try:
-            number = int(str(value).strip())
-        except (ValueError, TypeError):
-            continue
+            if value and re.match(r'^(\d+)\s*$', value):
+                num = int(re.match(r'^(\d+)', value).group(1))
+                if 1 <= num <= 7:
+                    lesson_rows.append((row_idx, num))
 
-        if 1 <= number <= MAX_LESSON:
-            rows.append((row, number))
+    return sorted(lesson_rows, key=lambda x: x[0])
 
-    # РЈР±РёСЂР°РµРј РґСѓР±Р»Рё Рё РјСѓСЃРѕСЂ.
-    result = []
-    seen = set()
-
-    for row, number in rows:
-        if number in seen:
-            continue
-
-        seen.add(number)
-        result.append((row, number))
-
-    return result
-
-
-# ============================================================
-# LESSON PARSING
-# ============================================================
 
 def merge_items(items):
     """
-    РћР±СЉРµРґРёРЅСЏРµС‚ РЅРµСЃРєРѕР»СЊРєРѕ Р·Р°РїРёСЃРµР№ РѕРґРЅРѕР№ РїР°СЂС‹.
-
-    Р­С‚Рѕ РЅСѓР¶РЅРѕ РґР»СЏ "РћР±СЉРµРґРёРЅС‘РЅРЅР°СЏ/Р Р°Р·РґРµР»С‘РЅРЅР°СЏ РїР°СЂР°", РєРѕРіРґР°
-    РѕРґРЅР° РіСЂСѓРїРїР° РёРјРµРµС‚ РґРІРµ Р·Р°РїРёСЃРё РІ СЃС‚СЂРѕРєР°С… start Рё start+1.
+    Объединяет одинаковые предметы/преподавателей/аудитории.
     """
-
     unique = []
     seen = set()
 
@@ -464,6 +326,9 @@ def merge_items(items):
 
 
 def make_lesson(number, items):
+    """
+    Создаёт объект занятия из списка элементов.
+    """
     items = merge_items(items)
 
     if not items:
@@ -485,18 +350,17 @@ def make_lesson(number, items):
 
     return {
         "num": str(number),
-
-        # РЎС‚Р°СЂС‹Р№ С„РѕСЂРјР°С‚ вЂ” РѕСЃС‚Р°РІР»СЏРµРј РґР»СЏ СЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚Рё СЃ С‚РµРєСѓС‰РёРј app.js.
         "subject": " / ".join(subjects),
         "teacher": " / ".join(teachers),
         "room": " / ".join(rooms),
-
-        # РќРѕРІС‹Р№ С„РѕСЂРјР°С‚ вЂ” С‚РѕС‡РЅС‹Рµ Р·Р°РїРёСЃРё РІРЅСѓС‚СЂРё РїР°СЂС‹.
         "items": items,
     }
 
 
 def parse_schedule(ws, groups, group_cols, merged_values):
+    """
+    Основная функция парсинга расписания.
+    """
     lesson_rows = find_lesson_rows(ws)
 
     if not lesson_rows:
@@ -507,235 +371,168 @@ def parse_schedule(ws, groups, group_cols, merged_values):
     schedule = {group: [] for group in groups}
 
     for index, (start_row, number) in enumerate(lesson_rows):
-        # Р’ СЌС‚РѕРј С„РѕСЂРјР°С‚Рµ СЃС‚СЂРѕРєРё start Рё start+1 СЏРІР»СЏСЋС‚СЃСЏ
-        # РѕСЃРЅРѕРІРЅРѕР№ Р·Р°РїРёСЃСЊСЋ РїР°СЂС‹ Рё РІС‚РѕСЂРѕР№ Р·Р°РїРёСЃСЊСЋ (РµСЃР»Рё РµСЃС‚СЊ).
-        #
-        # РњС‹ РќР• С‡РёС‚Р°РµРј СЃС‚СЂРѕРєРё start+2...start+11:
-        # С‚Р°Рј РЅР°С…РѕРґРёС‚СЃСЏ СЃР»СѓР¶РµР±РЅР°СЏ/СЂР°Р·Р»РѕР¶РµРЅРЅР°СЏ С‚Р°Р±Р»РёС†Р°,
-        # РєРѕС‚РѕСЂР°СЏ РёРЅР°С‡Рµ СЃРѕР·РґР°С‘С‚ РґСѓР±Р»Рё Рё Р»РѕР¶РЅС‹Рµ РїСЂРµРґРјРµС‚С‹.
-        candidate_rows = [start_row]
+        # Определяем конец блока
+        if index + 1 < len(lesson_rows):
+            end_row = lesson_rows[index + 1][0] - 1
+        else:
+            # Последняя пара — до конца листа
+            end_row = ws.max_row
 
-        if start_row + 1 <= ws.max_row:
-            candidate_rows.append(start_row + 1)
+        # Парсим блок
+        items_by_group = parse_lesson_block(ws, start_row, end_row, group_cols, merged_values)
 
+        # Создаём занятия для каждой группы
         for group in groups:
-            col = group_cols[group]
-            items = []
-
-            for row in candidate_rows:
-                value = get_value(ws, merged_values, row, col)
-
-                if value is None:
-                    continue
-
-                parsed = parse_cell(value)
-
-                if parsed and (
-                    parsed["subject"]
-                    or parsed["teacher"]
-                    or parsed["room"]
-                ):
-                    items.append(parsed)
-
+            items = items_by_group.get(group, [])
             lesson = make_lesson(number, items)
 
-            if lesson is not None:
+            if lesson:
                 schedule[group].append(lesson)
-
-    # РЎРѕСЂС‚РёСЂРѕРІРєР° РїРѕ РЅРѕРјРµСЂСѓ РїР°СЂС‹.
-    for group in schedule:
-        schedule[group].sort(key=lambda x: int(x["num"]))
 
     return schedule
 
 
-# ============================================================
-# VALIDATION
-# ============================================================
+def get_date_from_ws(ws):
+    """
+    Пытается найти дату в листе Excel.
+    """
+    # Сначала ищем в строке 1
+    for col_idx in range(1, min(ws.max_column + 1, 10)):
+        cell = ws.cell(row=1, column=col_idx)
+        value = clean_cell_value(cell.value)
 
-def validate_result(result):
-    groups = result.get("groups")
+        if value:
+            # Проверяем, похоже ли значение на дату
+            date_match = re.search(r'(\d{1,2})\s*[\./]\s*(\d{1,2})\s*[\./]\s*(\d{2,4})', value)
+            if date_match:
+                day = int(date_match.group(1))
+                month = int(date_match.group(2))
+                year = int(date_match.group(3))
 
-    if not isinstance(groups, list) or not groups:
-        raise ValueError("Parsed result contains no groups")
+                if year < 100:
+                    year += 2000
 
-    schedule = result.get("schedule")
+                try:
+                    date_obj = datetime(year, month, day)
+                    return date_obj.strftime("%d.%m.%Y")
+                except ValueError:
+                    pass
 
-    if not isinstance(schedule, dict):
-        raise ValueError("Parsed result contains no schedule")
+    # Если не нашли, пробуем другие строки
+    for row_idx in range(1, 5):
+        for col_idx in range(1, min(ws.max_column + 1, 5)):
+            cell = ws.cell(row=row_idx, column=col_idx)
+            value = clean_cell_value(cell.value)
 
-    lessons_count = 0
+            if value:
+                date_match = re.search(r'(\d{1,2})\s*[\./]\s*(\d{1,2})\s*[\./]\s*(\d{2,4})', value)
+                if date_match:
+                    day = int(date_match.group(1))
+                    month = int(date_match.group(2))
+                    year = int(date_match.group(3))
 
-    for group in groups:
-        if group not in schedule:
-            raise ValueError(f"Missing schedule for group {group}")
+                    if year < 100:
+                        year += 2000
 
-        for lesson in schedule[group]:
-            lessons_count += 1
+                    try:
+                        date_obj = datetime(year, month, day)
+                        return date_obj.strftime("%d.%m.%Y")
+                    except ValueError:
+                        pass
 
-            if not lesson.get("num"):
-                raise ValueError(f"Lesson without number in group {group}")
+    # Если дату не нашли, используем текущую дату
+    return datetime.now().strftime("%d.%m.%Y")
 
-            if not (
-                lesson.get("subject")
-                or lesson.get("teacher")
-                or lesson.get("room")
-            ):
-                raise ValueError(
-                    f"Empty lesson {lesson.get('num')} in group {group}"
-                )
-
-    if lessons_count == 0:
-        raise ValueError("No lessons parsed from XLSX")
-
-    print(f"Validation OK: {len(groups)} groups, {lessons_count} lessons")
-
-
-# ============================================================
-# ATOMIC FILE WRITE
-# ============================================================
-
-def atomic_write_json(path, data):
-    directory = os.path.dirname(os.path.abspath(path)) or "."
-
-    fd, temp_path = tempfile.mkstemp(
-        prefix=".schedule_",
-        suffix=".json",
-        dir=directory,
-        text=True,
-    )
-
-    try:
-        with os.fdopen(fd, "w", encoding="utf-8") as file:
-            json.dump(
-                data,
-                file,
-                ensure_ascii=False,
-                indent=2,
-            )
-            file.write("\n")
-
-        os.replace(temp_path, path)
-
-    except Exception:
-        try:
-            os.unlink(temp_path)
-        except OSError:
-            pass
-        raise
-
-
-def atomic_write_text(path, text):
-    directory = os.path.dirname(os.path.abspath(path)) or "."
-
-    fd, temp_path = tempfile.mkstemp(
-        prefix=".schedule_",
-        suffix=".tmp",
-        dir=directory,
-        text=True,
-    )
-
-    try:
-        with os.fdopen(fd, "w", encoding="utf-8") as file:
-            file.write(text)
-
-        os.replace(temp_path, path)
-
-    except Exception:
-        try:
-            os.unlink(temp_path)
-        except OSError:
-            pass
-        raise
-
-
-# ============================================================
-# MAIN
-# ============================================================
 
 def main():
+    """Основная функция."""
+    print("=" * 60)
+    print("Schedule Parser")
+    print("=" * 60)
+
+    # Проверяем MD5
+    old_md5 = get_md5(XLSX_FILENAME)
+    new_md5 = None
+
+    # Скачиваем файл
+    if download_file(URL, XLSX_FILENAME):
+        new_md5 = get_md5(XLSX_FILENAME)
+
+        # Проверяем, изменился ли файл
+        if old_md5 == new_md5:
+            print("File not changed, using existing schedule.json")
+            return 0
+    else:
+        print("Download failed, using existing schedule.json")
+        if not os.path.exists(JSON_FILENAME):
+            print("Error: schedule.json not found")
+            return 1
+        return 0
+
     try:
-        content = download_xlsx()
+        # Загружаем Excel
+        print(f"Loading {XLSX_FILENAME}...")
+        wb = openpyxl.load_workbook(XLSX_FILENAME, data_only=True)
+        ws = wb.active
 
-        new_hash = hashlib.md5(content).hexdigest()
+        # Собираем информацию об объединённых ячейках
+        merged_values = {}
+        for merged_range in ws.merged_cells.ranges:
+            top_left = ws.cell(row=merged_range.min_row, column=merged_range.min_col)
+            if top_left.value is not None:
+                merged_values[merged_range] = clean_cell_value(top_left.value)
 
-        if not LOCAL_XLSX:
-            try:
-                with open(HASH_FILE, "r", encoding="utf-8") as file:
-                    old_hash = file.read().strip()
-            except FileNotFoundError:
-                old_hash = ""
+        # Определяем группы
+        groups, group_cols = detect_groups(ws, merged_values)
 
-            if old_hash == new_hash:
-                print("No changes.")
-                return
+        if not groups:
+            print("Error: Groups not found")
+            return 1
 
-            print(
-                f"Changed! "
-                f"{old_hash[:8] if old_hash else 'none'} -> {new_hash[:8]}"
-            )
+        print(f"Found groups: {', '.join(groups)}")
 
-        workbook = load_workbook(
-            filename=BytesIO(content),
-            data_only=True,
-            read_only=False,
-        )
+        # Определяем дату
+        date_str = get_date_from_ws(ws)
+        print(f"Date: {date_str}")
 
-        try:
-            ws = workbook.active
+        # Парсим расписание
+        schedule = parse_schedule(ws, groups, group_cols, merged_values)
 
-            if ws.max_row < 5 or ws.max_column < 3:
-                raise ValueError(
-                    f"Unexpected XLSX dimensions: "
-                    f"{ws.max_row}x{ws.max_column}"
-                )
-
-            merged_values = build_merged_value_map(ws)
-
-            date = find_date(ws)
-            groups, group_cols = find_groups(ws, merged_values)
-
-            print(f"Found {len(groups)} groups")
-            print(f"Date: {date}")
-
-            schedule = parse_schedule(
-                ws,
-                groups,
-                group_cols,
-                merged_values,
-            )
-
-        finally:
-            workbook.close()
-
+        # Формируем результат
         result = {
-            "date": date,
-            "groups": sorted(groups),
+            "date": date_str,
+            "groups": groups,
             "schedule": schedule,
         }
 
-        validate_result(result)
+        # Сохраняем JSON
+        with open(JSON_FILENAME, "w", encoding="utf-8") as f:
+            json.dump(result, f, ensure_ascii=False, indent=2)
 
-        # JSON РјРµРЅСЏРµРј С‚РѕР»СЊРєРѕ РїРѕСЃР»Рµ РїРѕР»РЅРѕР№ СѓСЃРїРµС€РЅРѕР№ РїСЂРѕРІРµСЂРєРё.
-        atomic_write_json(JSON_FILE, result)
+        print(f"Saved: {JSON_FILENAME}")
 
-        # HASH С‚РѕР¶Рµ РјРµРЅСЏРµРј С‚РѕР»СЊРєРѕ РїРѕСЃР»Рµ СѓСЃРїРµС€РЅРѕРіРѕ JSON.
-        if not LOCAL_XLSX:
-            atomic_write_text(HASH_FILE, new_hash + "\n")
+        # Сохраняем MD5
+        if new_md5:
+            save_md5(MD5_FILENAME, new_md5)
 
-        total = sum(len(v) for v in schedule.values())
+        print("Done!")
 
-        print(
-            f"Done! "
-            f"{len(groups)} groups, "
-            f"{total} lessons, "
-            f"date: {date}"
-        )
+        # Выводим статистику
+        total_lessons = 0
+        for group, lessons in schedule.items():
+            total_lessons += len(lessons)
 
-    except Exception as exc:
-        print(f"ERROR: {exc}", file=sys.stderr)
-        sys.exit(1)
+        print(f"Total groups: {len(groups)}")
+        print(f"Total lessons: {total_lessons}")
+
+        return 0
+
+    except Exception as e:
+        print(f"Error: {e}")
+        import traceback
+        traceback.print_exc()
+        return 1
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
