@@ -58,28 +58,24 @@ def extract_data(text):
     room = ""
     
     for line in lines:
-        # Кабинет в скобках (23), (34а) и т.д. - извлекаем содержимое из скобок
-        room_match = re.search(r'\(([^)]+)\)', line)
+        # Кабинет ТОЛЬКО в скобках в конце строки (23), (34а)
+        room_match = re.search(r'\(([0-9]+[а-яА-ЯёЁ]*)\)\s*$', line)
         if room_match and not room:
-            room_content = room_match.group(1).strip()
-            # Проверяем, что это похоже на номер кабинета (начинается с цифр)
-            if re.match(r'^[0-9]+[а-яА-ЯёЁ]*$', room_content):
-                room = room_content
+            room = room_match.group(1)
+            # Удаляем кабинет из строки для дальнейшего парсинга
+            line = re.sub(r'\s*\([^)]*\)\s*$', '', line).strip()
         
         # Преподаватель: ФИО (Иванов И.И., Ванявина О.О. и т.д.)
         teacher_match = re.search(r'([А-ЯЁ][а-яё]+\s+[А-ЯЁ]\.\s*[А-ЯЁ]\.?)', line)
         if teacher_match and not teacher:
             teacher = teacher_match.group(1).strip()
+            # Удаляем преподавателя из строки
+            line = re.sub(r'[А-ЯЁ][а-яё]+\s+[А-ЯЁ]\.\s*[А-ЯЁ]\.?', '', line).strip()
         
-        # Предмет: код (ООД.04, ОП.06) или название
-        if not subject:
-            # Проверяем, начинается ли с кода предмета
-            code_match = re.match(r'^([А-ЯЁа-яё]+\.\d+|[А-ЯЁа-яё]+\s*\d+)', line)
-            if code_match:
-                subject = line
-                break
-            # Или это название без кода
-            elif not room_match and not teacher_match:
+        # Предмет: то что осталось (обычно название или код вроде ООД.04)
+        if line and not subject:
+            # Пропускаем служебные строки
+            if not any(x in line.lower() for x in ["разделённая", "объединённая", "физкультура", "консультация"]):
                 subject = line
     
     return subject.strip(), teacher.strip(), room.strip()
@@ -92,7 +88,6 @@ def parse_schedule_excel():
     print(f"📄 Лист: {ws.title}, Строк: {ws.max_row}, Столбцов: {ws.max_column}")
     
     # ===== ДАТА =====
-    # Дата внизу листа или в строке 1 - ищем в любом месте
     date_str = datetime.now().strftime("%d.%m.%Y")
     for row in range(1, min(5, ws.max_row + 1)):
         for col in range(1, min(10, ws.max_column + 1)):
@@ -123,7 +118,7 @@ def parse_schedule_excel():
     
     print(f"👥 Групп найдено: {len(groups)}")
     if groups:
-        print(f"   Группы: {', '.join(groups)}")
+        print(f"   Группы: {', '.join(groups[:5])}")
     
     if not groups:
         print("❌ Группы не найдены в строке 2!")
@@ -142,7 +137,6 @@ def parse_schedule_excel():
                 pair_rows.append((row, pair_num))
     
     print(f"🔢 Пар найдено: {len(pair_rows)}")
-    print(f"   Строки пар: {[row for row, _ in pair_rows]}")
     
     # Парсим каждую пару
     for idx, (start_row, pair_num) in enumerate(pair_rows):
@@ -183,7 +177,7 @@ def parse_schedule_excel():
 
 def main():
     print("=" * 60)
-    print("🎓 Schedule Parser v5.0")
+    print("🎓 Schedule Parser v6.0")
     print("=" * 60)
     
     # Проверяем изменения
