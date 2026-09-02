@@ -1,3 +1,4 @@
+import datetime
 import hashlib
 import json
 import re
@@ -57,6 +58,12 @@ max_col = ws.max_column or 50
 
 # Ищем дату в первых 50 строках и 5 столбцах
 date = "Неизвестная дата"
+MONTHS_RU = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
+             'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
+
+def format_date(d):
+    return f"{d.day} {MONTHS_RU[d.month - 1]} {d.year}"
+
 # несколько шаблонов: "01.09.2025", "1 сентября 2025", "1.09.2025 - 5.09.2025" и т.п.
 DATE_PATTERNS = [
     r'\d{1,2}\s+\w+\s+\d{4}',        # 1 сентября 2025
@@ -66,15 +73,24 @@ DATE_PATTERNS = [
 for r in range(1, min(51, max_row + 1)):
     for c in range(1, min(6, max_col + 1)):
         v = ws.cell(row=r, column=c).value
-        if v:
-            s = str(v)
-            for pattern in DATE_PATTERNS:
-                m = re.search(pattern, s)
-                if m:
-                    date = m.group(0)
-                    break
-            if date != "Неизвестная дата":
+        if v is None:
+            continue
+        # ВАЖНО: если в ячейке лежит настоящая дата (тип datetime/date,
+        # а не текст), openpyxl отдаёт объект, и str(v) превращается в
+        # "2026-09-01 00:00:00" — под DATE_PATTERNS такое никогда не
+        # подходило, поэтому дата всегда оставалась "Неизвестная дата".
+        # Обрабатываем этот тип отдельно, до преобразования в строку.
+        if isinstance(v, (datetime.datetime, datetime.date)):
+            date = format_date(v)
+            break
+        s = str(v)
+        for pattern in DATE_PATTERNS:
+            m = re.search(pattern, s)
+            if m:
+                date = m.group(0)
                 break
+        if date != "Неизвестная дата":
+            break
     if date != "Неизвестная дата":
         break
 
