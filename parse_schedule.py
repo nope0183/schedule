@@ -43,109 +43,134 @@ def clean(val):
     if val is None:
         return ""
     s = str(val).strip()
-    # Убираем переносы строк
     s = re.sub(r'\s+', ' ', s)
     return s
 
-def analyze_structure():
-    """Анализирует структуру Excel файла."""
-    if not os.path.exists(XLSX_FILENAME):
-        print("❌ Файл не найден")
-        return
+def extract_data(text):
+    """Извлекает из текста пары: предмет, преподавателя и кабинет."""
+    if not text:
+        return "", "", ""
     
-    wb = openpyxl.load_workbook(XLSX_FILENAME, data_only=True)
-    ws = wb.active
+    lines = [l.strip() for l in text.split('\n') if l.strip()]
     
-    print(f"\n📊 АНАЛИЗ СТРУКТУРЫ")
-    print(f"Лист: {ws.title}")
-    print(f"Строк: {ws.max_row}, Столбцов: {ws.max_column}\n")
+    subject = ""
+    teacher = ""
+    room = ""
     
-    # Показываем первые 10 строк
-    print("Первые 10 строк:")
-    for row in range(1, min(11, ws.max_row + 1)):
-        row_data = []
-        for col in range(1, min(6, ws.max_column + 1)):
-            val = clean(ws.cell(row, col).value)
-            row_data.append(f"[{val[:15]}]" if val else "[_]")
-        print(f"Строка {row}: {' '.join(row_data)}")
+    for line in lines:
+        # Кабинет в скобках (23), (34а) и т.д.
+        room_match = re.search(r'\(([0-9]+[а-яА-ЯёЁ]*)\)', line)
+        if room_match and not room:
+            room = room_match.group(1)
+        
+        # Преподаватель: ФИО (Иванов И.И., Ванявина О.О. и т.д.)
+        teacher_match = re.search(r'([А-ЯЁ][а-яё]+\s+[А-ЯЁ]\.\s*[А-ЯЁ]\.?)', line)
+        if teacher_match and not teacher:
+            teacher = teacher_match.group(1).strip()
+        
+        # Предмет: код (ООД.04, ОП.06) или название
+        if not subject:
+            # Проверяем, начинается ли с кода предмета
+            code_match = re.match(r'^([А-ЯЁа-яё]+\.\d+|[А-ЯЁа-яё]+\s*\d+)', line)
+            if code_match:
+                subject = line
+                break
+            # Или это название без кода
+            elif not room_match and not teacher_match:
+                subject = line
     
-    print("\n")
+    return subject.strip(), teacher.strip(), room.strip()
 
-def parse_excel():
+def parse_schedule_excel():
     """Парсит расписание из Excel."""
     wb = openpyxl.load_workbook(XLSX_FILENAME, data_only=True)
     ws = wb.active
     
-    print(f"📄 Лист: {ws.title}")
+    print(f"📄 Лист: {ws.title}, Строк: {ws.max_row}, Столбцов: {ws.max_column}")
     
     # ===== ДАТА =====
+    # Дата внизу листа или в строке 1 - ищем в любом месте
     date_str = datetime.now().strftime("%d.%m.%Y")
-    for col in range(1, min(10, ws.max_column + 1)):
-        val = clean(ws.cell(1, col).value)
-        if val:
-            match = re.search(r'(\d{1,2})[.\/-](\d{1,2})[.\/-](\d{2,4})', val)
-            if match:
-                d, m, y = int(match.group(1)), int(match.group(2)), int(match.group(3))
-                if y < 100:
-                    y += 2000
-                try:
-                    date_str = datetime(y, m, d).strftime("%d.%m.%Y")
-                    break
-                except:
-                    pass
-    print(f"📅 Дата: {date_str}")
+    for row in range(1, min(5, ws.max_row + 1)):
+        for col in range(1, min(10, ws.max_column + 1)):
+            val = clean(ws.cell(row, col).value)
+            if val:
+                match = re.search(r'(\d{1,2})[.\/-](\d{1,2})[.\/-](\d{2,4})', val)
+                if match:
+                    d, m, y = int(match.group(1)), int(match.group(2)), int(match.group(3))
+                    if y < 100:
+                        y += 2000
+                    try:
+                        date_str = datetime(y, m, d).strftime("%d.%m.%Y")
+                        print(f"📅 Дата: {date_str}")
+                        break
+                    except:
+                        pass
     
     # ===== ГРУППЫ (строка 2) =====
     groups = []
     group_cols = {}
     for col in range(1, ws.max_column + 1):
         val = clean(ws.cell(2, col).value)
-        # Группа: до 5 символов, содержит цифры
-        if val and re.match(r'^[А-Яа-я0-9]{2,5}$', val) and any(c.isdigit() for c in val):
+        # Группа: 4 цифры (1161, 1162 и т.д.)
+        if val and re.match(r'^\d{4}$', val):
             if val not in groups:
                 groups.append(val)
                 group_cols[val] = col
     
-    print(f"👥 Групп: {len(groups)}")
+    print(f"👥 Групп найдено: {len(groups)}")
     if groups:
-        print(f"   {', '.join(groups[:10])}")
+        print(f"   Группы: {', '.join(groups)}")
     
     if not groups:
-        print("❌ Группы не найдены!")
+        print("❌ Группы не найдены в строке 2!")
         return None
     
-    # ===== ПАРЫ (начиная со строки 3) =====
+    # ===== ПАРЫ (ищем номера пар в столбце A) =====
     schedule = {group: [] for group in groups}
     
-    row = 3
-    while row <= ws.max_row:
-        # Проверяем, есть ли номер пары в столбце A
-        col_a = clean(ws.cell(row, 1).value)
+    pair_rows = []  # Строки где начинаются пары
+    for row in range(3, ws.max_row + 1):
+        val = clean(ws.cell(row, 1).value)
+        # Проверяем, это ли номер пары (1-7)
+        if val and re.match(r'^\d+$', val):
+            pair_num = int(val)
+            if 1 <= pair_num <= 7:
+                pair_rows.append((row, pair_num))
+    
+    print(f"🔢 Пар найдено: {len(pair_rows)}")
+    print(f"   Строки пар: {[row for row, _ in pair_rows]}")
+    
+    # Парсим каждую пару
+    for idx, (start_row, pair_num) in enumerate(pair_rows):
+        # Пара занимает 2 строки (или больше до следующей пары)
+        if idx + 1 < len(pair_rows):
+            end_row = pair_rows[idx + 1][0] - 1
+        else:
+            end_row = ws.max_row
         
-        # Номер пары - это цифра от 1 до 7
-        pair_num = None
-        if col_a and re.match(r'^\d+$', col_a):
-            pair_num = int(col_a)
-            if not (1 <= pair_num <= 7):
-                pair_num = None
-        
-        if pair_num is not None:
-            # Это строка с номером пары
-            # Данные пары находятся в этой же строке для каждой группы
-            print(f"Пара {pair_num} на строке {row}")
-            
-            for group, col in group_cols.items():
+        # Для каждой группы
+        for group, col in group_cols.items():
+            # Объединяем содержимое ячеек в блоке пары
+            content_lines = []
+            for row in range(start_row, end_row + 1):
                 val = clean(ws.cell(row, col).value)
                 if val:
+                    content_lines.append(val)
+            
+            content = '\n'.join(content_lines)
+            
+            if content:
+                subject, teacher, room = extract_data(content)
+                
+                if subject or teacher or room:
                     lesson = {
                         "num": str(pair_num),
-                        "subject": val,
-                        "teacher": "",
-                        "room": "",
+                        "subject": subject,
+                        "teacher": teacher,
+                        "room": room,
                     }
                     schedule[group].append(lesson)
-        
-        row += 1
     
     return {
         "date": date_str,
@@ -155,11 +180,8 @@ def parse_excel():
 
 def main():
     print("=" * 60)
-    print("🎓 Schedule Parser v4.0")
+    print("🎓 Schedule Parser v5.0")
     print("=" * 60)
-    
-    # Анализируем структуру
-    analyze_structure()
     
     # Проверяем изменения
     old_hash = get_hash(XLSX_FILENAME)
@@ -171,12 +193,13 @@ def main():
             print("📌 Файл не изменился")
             return 0
     else:
-        print("⚠️  Скачивание не удалось")
-        if not os.path.exists(JSON_FILENAME):
+        print("⚠️  Скачивание не удалось, используем локальный файл")
+        if not os.path.exists(XLSX_FILENAME):
+            print("❌ Файл не найден")
             return 1
     
     try:
-        result = parse_excel()
+        result = parse_schedule_excel()
         if not result:
             return 1
         
@@ -188,9 +211,13 @@ def main():
         if new_hash:
             save_hash(HASH_FILENAME, new_hash)
         
+        # Статистика
         total = sum(len(v) for v in result["schedule"].values())
-        print(f"📊 Пар всего: {total}")
+        print(f"📊 Всего пар: {total}")
+        for group, lessons in list(result["schedule"].items())[:5]:
+            print(f"   {group}: {len(lessons)} пар")
         
+        print("\n✨ Готово!")
         return 0
     
     except Exception as e:
