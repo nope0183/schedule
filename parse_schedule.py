@@ -241,6 +241,7 @@ for lesson_num, row_range in LESSON_ROWS.items():
             if not (subject or teacher or room):
                 continue
 
+            # Если есть хотя бы один элемент (предмет, преподаватель или кабинет) — это пара, а не окно
             record = {'subject': subject, 'teacher': teacher, 'room': room}
             records = raw_records[lesson_num].setdefault(gname, [])
             if record not in records:
