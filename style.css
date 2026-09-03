@@ -29,12 +29,52 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 }
 .lesson-card.empty { border-left-color: #22c55e; opacity: 0.7; }
 
-.lesson-header { display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px; }
+.lesson-header { display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
 .lesson-num { font-size: 0.85rem; color: var(--lesson-num); font-weight: 600; white-space: nowrap; }
+.lesson-time { 
+    font-size: 0.85rem; 
+    color: var(--accent); 
+    font-weight: 600; 
+    white-space: nowrap;
+    background: rgba(59, 130, 246, 0.1);
+    padding: 2px 8px;
+    border-radius: 4px;
+}
 .lesson-subject { font-size: 1rem; font-weight: 600; line-height: 1.3; }
 
 .lesson-meta { font-size: 0.9rem; opacity: 0.8; line-height: 1.5; }
 .lesson-meta span { display: block; }
+
+/* Стили для версии преподавателя */
+.teacher-lesson {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+}
+.teacher-lesson:last-child {
+    border-bottom: none;
+}
+.teacher-lesson-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+.teacher-lesson-subject {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--text);
+}
+.teacher-lesson-meta {
+    font-size: 0.85rem;
+    opacity: 0.8;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+.teacher-lesson-meta span {
+    display: inline-block;
+}
 
 .placeholder { text-align: center; padding: 60px 20px; opacity: 0.5; font-size: 1.1rem; }
 
@@ -66,6 +106,37 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 }
 .bell-btn:active {
     transform: scale(0.98);
+}
+
+/* Переключатель версий */
+.version-switcher {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding: 4px;
+    background: var(--card-bg);
+    border-radius: 12px;
+}
+.version-btn {
+    flex: 1;
+    padding: 10px 16px;
+    background: transparent;
+    color: var(--text);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+    opacity: 0.7;
+}
+.version-btn.active {
+    background: var(--accent);
+    opacity: 1;
+}
+.version-btn:hover:not(.active) {
+    opacity: 1;
+    background: rgba(59, 130, 246, 0.2);
 }
 
 /* Модальное окно */
