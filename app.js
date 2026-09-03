@@ -109,12 +109,16 @@ function renderSchedule(group) {
         const timeInfo = getLessonTime(lessonNum, isMonday);
         const timeDisplay = timeInfo ? `<span class="lesson-time">${timeInfo.time}</span>` : '';
         
+        // Если есть предмет, показываем его. Если нет предмета, но есть преподаватель или кабинет — показываем "Пара"
+        // Если вообще ничего нет — показываем "Окно"
+        const subjectDisplay = l.subject ? l.subject : (l.teacher || l.room ? 'Пара' : 'Окно');
+        
         return `
         <div class="lesson-card ${l.subject ? '' : 'empty'}">
             <div class="lesson-header">
                 <span class="lesson-num">${l.num}-я пара</span>
                 ${timeDisplay}
-                <span class="lesson-subject">${l.subject || 'Окно'}</span>
+                <span class="lesson-subject">${subjectDisplay}</span>
             </div>
             ${l.teacher || l.room ? `<div class="lesson-meta">
                 ${l.teacher ? `<span>👨‍🏫 ${l.teacher}</span>` : ''}
