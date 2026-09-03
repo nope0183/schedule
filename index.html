@@ -18,7 +18,14 @@
             <select id="group-select" class="group-selector">
                 <option value="">Выберите группу</option>
             </select>
+            <button id="bell-schedule-btn" class="bell-btn">🔔 Расписание звонков</button>
         </header>
+
+        <!-- Переключатель версий -->
+        <div class="version-switcher">
+            <button id="student-version-btn" class="version-btn active">Студент</button>
+            <button id="teacher-version-btn" class="version-btn">Преподаватель</button>
+        </div>
 
         <!-- Контент -->
         <main id="schedule-container" class="schedule">
@@ -27,6 +34,25 @@
 
         <!-- Индикатор загрузки -->
         <div id="loader" class="loader hidden"></div>
+
+        <!-- Модальное окно расписания звонков -->
+        <div id="bell-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>🔔 Расписание звонков</h2>
+                    <button id="close-modal" class="close-btn">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="bell-tabs">
+                        <button class="tab-btn active" data-day="monday">Понедельник</button>
+                        <button class="tab-btn" data-day="other">Вт-Пт</button>
+                    </div>
+                    <div id="bell-content" class="bell-content">
+                        <!-- Контент загружается через JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="app.js"></script>
