@@ -27,7 +27,8 @@ const bellSchedule = {
 // Функция для получения времени пары по номеру
 function getLessonTime(lessonNum, isMonday) {
     const schedule = isMonday ? bellSchedule.monday : bellSchedule.other;
-    // Для понедельника классный час - это 0 пара, поэтому сдвигаем индекс
+    // Для понедельника: 0-й элемент - классный час, 1-й - 1 пара, 2-й - 2 пара и т.д.
+    // Для других дней: 0-й элемент - 1 пара, 1-й - 2 пара и т.д.
     const index = isMonday ? lessonNum : lessonNum - 1;
     if (index >= 0 && index < schedule.length) {
         return schedule[index];
