@@ -27,7 +27,8 @@ const bellSchedule = {
 // Функция для получения времени пары по номеру
 function getLessonTime(lessonNum, isMonday) {
     const schedule = isMonday ? bellSchedule.monday : bellSchedule.other;
-    // Для понедельника классный час - это 0 пара, поэтому сдвигаем индекс
+    // Для понедельника: 0-й элемент - классный час, 1-й - 1 пара, 2-й - 2 пара и т.д.
+    // Для других дней: 0-й элемент - 1 пара, 1-й - 2 пара и т.д.
     const index = isMonday ? lessonNum : lessonNum - 1;
     if (index >= 0 && index < schedule.length) {
         return schedule[index];
@@ -109,16 +110,16 @@ function renderSchedule(group) {
         const timeInfo = getLessonTime(lessonNum, isMonday);
         const timeDisplay = timeInfo ? `<span class="lesson-time">${timeInfo.time}</span>` : '';
         
-        // Если есть предмет, показываем его. Если нет предмета, но есть преподаватель или кабинет — показываем "Пара"
-        // Если вообще ничего нет — показываем "Окно"
-        const subjectDisplay = l.subject ? l.subject : (l.teacher || l.room ? 'Пара' : 'Окно');
+        // Показываем предмет, если он есть. Если предмета нет, но есть преподаватель или кабинет — показываем "Пара"
+        // Если вообще ничего нет — показываем пустое значение (без надписи "Окно")
+        const subjectDisplay = l.subject ? l.subject : (l.teacher || l.room ? 'Пара' : '');
         
         return `
-        <div class="lesson-card ${l.subject ? '' : 'empty'}">
+        <div class="lesson-card ${l.subject || l.teacher || l.room ? '' : 'empty'}">
             <div class="lesson-header">
                 <span class="lesson-num">${l.num}-я пара</span>
                 ${timeDisplay}
-                <span class="lesson-subject">${subjectDisplay}</span>
+                ${subjectDisplay ? `<span class="lesson-subject">${subjectDisplay}</span>` : ''}
             </div>
             ${l.teacher || l.room ? `<div class="lesson-meta">
                 ${l.teacher ? `<span>👨‍🏫 ${l.teacher}</span>` : ''}
