@@ -244,3 +244,35 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
     font-size: 0.95rem;
     color: var(--accent);
 }
+/* Неделя: переключатель дней */
+.week-nav { margin-bottom: 16px; }
+.week-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 8px;
+}
+.week-label { font-size: 0.9rem; font-weight: 600; color: var(--lesson-num); }
+.week-arrow {
+    width: 36px; height: 32px; font-size: 20px; line-height: 1;
+    background: var(--card-bg); color: var(--text);
+    border: 1px solid var(--border); border-radius: 10px; cursor: pointer;
+}
+.week-arrow:disabled { opacity: 0.3; cursor: default; }
+
+.week-days { display: flex; gap: 6px; }
+.day-chip {
+    flex: 1; min-width: 0; padding: 8px 0;
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    background: var(--card-bg); color: var(--text);
+    border: 1px solid var(--border); border-radius: 12px; cursor: pointer;
+    font-family: inherit; position: relative;
+}
+.day-chip-name { font-size: 0.75rem; color: var(--lesson-num); font-weight: 600; }
+.day-chip-num { font-size: 1rem; font-weight: 700; }
+.day-chip.active { background: var(--accent); border-color: var(--accent); }
+.day-chip.active .day-chip-name { color: rgba(255, 255, 255, 0.85); }
+.day-chip.no-data { opacity: 0.35; cursor: default; }
+.day-chip.today::after {
+    content: ''; position: absolute; bottom: 3px; width: 4px; height: 4px;
+    border-radius: 50%; background: var(--accent);
+}
+.day-chip.today.active::after { background: #fff; }

@@ -1,6 +1,7 @@
 import datetime
 import hashlib
 import json
+import os
 import re
 import sys
 
@@ -11,6 +12,77 @@ from openpyxl import load_workbook
 URL = 'https://serp-koll.ru/images/ep/k1/rasp1.xlsx'
 JSON_FILE = 'schedule.json'
 HASH_FILE = 'schedule.hash'
+HISTORY_FILE = 'history.json'   # накопленное расписание по дням (для недельного вида)
+HISTORY_KEEP_DAYS = 28          # сколько дней истории хранить
+
+MONTHS_RU = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
+             'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
+WEEKDAYS_RU = ['понедельник', 'вторник', 'среда', 'четверг',
+               'пятница', 'суббота', 'воскресенье']
+
+
+def parse_date_text(text):
+    """'20 октября 2026, вторник' / '20.10.2026' -> datetime.date или None."""
+    text = text or ''
+    try:
+        m = re.search(r'(\d{1,2})\s+([а-яё]+)\s+(\d{4})', text, re.IGNORECASE)
+        if m and m.group(2).lower() in MONTHS_RU:
+            return datetime.date(int(m.group(3)), MONTHS_RU.index(m.group(2).lower()) + 1, int(m.group(1)))
+        m = re.search(r'(\d{1,2})\.(\d{1,2})\.(\d{4})', text)
+        if m:
+            return datetime.date(int(m.group(3)), int(m.group(2)), int(m.group(1)))
+    except ValueError:
+        pass
+    return None
+
+
+def load_history():
+    try:
+        with open(HISTORY_FILE, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        if isinstance(data.get('days'), dict):
+            return data
+    except (FileNotFoundError, ValueError, AttributeError):
+        pass
+    return {'days': {}}
+
+
+def save_history(history):
+    days = history['days']
+    if days:
+        # обрезаем старое относительно самого свежего дня в истории
+        newest = datetime.date.fromisoformat(max(days))
+        limit = (newest - datetime.timedelta(days=HISTORY_KEEP_DAYS)).isoformat()
+        history['days'] = {k: v for k, v in days.items() if k >= limit}
+    history['days'] = dict(sorted(history['days'].items()))
+    with open(HISTORY_FILE, 'w', encoding='utf-8') as f:
+        json.dump(history, f, ensure_ascii=False, indent=1)
+
+
+def add_day_to_history(history, day_date, date_text, groups, schedule):
+    """Добавляет (или перезаписывает свежей версией) один день."""
+    history['days'][day_date.isoformat()] = {
+        'date': date_text,
+        'weekday': WEEKDAYS_RU[day_date.weekday()],
+        'groups': sorted(groups),
+        'schedule': schedule,
+    }
+
+
+# Если history.json ещё нет, а schedule.json уже есть — засеиваем историю им,
+# чтобы текущий день не потерялся после первого запуска.
+if not os.path.exists(HISTORY_FILE) and os.path.exists(JSON_FILE):
+    try:
+        with open(JSON_FILE, 'r', encoding='utf-8') as f:
+            _cur = json.load(f)
+        _d = parse_date_text(_cur.get('date_iso') or _cur.get('date'))
+        if _d:
+            _h = load_history()
+            add_day_to_history(_h, _d, _cur.get('date', ''), _cur.get('groups', []), _cur.get('schedule', {}))
+            save_history(_h)
+            print(f'History seeded from {JSON_FILE}: {_d.isoformat()}')
+    except Exception as e:
+        print(f'History seed error: {e}')
 
 # 1. Скачиваем файл
 try:
@@ -65,9 +137,6 @@ for merged_range in list(ws.merged_cells.ranges):
 
 max_row = ws.max_row or 200
 max_col = ws.max_column or 50
-
-MONTHS_RU = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
-             'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
 
 def format_date(d):
     return f"{d.day} {MONTHS_RU[d.month - 1]} {d.year}"
@@ -250,7 +319,14 @@ for lesson_num, row_range in LESSON_ROWS.items():
 wb.close()
 
 # 4. Формируем JSON
-result = {'date': date, 'groups': sorted(groups), 'schedule': {}}
+day_date = parse_date_text(date)
+result = {
+    'date': date,
+    'date_iso': day_date.isoformat() if day_date else None,
+    'weekday': WEEKDAYS_RU[day_date.weekday()] if day_date else None,
+    'groups': sorted(groups),
+    'schedule': {},
+}
 for gname in groups:
     lessons = []
     for num in sorted(raw_records.keys(), key=int):
@@ -279,6 +355,15 @@ for gname in groups:
 
 with open(JSON_FILE, 'w', encoding='utf-8') as f:
     json.dump(result, f, ensure_ascii=False, indent=2)
+
+# 5. Дописываем день в историю (недельный вид на сайте)
+if day_date:
+    history = load_history()
+    add_day_to_history(history, day_date, date, groups, result['schedule'])
+    save_history(history)
+    print(f'History: {len(history["days"])} days stored')
+else:
+    print('WARNING: date not recognised, day not added to history')
 
 with open(HASH_FILE, 'w') as f:
     f.write(new_hash)
