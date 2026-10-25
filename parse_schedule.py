@@ -22,9 +22,12 @@ WEEKDAYS_RU = ['понедельник', 'вторник', 'среда', 'чет
 
 
 def parse_date_text(text):
-    """'20 октября 2026, вторник' / '20.10.2026' -> datetime.date или None."""
+    """'20 октября 2026, вторник' / '20.10.2026' / '2026-10-20' -> datetime.date или None."""
     text = text or ''
     try:
+        m = re.search(r'(\d{4})-(\d{2})-(\d{2})', text)
+        if m:
+            return datetime.date(int(m.group(1)), int(m.group(2)), int(m.group(3)))
         m = re.search(r'(\d{1,2})\s+([а-яё]+)\s+(\d{4})', text, re.IGNORECASE)
         if m and m.group(2).lower() in MONTHS_RU:
             return datetime.date(int(m.group(3)), MONTHS_RU.index(m.group(2).lower()) + 1, int(m.group(1)))
@@ -50,9 +53,10 @@ def load_history():
 def save_history(history):
     days = history['days']
     if days:
-        # обрезаем старое относительно самого свежего дня в истории
+        # Обрезаем старое относительно самого свежего дня в истории.
+        # -1, чтобы в окне было ровно 28 календарных дней, а не 29.
         newest = datetime.date.fromisoformat(max(days))
-        limit = (newest - datetime.timedelta(days=HISTORY_KEEP_DAYS)).isoformat()
+        limit = (newest - datetime.timedelta(days=HISTORY_KEEP_DAYS - 1)).isoformat()
         history['days'] = {k: v for k, v in days.items() if k >= limit}
     history['days'] = dict(sorted(history['days'].items()))
     with open(HISTORY_FILE, 'w', encoding='utf-8') as f:
@@ -69,9 +73,11 @@ def add_day_to_history(history, day_date, date_text, groups, schedule):
     }
 
 
-# Если history.json ещё нет, а schedule.json уже есть — засеиваем историю им,
-# чтобы текущий день не потерялся после первого запуска.
-if not os.path.exists(HISTORY_FILE) and os.path.exists(JSON_FILE):
+# Синхронизируем history.json с текущим schedule.json при каждом запуске.
+# Это не только засеивает историю после первого запуска, но и чинит её, если
+# день потерялся, а файл расписания при этом не изменился (раньше скрипт
+# выходил по "No changes" до записи истории).
+if os.path.exists(JSON_FILE):
     try:
         with open(JSON_FILE, 'r', encoding='utf-8') as f:
             _cur = json.load(f)
@@ -80,9 +86,9 @@ if not os.path.exists(HISTORY_FILE) and os.path.exists(JSON_FILE):
             _h = load_history()
             add_day_to_history(_h, _d, _cur.get('date', ''), _cur.get('groups', []), _cur.get('schedule', {}))
             save_history(_h)
-            print(f'History seeded from {JSON_FILE}: {_d.isoformat()}')
+            print(f'History synced from {JSON_FILE}: {_d.isoformat()}')
     except Exception as e:
-        print(f'History seed error: {e}')
+        print(f'History sync error: {e}')
 
 # 1. Скачиваем файл
 try:
